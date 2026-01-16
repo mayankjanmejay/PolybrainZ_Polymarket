@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(del \"q:\\\\Apps\\\\Invictus\\\\SIN\\\\PulseX\\\\polybrainz_polymarket\\\\lib\\\\src\\\\polybrainz_polymarket_base.dart\")",
+      "Bash(dart pub get:*)",
+      "Bash(dart test:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}

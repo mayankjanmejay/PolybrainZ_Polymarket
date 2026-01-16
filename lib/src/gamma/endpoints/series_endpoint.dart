@@ -1,0 +1,58 @@
+import '../../core/api_client.dart';
+import '../models/series.dart';
+
+/// Endpoints for series.
+class SeriesEndpoint {
+  final ApiClient _client;
+
+  SeriesEndpoint(this._client);
+
+  /// List series with filters.
+  Future<List<Series>> listSeries({
+    int limit = 100,
+    int offset = 0,
+    String? order,
+    bool? ascending,
+    List<String>? slugs,
+    List<int>? categoriesIds,
+    List<String>? categoriesLabels,
+    bool? closed,
+    bool? includeChat,
+    String? recurrence,
+  }) async {
+    final params = <String, String>{
+      'limit': limit.toString(),
+      'offset': offset.toString(),
+    };
+
+    if (order != null) params['order'] = order;
+    if (ascending != null) params['ascending'] = ascending.toString();
+    if (slugs != null) params['slug'] = slugs.join(',');
+    if (categoriesIds != null) {
+      params['categories_id'] = categoriesIds.join(',');
+    }
+    if (categoriesLabels != null) {
+      params['categories_label'] = categoriesLabels.join(',');
+    }
+    if (closed != null) params['closed'] = closed.toString();
+    if (includeChat != null) params['include_chat'] = includeChat.toString();
+    if (recurrence != null) params['recurrence'] = recurrence;
+
+    final response = await _client.get<List<dynamic>>(
+      '/series',
+      queryParams: params,
+    );
+
+    return response
+        .map((s) => Series.fromJson(s as Map<String, dynamic>))
+        .toList();
+  }
+
+  /// Get series by ID.
+  Future<Series> getById(int id) async {
+    final response = await _client.get<Map<String, dynamic>>(
+      '/series/$id',
+    );
+    return Series.fromJson(response);
+  }
+}
