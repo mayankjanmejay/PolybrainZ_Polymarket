@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.1] - 2026-01-18
+
+### Changed
+
+- **README UI Overhaul** - Modern design with badges, collapsible sections, and improved visual hierarchy
+  - Added Dart SDK, version, and license badges
+  - Reorganized API reference with collapsible `<details>` sections
+  - Features displayed in clean table format
+  - Type-safe enums organized into categorized collapsible tables
+  - Quick navigation links and centered hero section
+  - Improved code examples organization
+
+---
+
 ## [1.6.0] - 2026-01-18
 
 ### Added
