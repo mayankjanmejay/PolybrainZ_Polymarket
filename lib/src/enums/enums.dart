@@ -1,7 +1,9 @@
 export 'activity_type.dart';
 export 'event_order_by.dart';
+export 'events_status.dart';
 export 'filter_type.dart';
 export 'game_status.dart';
+export 'gamma_leaderboard_order_by.dart';
 export 'leaderboard_type.dart';
 export 'leaderboard_window.dart';
 export 'market_order_by.dart';
@@ -11,13 +13,16 @@ export 'order_status.dart';
 export 'order_type.dart';
 export 'outcome_type.dart';
 export 'parent_entity_type.dart';
+export 'price_history_interval.dart';
 export 'rtds_topic.dart';
+export 'search_sort.dart';
 export 'signature_type.dart';
 export 'sort_by.dart';
 export 'sort_direction.dart';
 export 'trade_status.dart';
 export 'ws_channel.dart';
 export 'ws_event_type.dart';
+export 'ws_subscription_type.dart';
 // Category enums
 export 'market_category.dart';
 export 'politics_subcategory.dart';

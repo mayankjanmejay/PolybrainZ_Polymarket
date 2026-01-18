@@ -1,5 +1,6 @@
 import '../../core/api_client.dart';
 import '../../enums/order_side.dart';
+import '../../enums/price_history_interval.dart';
 
 /// Pricing endpoints (public, no auth).
 class PricingEndpoint {
@@ -87,18 +88,18 @@ class PricingEndpoint {
 
   /// Get price history for a token.
   ///
-  /// [interval] - Time interval (e.g., '1m', '5m', '1h', '1d')
+  /// [interval] - Time interval (1m, 5m, 15m, 30m, 1h, 4h, 6h, 12h, 1d, 1w, max)
   /// [fidelity] - Data fidelity (higher = more points)
   Future<List<PriceHistoryPoint>> getPriceHistory(
     String tokenId, {
-    String interval = 'max',
+    PriceHistoryInterval interval = PriceHistoryInterval.max,
     int fidelity = 100,
   }) async {
     final response = await _client.get<Map<String, dynamic>>(
       '/prices-history',
       queryParams: {
         'token_id': tokenId,
-        'interval': interval,
+        'interval': interval.value,
         'fidelity': fidelity.toString(),
       },
     );

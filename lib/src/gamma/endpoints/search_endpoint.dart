@@ -1,4 +1,6 @@
 import '../../core/api_client.dart';
+import '../../enums/events_status.dart';
+import '../../enums/search_sort.dart';
 import '../models/search_result.dart';
 
 /// Endpoints for search.
@@ -8,15 +10,19 @@ class SearchEndpoint {
   SearchEndpoint(this._client);
 
   /// Search events, tags, and profiles.
+  ///
+  /// [query] - Search query string
+  /// [eventsStatus] - Filter events by status (active, closed, all)
+  /// [sort] - Sort results by (relevance, volume, liquidity, startDate, endDate, createdAt)
   Future<SearchResult> search({
     required String query,
     bool? cache,
-    String? eventsStatus,
+    EventsStatus? eventsStatus,
     int? limitPerType,
     int? page,
     List<String>? eventsTags,
     int? keepClosedMarkets,
-    String? sort,
+    SearchSort? sort,
     bool? ascending,
     bool? searchTags,
     bool? searchProfiles,
@@ -29,7 +35,7 @@ class SearchEndpoint {
     };
 
     if (cache != null) params['cache'] = cache.toString();
-    if (eventsStatus != null) params['events_status'] = eventsStatus;
+    if (eventsStatus != null) params['events_status'] = eventsStatus.value;
     if (limitPerType != null) {
       params['limit_per_type'] = limitPerType.toString();
     }
@@ -38,7 +44,7 @@ class SearchEndpoint {
     if (keepClosedMarkets != null) {
       params['keep_closed_markets'] = keepClosedMarkets.toString();
     }
-    if (sort != null) params['sort'] = sort;
+    if (sort != null) params['sort'] = sort.value;
     if (ascending != null) params['ascending'] = ascending.toString();
     if (searchTags != null) params['search_tags'] = searchTags.toString();
     if (searchProfiles != null) {

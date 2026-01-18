@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:web_socket_channel/web_socket_channel.dart';
 
+import '../enums/ws_subscription_type.dart';
 import 'constants.dart';
 import 'exceptions.dart';
 
@@ -85,9 +86,12 @@ class WebSocketClient {
   }
 
   /// Send a subscription message.
-  void subscribe(List<String> assetIds, {String type = 'market'}) {
+  void subscribe(
+    List<String> assetIds, {
+    WsSubscriptionType type = WsSubscriptionType.market,
+  }) {
     send({
-      'type': type,
+      'type': type.value,
       'assets_ids': assetIds,
     });
   }
@@ -95,7 +99,7 @@ class WebSocketClient {
   /// Unsubscribe from assets.
   void unsubscribe(List<String> assetIds) {
     send({
-      'type': 'unsubscribe',
+      'type': WsSubscriptionType.unsubscribe.value,
       'assets_ids': assetIds,
     });
   }

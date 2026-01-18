@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2026-01-18
+
+### Added
+
+#### Additional Type-Safe Enums
+- `PriceHistoryInterval` - Enum for price history time intervals
+  - `minute1`, `minute5`, `minute15`, `minute30`, `hour1`, `hour4`, `hour6`, `hour12`, `day1`, `week1`, `max`
+- `GammaLeaderboardOrderBy` - Enum for Gamma leaderboard ordering
+  - `profit`, `volume`, `marketsTraded`
+- `SearchSort` - Enum for search result sorting
+  - `relevance`, `volume`, `liquidity`, `startDate`, `endDate`, `createdAt`
+- `EventsStatus` - Enum for filtering events by status
+  - `active`, `closed`, `all`
+- `WsSubscriptionType` - Enum for WebSocket subscription types
+  - `market`, `user`, `unsubscribe`
+
+### Changed
+
+- **Breaking**: `PricingEndpoint.getPriceHistory()` now uses `PriceHistoryInterval` enum instead of `String` for `interval`
+- **Breaking**: `GammaLeaderboardEndpoint.getLeaderboard()` now uses `GammaLeaderboardOrderBy` enum instead of `String` for `order`
+- **Breaking**: `SearchEndpoint.search()` now uses `SearchSort` enum instead of `String` for `sort`
+- **Breaking**: `SearchEndpoint.search()` now uses `EventsStatus` enum instead of `String` for `eventsStatus`
+- **Breaking**: `WebSocketClient.subscribe()` now uses `WsSubscriptionType` enum instead of `String` for `type`
+
+---
+
 ## [1.3.0] - 2026-01-18
 
 ### Added

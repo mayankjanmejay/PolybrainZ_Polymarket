@@ -22,7 +22,7 @@ Add to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  polybrainz_polymarket: ^1.3.0
+  polybrainz_polymarket: ^1.4.0
 ```
 
 Then run:
@@ -442,6 +442,11 @@ final recentEvents = await client.gamma.events.listEvents(
 | `ActivityType` | `trade`, `split`, `merge`, `redeem`, `deposit`, `withdraw` | - |
 | `MarketOrderBy` | `volume`, `volume24hr`, `liquidity`, `endDate`, `startDate`, `createdAt` | - |
 | `EventOrderBy` | `volume`, `startDate`, `endDate`, `createdAt`, `liquidity` | - |
+| `PriceHistoryInterval` | `minute1`, `minute5`, `minute15`, `minute30`, `hour1`, `hour4`, `hour6`, `hour12`, `day1`, `week1`, `max` | - |
+| `GammaLeaderboardOrderBy` | `profit`, `volume`, `marketsTraded` | - |
+| `SearchSort` | `relevance`, `volume`, `liquidity`, `startDate`, `endDate`, `createdAt` | - |
+| `EventsStatus` | `active`, `closed`, `all` | - |
+| `WsSubscriptionType` | `market`, `user`, `unsubscribe` | - |
 
 ### toLegacyMap()
 
