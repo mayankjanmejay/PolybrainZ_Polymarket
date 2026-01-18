@@ -1,8 +1,10 @@
 export 'activity_type.dart';
+export 'event_order_by.dart';
 export 'filter_type.dart';
 export 'game_status.dart';
 export 'leaderboard_type.dart';
 export 'leaderboard_window.dart';
+export 'market_order_by.dart';
 export 'order_action_type.dart';
 export 'order_side.dart';
 export 'order_status.dart';

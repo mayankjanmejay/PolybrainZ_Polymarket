@@ -1,4 +1,5 @@
 import '../../core/api_client.dart';
+import '../../enums/event_order_by.dart';
 import '../models/event.dart';
 import '../models/tag.dart';
 
@@ -12,7 +13,7 @@ class EventsEndpoint {
   ///
   /// [limit] - Max events to return (default 100)
   /// [offset] - Pagination offset
-  /// [order] - Field to order by (e.g., 'volume', 'startDate', 'endDate')
+  /// [order] - Field to order by (volume, startDate, endDate, createdAt, liquidity)
   /// [ascending] - Sort direction
   /// [closed] - Filter by closed status
   /// [active] - Filter by active status
@@ -23,7 +24,7 @@ class EventsEndpoint {
   Future<List<Event>> listEvents({
     int limit = 100,
     int offset = 0,
-    String? order,
+    EventOrderBy? order,
     bool? ascending,
     List<int>? ids,
     List<String>? slugs,
@@ -50,7 +51,7 @@ class EventsEndpoint {
       'offset': offset.toString(),
     };
 
-    if (order != null) params['order'] = order;
+    if (order != null) params['order'] = order.value;
     if (ascending != null) params['ascending'] = ascending.toString();
     if (ids != null) params['id'] = ids.join(',');
     if (slugs != null) params['slug'] = slugs.join(',');
@@ -160,7 +161,7 @@ class EventsEndpoint {
       endDateMax: now.add(within),
       active: true,
       closed: false,
-      order: 'endDate',
+      order: EventOrderBy.endDate,
       ascending: true,
     );
   }

@@ -1,4 +1,5 @@
 import '../../core/api_client.dart';
+import '../../enums/market_order_by.dart';
 import '../models/market.dart';
 import '../models/tag.dart';
 
@@ -10,13 +11,13 @@ class MarketsEndpoint {
 
   /// List markets with filters.
   ///
-  /// [order] - Field to order by (e.g., 'volume', 'volume24hr', 'liquidity', 'endDate')
+  /// [order] - Field to order by (volume, volume24hr, liquidity, endDate, startDate, createdAt)
   /// [ascending] - Sort direction (true = ascending, false = descending)
   /// [tagSlug] - Filter by tag slug (e.g., 'politics', 'crypto')
   Future<List<Market>> listMarkets({
     int limit = 100,
     int offset = 0,
-    String? order,
+    MarketOrderBy? order,
     bool? ascending,
     List<int>? ids,
     List<String>? slugs,
@@ -50,7 +51,7 @@ class MarketsEndpoint {
       'offset': offset.toString(),
     };
 
-    if (order != null) params['order'] = order;
+    if (order != null) params['order'] = order.value;
     if (ascending != null) params['ascending'] = ascending.toString();
     if (ids != null) params['id'] = ids.join(',');
     if (slugs != null) params['slug'] = slugs.join(',');
@@ -145,7 +146,7 @@ class MarketsEndpoint {
   Future<List<Market>> getTopByVolume({int limit = 20}) {
     return listMarkets(
       limit: limit,
-      order: 'volume',
+      order: MarketOrderBy.volume,
       ascending: false,
       active: true,
       closed: false,
@@ -156,7 +157,7 @@ class MarketsEndpoint {
   Future<List<Market>> getTopByVolume24hr({int limit = 20}) {
     return listMarkets(
       limit: limit,
-      order: 'volume24hr',
+      order: MarketOrderBy.volume24hr,
       ascending: false,
       active: true,
       closed: false,
@@ -167,7 +168,7 @@ class MarketsEndpoint {
   Future<List<Market>> getTopByLiquidity({int limit = 20}) {
     return listMarkets(
       limit: limit,
-      order: 'liquidity',
+      order: MarketOrderBy.liquidity,
       ascending: false,
       active: true,
       closed: false,
@@ -196,7 +197,7 @@ class MarketsEndpoint {
       endDateMax: now.add(within),
       active: true,
       closed: false,
-      order: 'endDate',
+      order: MarketOrderBy.endDate,
       ascending: true,
     );
   }

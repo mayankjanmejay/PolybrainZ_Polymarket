@@ -22,7 +22,7 @@ Add to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  polybrainz_polymarket: ^1.2.0
+  polybrainz_polymarket: ^1.3.0
 ```
 
 Then run:
@@ -414,6 +414,19 @@ if (event.gameStatusEnum?.isLive ?? false) {
 // Market prices
 final market = markets.first;
 print('YES: ${market.yesPrice}, NO: ${market.noPrice}');
+
+// Type-safe ordering
+final topMarkets = await client.gamma.markets.listMarkets(
+  order: MarketOrderBy.volume24hr,  // Type-safe!
+  ascending: false,
+  limit: 20,
+);
+
+final recentEvents = await client.gamma.events.listEvents(
+  order: EventOrderBy.createdAt,
+  ascending: false,
+  limit: 10,
+);
 ```
 
 ### Available Enums
@@ -427,6 +440,8 @@ print('YES: ${market.yesPrice}, NO: ${market.noPrice}');
 | `TradeStatus` | `mined`, `confirmed`, `retrying`, `failed` | `isTerminal`, `isPending` |
 | `GameStatus` | `scheduled`, `inProgress`, `halftime`, `ended`, `postponed`, `cancelled`, `suspended` | `isLive`, `isFinished`, `isUpcoming`, `isInterrupted` |
 | `ActivityType` | `trade`, `split`, `merge`, `redeem`, `deposit`, `withdraw` | - |
+| `MarketOrderBy` | `volume`, `volume24hr`, `liquidity`, `endDate`, `startDate`, `createdAt` | - |
+| `EventOrderBy` | `volume`, `startDate`, `endDate`, `createdAt`, `liquidity` | - |
 
 ### toLegacyMap()
 

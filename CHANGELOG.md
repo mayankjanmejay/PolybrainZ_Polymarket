@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-01-18
+
+### Added
+
+#### Type-Safe Order By Enums
+- `MarketOrderBy` - Enum for ordering markets in list queries
+  - `volume`, `volume24hr`, `liquidity`, `endDate`, `startDate`, `createdAt`
+- `EventOrderBy` - Enum for ordering events in list queries
+  - `volume`, `startDate`, `endDate`, `createdAt`, `liquidity`
+
+### Changed
+
+- **Breaking**: `MarketsEndpoint.listMarkets()` now uses `MarketOrderBy` enum instead of `String` for the `order` parameter
+- **Breaking**: `EventsEndpoint.listEvents()` now uses `EventOrderBy` enum instead of `String` for the `order` parameter
+
+---
+
 ## [1.2.1] - 2026-01-18
 
 ### Changed
