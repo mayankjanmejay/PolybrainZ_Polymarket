@@ -13,3 +13,12 @@ export 'sort_direction.dart';
 export 'trade_status.dart';
 export 'ws_channel.dart';
 export 'ws_event_type.dart';
+// Category enums
+export 'market_category.dart';
+export 'politics_subcategory.dart';
+export 'sports_subcategory.dart';
+export 'crypto_subcategory.dart';
+export 'pop_culture_subcategory.dart';
+export 'business_subcategory.dart';
+export 'science_subcategory.dart';
+export 'category_detector.dart';

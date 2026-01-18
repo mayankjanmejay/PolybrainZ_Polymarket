@@ -8,6 +8,7 @@ import 'endpoints/series_endpoint.dart';
 import 'endpoints/comments_endpoint.dart';
 import 'endpoints/profiles_endpoint.dart';
 import 'endpoints/search_endpoint.dart';
+import 'endpoints/leaderboard_endpoint.dart';
 
 /// Client for the Gamma API (market discovery and metadata).
 class GammaClient {
@@ -21,6 +22,7 @@ class GammaClient {
   late final CommentsEndpoint comments;
   late final ProfilesEndpoint profiles;
   late final SearchEndpoint search;
+  late final GammaLeaderboardEndpoint leaderboard;
 
   GammaClient({
     String? baseUrl,
@@ -37,6 +39,7 @@ class GammaClient {
     comments = CommentsEndpoint(_client);
     profiles = ProfilesEndpoint(_client);
     search = SearchEndpoint(_client);
+    leaderboard = GammaLeaderboardEndpoint(_client);
   }
 
   /// Check API health.

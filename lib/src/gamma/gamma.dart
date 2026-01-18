@@ -7,4 +7,5 @@ export 'endpoints/series_endpoint.dart';
 export 'endpoints/comments_endpoint.dart';
 export 'endpoints/profiles_endpoint.dart';
 export 'endpoints/search_endpoint.dart';
+export 'endpoints/leaderboard_endpoint.dart';
 export 'models/models.dart';

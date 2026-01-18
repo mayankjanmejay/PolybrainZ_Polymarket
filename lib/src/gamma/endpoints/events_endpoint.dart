@@ -12,12 +12,14 @@ class EventsEndpoint {
   ///
   /// [limit] - Max events to return (default 100)
   /// [offset] - Pagination offset
-  /// [order] - Field to order by (e.g., 'volume', 'startDate')
+  /// [order] - Field to order by (e.g., 'volume', 'startDate', 'endDate')
   /// [ascending] - Sort direction
   /// [closed] - Filter by closed status
   /// [active] - Filter by active status
   /// [tagId] - Filter by tag ID
+  /// [tagSlug] - Filter by tag slug (e.g., 'politics', 'crypto')
   /// [featured] - Filter featured events only
+  /// [hot] - Filter hot/trending events
   Future<List<Event>> listEvents({
     int limit = 100,
     int offset = 0,
@@ -26,9 +28,11 @@ class EventsEndpoint {
     List<int>? ids,
     List<String>? slugs,
     int? tagId,
+    String? tagSlug,
     List<int>? excludeTagIds,
     bool? relatedTags,
     bool? featured,
+    bool? hot,
     bool? cyom,
     bool? includeChat,
     bool? includeTemplate,
@@ -51,11 +55,13 @@ class EventsEndpoint {
     if (ids != null) params['id'] = ids.join(',');
     if (slugs != null) params['slug'] = slugs.join(',');
     if (tagId != null) params['tag_id'] = tagId.toString();
+    if (tagSlug != null) params['tag_slug'] = tagSlug;
     if (excludeTagIds != null) {
       params['exclude_tag_ids'] = excludeTagIds.join(',');
     }
     if (relatedTags != null) params['related_tags'] = relatedTags.toString();
     if (featured != null) params['featured'] = featured.toString();
+    if (hot != null) params['hot'] = hot.toString();
     if (cyom != null) params['cyom'] = cyom.toString();
     if (includeChat != null) params['include_chat'] = includeChat.toString();
     if (includeTemplate != null) {
@@ -110,5 +116,52 @@ class EventsEndpoint {
       '/events/$eventId/tags',
     );
     return response.map((t) => Tag.fromJson(t as Map<String, dynamic>)).toList();
+  }
+
+  /// Get hot/trending events.
+  Future<List<Event>> getHotEvents({int limit = 20}) {
+    return listEvents(
+      limit: limit,
+      hot: true,
+      active: true,
+      closed: false,
+    );
+  }
+
+  /// Get featured events.
+  Future<List<Event>> getFeaturedEvents({int limit = 20}) {
+    return listEvents(
+      limit: limit,
+      featured: true,
+      active: true,
+      closed: false,
+    );
+  }
+
+  /// Get events by tag slug.
+  Future<List<Event>> getByTagSlug(String tagSlug, {int limit = 100}) {
+    return listEvents(
+      limit: limit,
+      tagSlug: tagSlug,
+      active: true,
+      closed: false,
+    );
+  }
+
+  /// Get events ending soon.
+  Future<List<Event>> getEndingSoon({
+    int limit = 20,
+    Duration within = const Duration(days: 7),
+  }) {
+    final now = DateTime.now();
+    return listEvents(
+      limit: limit,
+      endDateMin: now,
+      endDateMax: now.add(within),
+      active: true,
+      closed: false,
+      order: 'endDate',
+      ascending: true,
+    );
   }
 }

@@ -7,7 +7,7 @@ part of 'tag.dart';
 // **************************************************************************
 
 Tag _$TagFromJson(Map<String, dynamic> json) => Tag(
-  id: (json['id'] as num).toInt(),
+  id: _parseId(json['id']),
   label: json['label'] as String?,
   slug: json['slug'] as String?,
   forceShow: json['force_show'] as bool? ?? false,

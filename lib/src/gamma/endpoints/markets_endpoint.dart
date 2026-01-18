@@ -9,6 +9,10 @@ class MarketsEndpoint {
   MarketsEndpoint(this._client);
 
   /// List markets with filters.
+  ///
+  /// [order] - Field to order by (e.g., 'volume', 'volume24hr', 'liquidity', 'endDate')
+  /// [ascending] - Sort direction (true = ascending, false = descending)
+  /// [tagSlug] - Filter by tag slug (e.g., 'politics', 'crypto')
   Future<List<Market>> listMarkets({
     int limit = 100,
     int offset = 0,
@@ -28,6 +32,7 @@ class MarketsEndpoint {
     DateTime? endDateMin,
     DateTime? endDateMax,
     int? tagId,
+    String? tagSlug,
     bool? relatedTags,
     bool? cyom,
     String? umaResolutionStatus,
@@ -63,6 +68,7 @@ class MarketsEndpoint {
     if (volumeNumMin != null) params['volume_num_min'] = volumeNumMin.toString();
     if (volumeNumMax != null) params['volume_num_max'] = volumeNumMax.toString();
     if (tagId != null) params['tag_id'] = tagId.toString();
+    if (tagSlug != null) params['tag_slug'] = tagSlug;
     if (relatedTags != null) params['related_tags'] = relatedTags.toString();
     if (cyom != null) params['cyom'] = cyom.toString();
     if (umaResolutionStatus != null) {
@@ -132,6 +138,66 @@ class MarketsEndpoint {
       active: true,
       closed: false,
       archived: false,
+    );
+  }
+
+  /// Get top markets by volume.
+  Future<List<Market>> getTopByVolume({int limit = 20}) {
+    return listMarkets(
+      limit: limit,
+      order: 'volume',
+      ascending: false,
+      active: true,
+      closed: false,
+    );
+  }
+
+  /// Get top markets by 24h volume.
+  Future<List<Market>> getTopByVolume24hr({int limit = 20}) {
+    return listMarkets(
+      limit: limit,
+      order: 'volume24hr',
+      ascending: false,
+      active: true,
+      closed: false,
+    );
+  }
+
+  /// Get top markets by liquidity.
+  Future<List<Market>> getTopByLiquidity({int limit = 20}) {
+    return listMarkets(
+      limit: limit,
+      order: 'liquidity',
+      ascending: false,
+      active: true,
+      closed: false,
+    );
+  }
+
+  /// Get markets by tag slug.
+  Future<List<Market>> getByTagSlug(String tagSlug, {int limit = 100}) {
+    return listMarkets(
+      limit: limit,
+      tagSlug: tagSlug,
+      active: true,
+      closed: false,
+    );
+  }
+
+  /// Get markets ending soon.
+  Future<List<Market>> getEndingSoon({
+    int limit = 20,
+    Duration within = const Duration(days: 7),
+  }) {
+    final now = DateTime.now();
+    return listMarkets(
+      limit: limit,
+      endDateMin: now,
+      endDateMax: now.add(within),
+      active: true,
+      closed: false,
+      order: 'endDate',
+      ascending: true,
     );
   }
 }
