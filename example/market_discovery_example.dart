@@ -45,7 +45,7 @@ Future<void> browseEventsExample(PolymarketClient client) async {
       limit: 10,
       closed: false,
       active: true,
-      order: 'volume',
+      order: EventOrderBy.volume,
       ascending: false,
     );
 
@@ -88,7 +88,7 @@ Future<void> browseMarketsExample(PolymarketClient client) async {
       limit: 10,
       active: true,
       closed: false,
-      order: 'volume',
+      order: MarketOrderBy.volume,
       ascending: false,
     );
 
@@ -161,7 +161,7 @@ Future<void> searchExample(PolymarketClient client) async {
   try {
     // Search for events
     final results = await client.gamma.search.search(
-      query: 'bitcoin',
+      query: SearchQuery.bitcoin,
       limitPerType: 5,
     );
 
@@ -240,7 +240,7 @@ Future<void> marketDetailsExample(PolymarketClient client) async {
       // Get price history
       final history = await client.clob.pricing.getPriceHistory(
         tokenId,
-        interval: '1d',
+        interval: PriceHistoryInterval.day1,
         fidelity: 10,
       );
 

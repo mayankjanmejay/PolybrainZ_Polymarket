@@ -1,5 +1,6 @@
 import '../../core/api_client.dart';
 import '../../enums/market_order_by.dart';
+import '../../enums/uma_resolution_status.dart';
 import '../models/market.dart';
 import '../models/tag.dart';
 
@@ -36,7 +37,7 @@ class MarketsEndpoint {
     String? tagSlug,
     bool? relatedTags,
     bool? cyom,
-    String? umaResolutionStatus,
+    UmaResolutionStatus? umaResolutionStatus,
     String? gameId,
     List<String>? sportsMarketTypes,
     double? rewardsMinSize,
@@ -73,7 +74,7 @@ class MarketsEndpoint {
     if (relatedTags != null) params['related_tags'] = relatedTags.toString();
     if (cyom != null) params['cyom'] = cyom.toString();
     if (umaResolutionStatus != null) {
-      params['uma_resolution_status'] = umaResolutionStatus;
+      params['uma_resolution_status'] = umaResolutionStatus.value;
     }
     if (gameId != null) params['game_id'] = gameId;
     if (sportsMarketTypes != null) {

@@ -5,6 +5,83 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0] - 2026-01-18
+
+### Added
+
+#### Complete Idiot-Proofing - All String Parameters Now Type-Safe!
+
+**New Order Enums:**
+- `TagOrderBy` - Type-safe ordering for tags (`volume`, `eventsCount`, `createdAt`, `label`)
+- `CommentOrderBy` - Type-safe ordering for comments (`createdAt`, `likes`, `replies`, `updatedAt`)
+- `SeriesOrderBy` - Type-safe ordering for series (`volume`, `startDate`, `endDate`, `createdAt`, `liquidity`)
+- `SportsOrderBy` - Type-safe ordering for sports teams (`name`, `league`, `abbreviation`, `createdAt`)
+
+**New Filter Enums:**
+- `RecurrenceType` - Event recurrence filtering (`daily`, `weekly`, `monthly`, `yearly`, `none`)
+  - Helper method: `isRecurring` getter
+- `UmaResolutionStatus` - UMA oracle resolution status (`pending`, `proposed`, `disputed`, `resolved`)
+  - Helper methods: `isTerminal`, `isInProgress`, `hasStarted` getters
+
+**SearchQuery Enhancements:**
+- `SearchQuery.tryFromPreset()` - Find preset matching a value (returns null if not found)
+- `SearchQuery.fromValue()` - Find preset or create custom query
+- `SearchQuery.custom()` now validates input and throws `ArgumentError` on empty/whitespace
+
+**Enum Improvements:**
+- `SortDirection` now has `opposite` getter
+- All enums now have consistent `fromJson` (throws) and `tryFromJson` (returns null) behavior
+- Added `@JsonEnum` annotations and comprehensive documentation
+
+### Changed
+
+- **Breaking**: `TagsEndpoint.listTags()` - `order` parameter changed from `String?` to `TagOrderBy?`
+- **Breaking**: `CommentsEndpoint.listComments()` - `order` parameter changed from `String?` to `CommentOrderBy?`
+- **Breaking**: `SeriesEndpoint.listSeries()` - `order` changed to `SeriesOrderBy?`, `recurrence` changed to `RecurrenceType?`
+- **Breaking**: `SportsEndpoint.listTeams()` - `order` parameter changed from `String?` to `SportsOrderBy?`
+- **Breaking**: `EventsEndpoint.listEvents()` - `recurrence` parameter changed from `String?` to `RecurrenceType?`
+- **Breaking**: `SearchEndpoint.search()` - `recurrence` parameter changed from `String?` to `RecurrenceType?`
+- **Breaking**: `MarketsEndpoint.listMarkets()` - `umaResolutionStatus` changed from `String?` to `UmaResolutionStatus?`
+- **Breaking**: `SearchQuery.custom()` now throws `ArgumentError` on empty/whitespace input
+- **Breaking**: `LeaderboardWindow.fromJson()` now throws on invalid input (was silent fallback to `all`)
+- **Breaking**: `LeaderboardType.fromJson()` now throws on invalid input (was silent fallback to `profit`)
+- **Breaking**: `SortDirection.fromJson()` now throws on invalid input (was silent fallback to `desc`)
+
+### Documentation
+
+- Added `doc/IDIOT_PROOFING.md` - Comprehensive progress tracker for type-safety work
+
+---
+
+## [1.5.0] - 2026-01-18
+
+### Added
+
+#### Type-Safe Search Queries
+- `SearchQuery` - Sealed class for type-safe search queries with 60+ presets
+  - **Crypto**: `bitcoin`, `ethereum`, `solana`, `crypto`, `defi`, `nft`, `memecoin`, `altcoin`
+  - **Politics**: `election`, `trump`, `biden`, `president`, `congress`, `senate`, `supremeCourt`, `policy`
+  - **Sports**: `nfl`, `nba`, `mlb`, `nhl`, `soccer`, `ufc`, `boxing`, `tennis`, `golf`, `olympics`, `superBowl`, `worldCup`
+  - **Entertainment**: `oscars`, `grammys`, `emmys`, `movies`, `tv`, `music`, `celebrity`, `taylorSwift`, `streaming`
+  - **Business**: `stocks`, `fed`, `interestRates`, `inflation`, `recession`, `ipo`, `tesla`, `apple`, `google`, `amazon`, `microsoft`, `elonMusk`
+  - **Science/Tech**: `ai`, `openai`, `chatgpt`, `spacex`, `nasa`, `climate`, `space`, `mars`
+  - **World**: `war`, `ukraine`, `russia`, `china`, `israel`, `middleEast`
+  - Custom queries via `SearchQuery.custom('your search')`
+  - Category-grouped presets: `SearchQuery.cryptoPresets`, `SearchQuery.politicsPresets`, etc.
+
+#### SearchEndpoint Convenience Methods
+- `searchBitcoin()`, `searchEthereum()`, `searchCrypto()` - Quick crypto searches
+- `searchElection()`, `searchTrump()` - Quick politics searches
+- `searchAI()` - Quick AI/tech searches
+- `searchNFL()`, `searchNBA()` - Quick sports searches
+
+### Changed
+
+- **Breaking**: `SearchEndpoint.search()` now uses `SearchQuery` instead of `String` for the `query` parameter
+  - Use `SearchQuery.bitcoin` for presets or `SearchQuery.custom('text')` for custom searches
+
+---
+
 ## [1.4.0] - 2026-01-18
 
 ### Added

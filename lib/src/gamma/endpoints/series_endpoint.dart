@@ -1,4 +1,6 @@
 import '../../core/api_client.dart';
+import '../../enums/recurrence_type.dart';
+import '../../enums/series_order_by.dart';
 import '../models/series.dart';
 
 /// Endpoints for series.
@@ -8,24 +10,28 @@ class SeriesEndpoint {
   SeriesEndpoint(this._client);
 
   /// List series with filters.
+  ///
+  /// [order] - Field to order by (volume, startDate, endDate, createdAt, liquidity)
+  /// [ascending] - Sort direction (true = ascending, false = descending)
+  /// [recurrence] - Filter by recurrence type (daily, weekly, monthly, yearly, none)
   Future<List<Series>> listSeries({
     int limit = 100,
     int offset = 0,
-    String? order,
+    SeriesOrderBy? order,
     bool? ascending,
     List<String>? slugs,
     List<int>? categoriesIds,
     List<String>? categoriesLabels,
     bool? closed,
     bool? includeChat,
-    String? recurrence,
+    RecurrenceType? recurrence,
   }) async {
     final params = <String, String>{
       'limit': limit.toString(),
       'offset': offset.toString(),
     };
 
-    if (order != null) params['order'] = order;
+    if (order != null) params['order'] = order.value;
     if (ascending != null) params['ascending'] = ascending.toString();
     if (slugs != null) params['slug'] = slugs.join(',');
     if (categoriesIds != null) {
@@ -36,7 +42,7 @@ class SeriesEndpoint {
     }
     if (closed != null) params['closed'] = closed.toString();
     if (includeChat != null) params['include_chat'] = includeChat.toString();
-    if (recurrence != null) params['recurrence'] = recurrence;
+    if (recurrence != null) params['recurrence'] = recurrence.value;
 
     final response = await _client.get<List<dynamic>>(
       '/series',

@@ -1,4 +1,5 @@
 import '../../core/api_client.dart';
+import '../../enums/comment_order_by.dart';
 import '../../enums/parent_entity_type.dart';
 import '../models/comment.dart';
 
@@ -9,10 +10,13 @@ class CommentsEndpoint {
   CommentsEndpoint(this._client);
 
   /// List comments with filters.
+  ///
+  /// [order] - Field to order by (createdAt, likes, replies, updatedAt)
+  /// [ascending] - Sort direction (true = ascending, false = descending)
   Future<List<Comment>> listComments({
     int limit = 100,
     int offset = 0,
-    String? order,
+    CommentOrderBy? order,
     bool? ascending,
     ParentEntityType? parentEntityType,
     int? parentEntityId,
@@ -24,7 +28,7 @@ class CommentsEndpoint {
       'offset': offset.toString(),
     };
 
-    if (order != null) params['order'] = order;
+    if (order != null) params['order'] = order.value;
     if (ascending != null) params['ascending'] = ascending.toString();
     if (parentEntityType != null) {
       params['parent_entity_type'] = parentEntityType.toJson();

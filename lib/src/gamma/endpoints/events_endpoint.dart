@@ -1,5 +1,6 @@
 import '../../core/api_client.dart';
 import '../../enums/event_order_by.dart';
+import '../../enums/recurrence_type.dart';
 import '../models/event.dart';
 import '../models/tag.dart';
 
@@ -37,7 +38,7 @@ class EventsEndpoint {
     bool? cyom,
     bool? includeChat,
     bool? includeTemplate,
-    String? recurrence,
+    RecurrenceType? recurrence,
     bool? closed,
     bool? active,
     bool? archived,
@@ -68,7 +69,7 @@ class EventsEndpoint {
     if (includeTemplate != null) {
       params['include_template'] = includeTemplate.toString();
     }
-    if (recurrence != null) params['recurrence'] = recurrence;
+    if (recurrence != null) params['recurrence'] = recurrence.value;
     if (closed != null) params['closed'] = closed.toString();
     if (active != null) params['active'] = active.toString();
     if (archived != null) params['archived'] = archived.toString();

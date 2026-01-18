@@ -1,4 +1,5 @@
 import '../../core/api_client.dart';
+import '../../enums/sports_order_by.dart';
 import '../models/team.dart';
 
 /// Endpoints for sports data.
@@ -8,10 +9,13 @@ class SportsEndpoint {
   SportsEndpoint(this._client);
 
   /// List teams with filters.
+  ///
+  /// [order] - Field to order by (name, league, abbreviation, createdAt)
+  /// [ascending] - Sort direction (true = ascending, false = descending)
   Future<List<Team>> listTeams({
     int limit = 100,
     int offset = 0,
-    String? order,
+    SportsOrderBy? order,
     bool? ascending,
     List<String>? leagues,
     List<String>? names,
@@ -22,7 +26,7 @@ class SportsEndpoint {
       'offset': offset.toString(),
     };
 
-    if (order != null) params['order'] = order;
+    if (order != null) params['order'] = order.value;
     if (ascending != null) params['ascending'] = ascending.toString();
     if (leagues != null) params['league'] = leagues.join(',');
     if (names != null) params['name'] = names.join(',');

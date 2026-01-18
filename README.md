@@ -22,7 +22,7 @@ Add to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  polybrainz_polymarket: ^1.4.0
+  polybrainz_polymarket: ^1.6.0
 ```
 
 Then run:
@@ -155,8 +155,13 @@ final market = await client.gamma.markets.getByConditionId('condition-id');
 final tags = await client.gamma.tags.listTags();
 final related = await client.gamma.tags.getRelatedTags(tagId);
 
-// Search
-final results = await client.gamma.search.search(query: 'bitcoin');
+// Search (type-safe queries)
+final results = await client.gamma.search.search(query: SearchQuery.bitcoin);
+final custom = await client.gamma.search.search(query: SearchQuery.custom('my search'));
+
+// Search convenience methods
+final btcResults = await client.gamma.search.searchBitcoin();
+final electionResults = await client.gamma.search.searchElection();
 
 // Profiles
 final profile = await client.gamma.profiles.getByAddress('0x...');
@@ -447,6 +452,14 @@ final recentEvents = await client.gamma.events.listEvents(
 | `SearchSort` | `relevance`, `volume`, `liquidity`, `startDate`, `endDate`, `createdAt` | - |
 | `EventsStatus` | `active`, `closed`, `all` | - |
 | `WsSubscriptionType` | `market`, `user`, `unsubscribe` | - |
+| `SearchQuery` | 60+ presets (bitcoin, election, nfl, ai, ...) + `custom()` | `allPresets`, `cryptoPresets`, `politicsPresets`, `sportsPresets`, `tryFromPreset()`, `fromValue()` |
+| `TagOrderBy` | `volume`, `eventsCount`, `createdAt`, `label` | - |
+| `CommentOrderBy` | `createdAt`, `likes`, `replies`, `updatedAt` | - |
+| `SeriesOrderBy` | `volume`, `startDate`, `endDate`, `createdAt`, `liquidity` | - |
+| `SportsOrderBy` | `name`, `league`, `abbreviation`, `createdAt` | - |
+| `RecurrenceType` | `daily`, `weekly`, `monthly`, `yearly`, `none` | `isRecurring` |
+| `UmaResolutionStatus` | `pending`, `proposed`, `disputed`, `resolved` | `isTerminal`, `isInProgress`, `hasStarted` |
+| `SortDirection` | `asc`, `desc` | `opposite` |
 
 ### toLegacyMap()
 

@@ -1,4 +1,5 @@
 import '../../core/api_client.dart';
+import '../../enums/tag_order_by.dart';
 import '../models/tag.dart';
 
 /// Endpoints for tags.
@@ -8,10 +9,13 @@ class TagsEndpoint {
   TagsEndpoint(this._client);
 
   /// List all tags.
+  ///
+  /// [order] - Field to order by (volume, eventsCount, createdAt, label)
+  /// [ascending] - Sort direction (true = ascending, false = descending)
   Future<List<Tag>> listTags({
     int limit = 100,
     int offset = 0,
-    String? order,
+    TagOrderBy? order,
     bool? ascending,
   }) async {
     final params = <String, String>{
@@ -19,7 +23,7 @@ class TagsEndpoint {
       'offset': offset.toString(),
     };
 
-    if (order != null) params['order'] = order;
+    if (order != null) params['order'] = order.value;
     if (ascending != null) params['ascending'] = ascending.toString();
 
     final response = await _client.get<List<dynamic>>(
