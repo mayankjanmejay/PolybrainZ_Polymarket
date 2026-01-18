@@ -4,12 +4,14 @@ A comprehensive Dart SDK for the [Polymarket](https://polymarket.com) prediction
 
 ## Features
 
-- **Gamma API** - Market discovery, events, tags, comments, profiles, search
+- **Gamma API** - Market discovery, events, tags, comments, profiles, search, leaderboard
 - **CLOB API** - Order book, pricing, order management, trade history
 - **Data API** - Positions, trades, activity, holders, leaderboard
 - **WebSocket** - Real-time order book updates, price changes, user notifications
 - **Authentication** - L1 (EIP-712) and L2 (HMAC-SHA256) authentication support
 - **Type-safe** - Full Dart type safety with JSON serialization
+- **Category Enums** - Strongly-typed enums for all market categories and subcategories
+- **Category Detection** - Automatic category detection from events, markets, and tags
 - **Error handling** - Comprehensive exception hierarchy and Result types
 
 ## Installation
@@ -18,7 +20,7 @@ Add to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  polybrainz_polymarket: ^1.0.0
+  polybrainz_polymarket: ^1.1.0
 ```
 
 Then run:
@@ -162,6 +164,15 @@ final comments = await client.gamma.comments.listComments(
   parentEntityType: ParentEntityType.market,
   parentEntityId: 123,
 );
+
+// Leaderboard
+final leaders = await client.gamma.leaderboard.getTopByProfit(limit: 10);
+
+// Convenience methods
+final hotEvents = await client.gamma.events.getHotEvents();
+final featuredEvents = await client.gamma.events.getFeaturedEvents();
+final politicsEvents = await client.gamma.events.getByTagSlug('politics');
+final endingSoon = await client.gamma.events.getEndingSoon(within: Duration(days: 3));
 ```
 
 ### CLOB API (Order Book & Trading)
@@ -296,6 +307,71 @@ try {
 } on PolymarketException catch (e) {
   print('Error: ${e.message}');
 }
+```
+
+## Category Detection
+
+The SDK includes comprehensive category enums and automatic detection utilities.
+
+### Available Categories
+
+| Category | Subcategory Enum |
+|----------|------------------|
+| `MarketCategory.politics` | `PoliticsSubcategory` |
+| `MarketCategory.sports` | `SportsSubcategory` |
+| `MarketCategory.crypto` | `CryptoSubcategory` |
+| `MarketCategory.popCulture` | `PopCultureSubcategory` |
+| `MarketCategory.business` | `BusinessSubcategory` |
+| `MarketCategory.science` | `ScienceSubcategory` |
+
+### Detecting Categories
+
+```dart
+import 'package:polybrainz_polymarket/polybrainz_polymarket.dart';
+
+// Detect from a single event
+final result = CategoryDetector.detectFromEvent(event);
+print(result.category);       // MarketCategory.politics
+print(result.subcategories);  // [PoliticsSubcategory.usPresidential]
+print(result.tagSlugs);       // ['politics', 'us-presidential', 'trump']
+
+// Detect from markets list
+final markets = await client.gamma.markets.listMarkets(limit: 100);
+final categories = markets.detectCategories();  // Extension method
+
+// Group by category
+final grouped = markets.groupByCategory();
+for (final entry in grouped.entries) {
+  print('${entry.key.label}: ${entry.value.length} markets');
+}
+
+// Get unique categories
+final unique = markets.uniqueCategories;  // Set<MarketCategory>
+
+// Filter by category using tag slugs
+final cryptoMarkets = await client.gamma.markets.getByTagSlug('crypto');
+final politicsEvents = await client.gamma.events.getByTagSlug('politics');
+```
+
+### Using Category Enums
+
+```dart
+// Get all available categories
+final categories = CategoryDetector.getAllCategories();
+
+// Get subcategories for a category
+final sportsSubcats = CategoryDetector.getSubcategoriesFor(MarketCategory.sports);
+// Returns: [SportsSubcategory.nfl, SportsSubcategory.nba, ...]
+
+// Use category slug for filtering
+final events = await client.gamma.events.listEvents(
+  tagSlug: MarketCategory.crypto.slug,  // 'crypto'
+);
+
+// Use subcategory slug
+final nflEvents = await client.gamma.events.listEvents(
+  tagSlug: SportsSubcategory.nfl.slug,  // 'nfl'
+);
 ```
 
 ## Key Concepts

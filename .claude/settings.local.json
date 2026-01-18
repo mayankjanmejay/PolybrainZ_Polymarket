@@ -8,7 +8,9 @@
       "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd complete Polymarket Dart SDK implementation\n\nImplement comprehensive Dart SDK for Polymarket prediction market APIs:\n\n- Gamma API: Events, markets, tags, comments, profiles, search, series, sports\n- CLOB API: Order book, pricing, orders, trades with L2 authentication  \n- Data API: Positions, trades, activity, holders, portfolio value, leaderboard\n- WebSocket: Real-time CLOB and RTDS streams with auto-reconnect\n- Authentication: L1 \\(EIP-712 placeholder\\) and L2 \\(HMAC-SHA256\\) support\n- 25+ type-safe models with JSON serialization via json_serializable\n- 15 enums for order types, activity types, leaderboard windows, etc.\n- Custom exception hierarchy with Result type for error handling\n- 4 comprehensive examples: basic, websocket, trading, market discovery\n- Full documentation in README and CHANGELOG\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
       "Bash(git mv:*)",
       "Bash(dart pub publish:*)",
-      "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd MIT LICENSE and rename docs to doc\n\n- Add MIT License file for open-source compliance\n- Rename docs/ to doc/ to follow Dart package layout convention\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")"
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd MIT LICENSE and rename docs to doc\n\n- Add MIT License file for open-source compliance\n- Rename docs/ to doc/ to follow Dart package layout convention\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git reset:*)",
+      "Bash(git commit:*)"
     ]
   }
 }

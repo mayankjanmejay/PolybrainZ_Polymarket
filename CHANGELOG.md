@@ -5,6 +5,54 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-01-18
+
+### Added
+
+#### Category Enums
+- `MarketCategory` - Main categories (politics, sports, crypto, popCulture, business, science, etc.)
+- `PoliticsSubcategory` - US elections, international, policy, supreme court, etc.
+- `SportsSubcategory` - NFL, NBA, MLB, NHL, soccer leagues, UFC, Olympics, etc.
+- `CryptoSubcategory` - Bitcoin, Ethereum, DeFi, NFTs, exchanges, etc.
+- `PopCultureSubcategory` - Movies, TV, music, celebrities, awards, streaming, etc.
+- `BusinessSubcategory` - Tech companies, stocks, Fed, economy, M&A, etc.
+- `ScienceSubcategory` - AI, space, climate, biotech, medicine, etc.
+
+#### CategoryDetector Utility
+- `CategoryDetector.detectFromEvent()` - Detect category from an Event
+- `CategoryDetector.detectFromMarket()` - Detect category from a Market
+- `CategoryDetector.detectFromTags()` - Detect category from Tag list
+- `CategoryDetector.detectFromTagSlugs()` - Detect category from slug strings
+- `CategoryDetector.groupEventsByCategory()` - Group events by detected category
+- `CategoryDetector.groupMarketsByCategory()` - Group markets by detected category
+- `CategoryDetector.getSubcategoriesFor()` - Get subcategory enum values for a category
+- Extension methods on `List<Event>` and `List<Market>` for convenience
+
+#### New Endpoints
+- `GammaLeaderboardEndpoint` - Get trader rankings via Gamma API
+  - `getTopByProfit()` - Top traders by profit
+  - `getTopByVolume()` - Top traders by volume
+  - `getTopByMarketsTraded()` - Top traders by markets traded
+  - `getLeaderboard()` - Custom ordering
+
+#### EventsEndpoint Enhancements
+- Added `hot` parameter for trending events
+- Added `tagSlug` parameter for category filtering
+- `getHotEvents()` - Get trending/hot events
+- `getFeaturedEvents()` - Get featured events
+- `getByTagSlug()` - Get events by category slug
+- `getEndingSoon()` - Get events ending within a time window
+
+#### MarketsEndpoint Enhancements
+- Added `tagSlug` parameter for category filtering
+- `getTopByVolume()` - Top markets by total volume
+- `getTopByVolume24hr()` - Top markets by 24-hour volume
+- `getTopByLiquidity()` - Top markets by liquidity
+- `getByTagSlug()` - Get markets by category slug
+- `getEndingSoon()` - Get markets ending within a time window
+
+---
+
 ## [1.0.0] - 2026-01-16
 
 ### Added
