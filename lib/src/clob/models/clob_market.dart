@@ -102,6 +102,36 @@ class ClobMarket extends Equatable {
   /// Get the No token
   ClobToken? get noToken => tokens.length > 1 ? tokens[1] : null;
 
+  /// Convert to a simplified Map format for easier consumption
+  Map<String, dynamic> toLegacyMap() {
+    return {
+      'conditionId': conditionId,
+      'question': question,
+      'description': description,
+      'marketSlug': marketSlug,
+      'icon': icon,
+      'image': image,
+      'active': active,
+      'closed': closed,
+      'archived': archived,
+      'acceptingOrders': acceptingOrders,
+      'enableOrderBook': enableOrderBook,
+      'negRisk': negRisk,
+      'negRiskMarketId': negRiskMarketId,
+      'negRiskRequestId': negRiskRequestId,
+      'minimumOrderSize': minimumOrderSize,
+      'minimumTickSize': minimumTickSize,
+      'makerBaseFee': makerBaseFee,
+      'takerBaseFee': takerBaseFee,
+      'endDateIso': endDateIso,
+      'gameStartTime': gameStartTime,
+      'secondsDelay': secondsDelay,
+      'is5050Outcome': is5050Outcome,
+      'tokens': tokens.map((t) => t.toLegacyMap()).toList(),
+      'tags': tags,
+    };
+  }
+
   @override
   List<Object?> get props => [conditionId, marketSlug];
 }

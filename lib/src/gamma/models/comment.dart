@@ -39,6 +39,24 @@ class Comment extends Equatable {
       _$CommentFromJson(json);
   Map<String, dynamic> toJson() => _$CommentToJson(this);
 
+  /// Convert to a simplified Map format for easier consumption
+  Map<String, dynamic> toLegacyMap() {
+    return {
+      'id': id,
+      'body': body,
+      'parentEntityType': parentEntityType,
+      'parentEntityId': parentEntityId,
+      'parentCommentId': parentCommentId,
+      'userAddress': userAddress,
+      'replyAddress': replyAddress,
+      'createdAt': createdAt?.toIso8601String(),
+      'updatedAt': updatedAt?.toIso8601String(),
+      'profile': profile?.toLegacyMap(),
+      'reportCount': reportCount,
+      'reactionCount': reactionCount,
+    };
+  }
+
   @override
   List<Object?> get props => [id];
 }

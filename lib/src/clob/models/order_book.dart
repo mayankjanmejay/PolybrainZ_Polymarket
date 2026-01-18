@@ -58,6 +58,25 @@ class OrderBook extends Equatable {
     return (bestBid! + bestAsk!) / 2;
   }
 
+  /// Convert to a simplified Map format for easier consumption
+  Map<String, dynamic> toLegacyMap() {
+    return {
+      'market': market,
+      'assetId': assetId,
+      'timestamp': timestamp,
+      'hash': hash,
+      'bestBid': bestBid,
+      'bestAsk': bestAsk,
+      'spread': spread,
+      'midpoint': midpoint,
+      'minTickSize': minTickSize,
+      'minOrderSize': minOrderSize,
+      'negRisk': negRisk,
+      'bids': bids.map((b) => b.toLegacyMap()).toList(),
+      'asks': asks.map((a) => a.toLegacyMap()).toList(),
+    };
+  }
+
   @override
   List<Object?> get props => [market, assetId, hash];
 }

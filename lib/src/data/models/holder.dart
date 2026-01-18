@@ -36,6 +36,22 @@ class Holder extends Equatable {
   factory Holder.fromJson(Map<String, dynamic> json) => _$HolderFromJson(json);
   Map<String, dynamic> toJson() => _$HolderToJson(this);
 
+  /// Convert to a simplified Map format for easier consumption
+  Map<String, dynamic> toLegacyMap() {
+    return {
+      'proxyWallet': proxyWallet,
+      'bio': bio,
+      'asset': asset,
+      'pseudonym': pseudonym,
+      'amount': amount,
+      'displayUsernamePublic': displayUsernamePublic,
+      'outcomeIndex': outcomeIndex,
+      'name': name,
+      'profileImage': profileImage,
+      'profileImageOptimized': profileImageOptimized,
+    };
+  }
+
   @override
   List<Object?> get props => [proxyWallet, asset, amount];
 }

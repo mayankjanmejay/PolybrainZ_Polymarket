@@ -1,10 +1,13 @@
 export 'activity_type.dart';
 export 'filter_type.dart';
+export 'game_status.dart';
 export 'leaderboard_type.dart';
 export 'leaderboard_window.dart';
 export 'order_action_type.dart';
 export 'order_side.dart';
+export 'order_status.dart';
 export 'order_type.dart';
+export 'outcome_type.dart';
 export 'parent_entity_type.dart';
 export 'rtds_topic.dart';
 export 'signature_type.dart';

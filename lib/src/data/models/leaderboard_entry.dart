@@ -32,6 +32,21 @@ class LeaderboardEntry extends Equatable {
       _$LeaderboardEntryFromJson(json);
   Map<String, dynamic> toJson() => _$LeaderboardEntryToJson(this);
 
+  /// Convert to a simplified Map format for easier consumption
+  Map<String, dynamic> toLegacyMap() {
+    return {
+      'rank': rank,
+      'proxyWallet': proxyWallet,
+      'name': name,
+      'pseudonym': pseudonym,
+      'profileImage': profileImage,
+      'profit': profit,
+      'volume': volume,
+      'tradesCount': tradesCount,
+      'winRate': winRate,
+    };
+  }
+
   @override
   List<Object?> get props => [rank, proxyWallet];
 }

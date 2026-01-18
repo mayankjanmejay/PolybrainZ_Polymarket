@@ -23,6 +23,15 @@ class SearchResult extends Equatable {
       _$SearchResultFromJson(json);
   Map<String, dynamic> toJson() => _$SearchResultToJson(this);
 
+  /// Convert to a simplified Map format for easier consumption
+  Map<String, dynamic> toLegacyMap() {
+    return {
+      'events': events?.map((e) => e.toLegacyMap()).toList(),
+      'tags': tags?.map((t) => t.toLegacyMap()).toList(),
+      'profiles': profiles?.map((p) => p.toLegacyMap()).toList(),
+    };
+  }
+
   @override
   List<Object?> get props => [events, tags, profiles];
 }

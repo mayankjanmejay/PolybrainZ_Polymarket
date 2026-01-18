@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import '../../enums/outcome_type.dart';
 
 part 'position.g.dart';
 
@@ -70,6 +71,43 @@ class Position extends Equatable {
   factory Position.fromJson(Map<String, dynamic> json) =>
       _$PositionFromJson(json);
   Map<String, dynamic> toJson() => _$PositionToJson(this);
+
+  /// Parse outcome to enum
+  OutcomeType? get outcomeEnum => OutcomeType.tryFromJson(outcome);
+
+  /// Parse opposite outcome to enum
+  OutcomeType? get oppositeOutcomeEnum => OutcomeType.tryFromJson(oppositeOutcome);
+
+  /// Convert to a simplified Map format for easier consumption
+  Map<String, dynamic> toLegacyMap() {
+    return {
+      'proxyWallet': proxyWallet,
+      'asset': asset,
+      'conditionId': conditionId,
+      'size': size,
+      'avgPrice': avgPrice,
+      'initialValue': initialValue,
+      'currentValue': currentValue,
+      'cashPnl': cashPnl,
+      'percentPnl': percentPnl,
+      'totalBought': totalBought,
+      'realizedPnl': realizedPnl,
+      'percentRealizedPnl': percentRealizedPnl,
+      'curPrice': curPrice,
+      'redeemable': redeemable,
+      'mergeable': mergeable,
+      'title': title,
+      'slug': slug,
+      'icon': icon,
+      'eventSlug': eventSlug,
+      'outcome': outcome,
+      'outcomeIndex': outcomeIndex,
+      'oppositeOutcome': oppositeOutcome,
+      'oppositeAsset': oppositeAsset,
+      'endDate': endDate,
+      'negativeRisk': negativeRisk,
+    };
+  }
 
   @override
   List<Object?> get props => [proxyWallet, asset, conditionId];

@@ -28,6 +28,19 @@ class OrderResponse extends Equatable {
       _$OrderResponseFromJson(json);
   Map<String, dynamic> toJson() => _$OrderResponseToJson(this);
 
+  /// Convert to a simplified Map format for easier consumption
+  Map<String, dynamic> toLegacyMap() {
+    return {
+      'success': success,
+      'errorMsg': errorMsg,
+      'orderId': orderId,
+      'transactionHashes': transactionHashes,
+      'status': status,
+      'takingAmount': takingAmount,
+      'makingAmount': makingAmount,
+    };
+  }
+
   @override
   List<Object?> get props => [success, orderId];
 }

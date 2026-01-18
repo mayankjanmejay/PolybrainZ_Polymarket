@@ -1,4 +1,7 @@
 import '../../enums/ws_event_type.dart';
+import '../../enums/order_side.dart';
+import '../../enums/trade_status.dart';
+import '../../enums/outcome_type.dart';
 import 'ws_message.dart';
 
 /// User trade notification (user channel).
@@ -40,4 +43,13 @@ class TradeWsMessage extends WsMessage {
       raw: json,
     );
   }
+
+  /// Parse side to enum
+  OrderSide get sideEnum => OrderSide.fromJson(side);
+
+  /// Parse status to enum
+  TradeStatus get statusEnum => TradeStatus.fromJson(status);
+
+  /// Parse outcome to enum
+  OutcomeType? get outcomeEnum => OutcomeType.tryFromJson(outcome);
 }

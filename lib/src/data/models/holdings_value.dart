@@ -22,6 +22,16 @@ class HoldingsValue extends Equatable {
       _$HoldingsValueFromJson(json);
   Map<String, dynamic> toJson() => _$HoldingsValueToJson(this);
 
+  /// Convert to a simplified Map format for easier consumption
+  Map<String, dynamic> toLegacyMap() {
+    return {
+      'proxyWallet': proxyWallet,
+      'totalValue': totalValue,
+      'totalPnl': totalPnl,
+      'totalPercentPnl': totalPercentPnl,
+    };
+  }
+
   @override
   List<Object?> get props => [proxyWallet, totalValue];
 }

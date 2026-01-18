@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import '../../enums/outcome_type.dart';
 
 part 'closed_position.g.dart';
 
@@ -50,6 +51,32 @@ class ClosedPosition extends Equatable {
   factory ClosedPosition.fromJson(Map<String, dynamic> json) =>
       _$ClosedPositionFromJson(json);
   Map<String, dynamic> toJson() => _$ClosedPositionToJson(this);
+
+  /// Parse outcome to enum
+  OutcomeType? get outcomeEnum => OutcomeType.tryFromJson(outcome);
+
+  /// Convert to a simplified Map format for easier consumption
+  Map<String, dynamic> toLegacyMap() {
+    return {
+      'proxyWallet': proxyWallet,
+      'asset': asset,
+      'conditionId': conditionId,
+      'size': size,
+      'avgPrice': avgPrice,
+      'initialValue': initialValue,
+      'payout': payout,
+      'cashPnl': cashPnl,
+      'percentPnl': percentPnl,
+      'title': title,
+      'slug': slug,
+      'icon': icon,
+      'eventSlug': eventSlug,
+      'outcome': outcome,
+      'outcomeIndex': outcomeIndex,
+      'won': won,
+      'resolutionDate': resolutionDate?.toIso8601String(),
+    };
+  }
 
   @override
   List<Object?> get props => [proxyWallet, asset, conditionId];

@@ -112,6 +112,43 @@ class Market extends Equatable {
     }
   }
 
+  /// Get YES price from outcome prices (first outcome)
+  double get yesPrice {
+    final prices = outcomePricesList;
+    return prices.isNotEmpty ? prices[0] : 0.5;
+  }
+
+  /// Get NO price from outcome prices (second outcome or 1 - yesPrice)
+  double get noPrice {
+    final prices = outcomePricesList;
+    return prices.length > 1 ? prices[1] : (1.0 - yesPrice);
+  }
+
+  /// Convert to a simplified Map format for easier consumption
+  Map<String, dynamic> toLegacyMap() {
+    return {
+      'id': id,
+      'question': question,
+      'conditionId': conditionId,
+      'slug': slug,
+      'endDate': endDate?.toIso8601String(),
+      'liquidity': liquidityNum,
+      'volume': volumeNum,
+      'active': active,
+      'closed': closed,
+      'acceptingOrders': acceptingOrders,
+      'enableOrderBook': enableOrderBook,
+      'yesPrice': yesPrice,
+      'noPrice': noPrice,
+      'outcomePrices': outcomePricesList,
+      'outcomes': outcomesList,
+      'tokenIds': tokenIdsList,
+      'marketMakerAddress': marketMakerAddress,
+      'createdAt': createdAt?.toIso8601String(),
+      'updatedAt': updatedAt?.toIso8601String(),
+    };
+  }
+
   @override
   List<Object?> get props => [id, conditionId, slug];
 }

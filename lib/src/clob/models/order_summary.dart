@@ -24,6 +24,14 @@ class OrderSummary extends Equatable {
   /// Size as double
   double get sizeNum => double.tryParse(size) ?? 0.0;
 
+  /// Convert to a simplified Map format for easier consumption
+  Map<String, dynamic> toLegacyMap() {
+    return {
+      'price': priceNum,
+      'size': sizeNum,
+    };
+  }
+
   @override
   List<Object?> get props => [price, size];
 }

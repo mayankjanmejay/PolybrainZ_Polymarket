@@ -43,6 +43,20 @@ class Tag extends Equatable {
   factory Tag.fromJson(Map<String, dynamic> json) => _$TagFromJson(json);
   Map<String, dynamic> toJson() => _$TagToJson(this);
 
+  /// Convert to a simplified Map format for easier consumption
+  Map<String, dynamic> toLegacyMap() {
+    return {
+      'id': id,
+      'label': label,
+      'slug': slug,
+      'forceShow': forceShow,
+      'display': display,
+      'eventCount': eventCount,
+      'createdAt': createdAt?.toIso8601String(),
+      'updatedAt': updatedAt?.toIso8601String(),
+    };
+  }
+
   @override
   List<Object?> get props => [id, slug];
 }

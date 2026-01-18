@@ -31,6 +31,21 @@ class Team extends Equatable {
   factory Team.fromJson(Map<String, dynamic> json) => _$TeamFromJson(json);
   Map<String, dynamic> toJson() => _$TeamToJson(this);
 
+  /// Convert to a simplified Map format for easier consumption
+  Map<String, dynamic> toLegacyMap() {
+    return {
+      'id': id,
+      'name': name,
+      'league': league,
+      'record': record,
+      'logo': logo,
+      'abbreviation': abbreviation,
+      'alias': alias,
+      'createdAt': createdAt?.toIso8601String(),
+      'updatedAt': updatedAt?.toIso8601String(),
+    };
+  }
+
   @override
   List<Object?> get props => [id, name];
 }

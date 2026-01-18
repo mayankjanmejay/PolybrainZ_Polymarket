@@ -1,5 +1,8 @@
 import '../../enums/ws_event_type.dart';
 import '../../enums/order_action_type.dart';
+import '../../enums/order_side.dart';
+import '../../enums/order_type.dart';
+import '../../enums/outcome_type.dart';
 import 'ws_message.dart';
 
 /// User order update notification (user channel).
@@ -47,4 +50,13 @@ class OrderWsMessage extends WsMessage {
 
   double get remainingSize => originalSize - sizeMatched;
   bool get isFilled => remainingSize <= 0;
+
+  /// Parse side to enum
+  OrderSide get sideEnum => OrderSide.fromJson(side);
+
+  /// Parse type to enum
+  OrderType? get typeEnum => type != null ? OrderType.fromJson(type!) : null;
+
+  /// Parse outcome to enum
+  OutcomeType? get outcomeEnum => OutcomeType.tryFromJson(outcome);
 }

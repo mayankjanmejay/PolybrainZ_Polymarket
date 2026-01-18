@@ -20,6 +20,15 @@ class Category extends Equatable {
       _$CategoryFromJson(json);
   Map<String, dynamic> toJson() => _$CategoryToJson(this);
 
+  /// Convert to a simplified Map format for easier consumption
+  Map<String, dynamic> toLegacyMap() {
+    return {
+      'id': id,
+      'label': label,
+      'slug': slug,
+    };
+  }
+
   @override
   List<Object?> get props => [id, slug];
 }

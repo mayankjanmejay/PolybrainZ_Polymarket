@@ -20,6 +20,15 @@ class ClobRewards extends Equatable {
       _$ClobRewardsFromJson(json);
   Map<String, dynamic> toJson() => _$ClobRewardsToJson(this);
 
+  /// Convert to a simplified Map format for easier consumption
+  Map<String, dynamic> toLegacyMap() {
+    return {
+      'maxSpread': maxSpread,
+      'minSize': minSize,
+      'rates': rates,
+    };
+  }
+
   @override
   List<Object?> get props => [maxSpread, minSize];
 }

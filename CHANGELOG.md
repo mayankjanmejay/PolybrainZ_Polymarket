@@ -5,6 +5,48 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-01-18
+
+### Added
+
+#### New Enums
+- `OutcomeType` - Binary outcome types (`yes`, `no`) with helper methods
+  - `opposite` getter to get the opposite outcome
+  - `isYes`, `isNo` boolean getters
+  - `tryFromJson()` for safe parsing
+- `OrderStatus` - Order lifecycle states (`live`, `matched`, `filled`, `cancelled`, `pending`, `delayed`)
+  - `isActive`, `isTerminal`, `isCancellable` boolean getters
+- `GameStatus` - Sports game states (`scheduled`, `inProgress`, `halftime`, `ended`, `postponed`, `cancelled`, `suspended`)
+  - `isLive`, `isFinished`, `isUpcoming`, `isInterrupted` boolean getters
+
+#### Type-Safe Enum Getters on Models
+Added enum parsing getters to all models with string fields that have fixed values:
+
+**CLOB Models:**
+- `Order` - `sideEnum`, `typeEnum`, `statusEnum`, `outcomeEnum`
+- `Trade` - `sideEnum`, `statusEnum`, `outcomeEnum`
+- `MakerOrder` - `outcomeEnum`
+- `ClobToken` - `outcomeEnum`
+
+**Data Models:**
+- `TradeRecord` - `sideEnum`, `outcomeEnum`
+- `Activity` - `outcomeEnum` (already had `activityType`, `sideEnum`)
+- `Position` - `outcomeEnum`, `oppositeOutcomeEnum`
+- `ClosedPosition` - `outcomeEnum`
+
+**Gamma Models:**
+- `Event` - `categoryEnum`, `sortByEnum`, `gameStatusEnum`
+
+**WebSocket Models:**
+- `OrderWsMessage` - `sideEnum`, `typeEnum`, `outcomeEnum`
+- `TradeWsMessage` - `sideEnum`, `statusEnum`, `outcomeEnum`
+
+#### Helper Methods on Models
+- Added `toLegacyMap()` to all model classes for simplified Map output
+- Added `yesPrice` and `noPrice` getters to `Market` class
+
+---
+
 ## [1.1.0] - 2026-01-18
 
 ### Added

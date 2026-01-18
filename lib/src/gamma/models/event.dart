@@ -1,5 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import '../../enums/game_status.dart';
+import '../../enums/market_category.dart';
+import '../../enums/sort_by.dart';
 import 'market.dart';
 import 'tag.dart';
 import 'category.dart';
@@ -143,6 +146,68 @@ class Event extends Equatable {
 
   factory Event.fromJson(Map<String, dynamic> json) => _$EventFromJson(json);
   Map<String, dynamic> toJson() => _$EventToJson(this);
+
+  /// Parse category to enum
+  MarketCategory? get categoryEnum =>
+      category != null ? MarketCategory.bySlug(category!) : null;
+
+  /// Parse sortBy to enum
+  SortBy? get sortByEnum {
+    if (sortBy == null) return null;
+    try {
+      return SortBy.fromJson(sortBy!);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// Parse gameStatus to enum
+  GameStatus? get gameStatusEnum => GameStatus.tryFromJson(gameStatus);
+
+  /// Convert to a simplified Map format for easier consumption
+  Map<String, dynamic> toLegacyMap() {
+    return {
+      'id': id,
+      'ticker': ticker,
+      'slug': slug,
+      'title': title,
+      'subtitle': subtitle,
+      'description': description,
+      'resolutionSource': resolutionSource,
+      'startDate': startDate?.toIso8601String(),
+      'endDate': endDate?.toIso8601String(),
+      'creationDate': creationDate?.toIso8601String(),
+      'image': image,
+      'icon': icon,
+      'featuredImage': featuredImage,
+      'active': active,
+      'closed': closed,
+      'archived': archived,
+      'isNew': isNew,
+      'featured': featured,
+      'restricted': restricted,
+      'liquidity': liquidity,
+      'volume': volume,
+      'volume24hr': volume24hr,
+      'volume1wk': volume1wk,
+      'volume1mo': volume1mo,
+      'volume1yr': volume1yr,
+      'openInterest': openInterest,
+      'category': category,
+      'subcategory': subcategory,
+      'negRisk': negRisk,
+      'negRiskMarketId': negRiskMarketId,
+      'commentCount': commentCount,
+      'enableOrderBook': enableOrderBook,
+      'live': live,
+      'ended': ended,
+      'gameStatus': gameStatus,
+      'markets': markets?.map((m) => m.toLegacyMap()).toList(),
+      'tags': tags?.map((t) => t.toLegacyMap()).toList(),
+      'createdAt': createdAt?.toIso8601String(),
+      'updatedAt': updatedAt?.toIso8601String(),
+    };
+  }
 
   @override
   List<Object?> get props => [id, slug, title];

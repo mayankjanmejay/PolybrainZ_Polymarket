@@ -38,6 +38,19 @@ class SimplifiedMarket extends Equatable {
       _$SimplifiedMarketFromJson(json);
   Map<String, dynamic> toJson() => _$SimplifiedMarketToJson(this);
 
+  /// Convert to a simplified Map format for easier consumption
+  Map<String, dynamic> toLegacyMap() {
+    return {
+      'conditionId': conditionId,
+      'acceptingOrders': acceptingOrders,
+      'active': active,
+      'archived': archived,
+      'closed': closed,
+      'rewards': rewards?.toLegacyMap(),
+      'tokens': tokens.map((t) => t.toLegacyMap()).toList(),
+    };
+  }
+
   @override
   List<Object?> get props => [conditionId];
 }
@@ -58,6 +71,15 @@ class SimplifiedToken extends Equatable {
   factory SimplifiedToken.fromJson(Map<String, dynamic> json) =>
       _$SimplifiedTokenFromJson(json);
   Map<String, dynamic> toJson() => _$SimplifiedTokenToJson(this);
+
+  /// Convert to a simplified Map format for easier consumption
+  Map<String, dynamic> toLegacyMap() {
+    return {
+      'outcome': outcome,
+      'price': price,
+      'tokenId': tokenId,
+    };
+  }
 
   @override
   List<Object?> get props => [tokenId];

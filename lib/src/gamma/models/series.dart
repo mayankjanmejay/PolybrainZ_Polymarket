@@ -89,6 +89,41 @@ class Series extends Equatable {
   factory Series.fromJson(Map<String, dynamic> json) => _$SeriesFromJson(json);
   Map<String, dynamic> toJson() => _$SeriesToJson(this);
 
+  /// Convert to a simplified Map format for easier consumption
+  Map<String, dynamic> toLegacyMap() {
+    return {
+      'id': id,
+      'ticker': ticker,
+      'slug': slug,
+      'title': title,
+      'subtitle': subtitle,
+      'seriesType': seriesType,
+      'recurrence': recurrence,
+      'description': description,
+      'image': image,
+      'icon': icon,
+      'layout': layout,
+      'active': active,
+      'closed': closed,
+      'archived': archived,
+      'isNew': isNew,
+      'featured': featured,
+      'restricted': restricted,
+      'volume24hr': volume24hr,
+      'volume': volume,
+      'liquidity': liquidity,
+      'score': score,
+      'commentCount': commentCount,
+      'publishedAt': publishedAt?.toIso8601String(),
+      'createdAt': createdAt?.toIso8601String(),
+      'updatedAt': updatedAt?.toIso8601String(),
+      'startDate': startDate?.toIso8601String(),
+      'events': events?.map((e) => e.toLegacyMap()).toList(),
+      'categories': categories?.map((c) => c.toLegacyMap()).toList(),
+      'tags': tags?.map((t) => t.toLegacyMap()).toList(),
+    };
+  }
+
   @override
   List<Object?> get props => [id, slug];
 }

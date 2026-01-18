@@ -42,6 +42,23 @@ class Profile extends Equatable {
       _$ProfileFromJson(json);
   Map<String, dynamic> toJson() => _$ProfileToJson(this);
 
+  /// Convert to a simplified Map format for easier consumption
+  Map<String, dynamic> toLegacyMap() {
+    return {
+      'createdAt': createdAt?.toIso8601String(),
+      'proxyWallet': proxyWallet,
+      'profileImage': profileImage,
+      'profileImageOptimized': profileImageOptimized,
+      'displayUsernamePublic': displayUsernamePublic,
+      'bio': bio,
+      'pseudonym': pseudonym,
+      'name': name,
+      'xUsername': xUsername,
+      'verifiedBadge': verifiedBadge,
+      'baseAddress': baseAddress,
+    };
+  }
+
   @override
   List<Object?> get props => [proxyWallet, pseudonym];
 }

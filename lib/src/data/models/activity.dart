@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import '../../enums/activity_type.dart';
 import '../../enums/order_side.dart';
+import '../../enums/outcome_type.dart';
 
 part 'activity.g.dart';
 
@@ -62,9 +63,40 @@ class Activity extends Equatable {
   /// Parse side to enum (only for trades)
   OrderSide? get sideEnum => side != null ? OrderSide.fromJson(side!) : null;
 
+  /// Parse outcome to enum
+  OutcomeType? get outcomeEnum => OutcomeType.tryFromJson(outcome);
+
   /// Timestamp as DateTime
   DateTime get timestampDate =>
       DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+
+  /// Convert to a simplified Map format for easier consumption
+  Map<String, dynamic> toLegacyMap() {
+    return {
+      'proxyWallet': proxyWallet,
+      'timestamp': timestamp,
+      'timestampDate': timestampDate.toIso8601String(),
+      'conditionId': conditionId,
+      'type': type,
+      'activityType': activityType.toJson(),
+      'size': size,
+      'usdcSize': usdcSize,
+      'transactionHash': transactionHash,
+      'price': price,
+      'asset': asset,
+      'side': side,
+      'outcomeIndex': outcomeIndex,
+      'title': title,
+      'slug': slug,
+      'icon': icon,
+      'eventSlug': eventSlug,
+      'outcome': outcome,
+      'name': name,
+      'pseudonym': pseudonym,
+      'bio': bio,
+      'profileImage': profileImage,
+    };
+  }
 
   @override
   List<Object?> get props => [proxyWallet, timestamp, transactionHash];

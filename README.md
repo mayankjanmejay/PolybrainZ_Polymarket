@@ -12,6 +12,8 @@ A comprehensive Dart SDK for the [Polymarket](https://polymarket.com) prediction
 - **Type-safe** - Full Dart type safety with JSON serialization
 - **Category Enums** - Strongly-typed enums for all market categories and subcategories
 - **Category Detection** - Automatic category detection from events, markets, and tags
+- **Type-Safe Enums** - Enum getters on all models for `side`, `status`, `outcome`, `type` fields
+- **Legacy Maps** - `toLegacyMap()` on all models for simplified Map output
 - **Error handling** - Comprehensive exception hierarchy and Result types
 
 ## Installation
@@ -20,7 +22,7 @@ Add to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  polybrainz_polymarket: ^1.1.0
+  polybrainz_polymarket: ^1.2.0
 ```
 
 Then run:
@@ -372,6 +374,70 @@ final events = await client.gamma.events.listEvents(
 final nflEvents = await client.gamma.events.listEvents(
   tagSlug: SportsSubcategory.nfl.slug,  // 'nfl'
 );
+```
+
+## Type-Safe Enums
+
+All models with string fields representing fixed values now have type-safe enum getters.
+
+### Using Enum Getters
+
+```dart
+// Order side and status
+final order = await client.clob.orders.getOrder('order-id');
+if (order.sideEnum == OrderSide.buy) {
+  print('This is a buy order');
+}
+if (order.statusEnum?.isActive ?? false) {
+  print('Order is still active');
+}
+
+// Trade status with helper methods
+final trade = trades.first;
+if (trade.statusEnum.isTerminal) {
+  print('Trade is complete');
+}
+
+// Outcome type
+final position = positions.first;
+if (position.outcomeEnum == OutcomeType.yes) {
+  print('Holding YES tokens');
+  print('Opposite: ${position.oppositeOutcomeEnum}'); // OutcomeType.no
+}
+
+// Game status for sports events
+final event = await client.gamma.events.getById(123);
+if (event.gameStatusEnum?.isLive ?? false) {
+  print('Game is currently in progress!');
+}
+
+// Market prices
+final market = markets.first;
+print('YES: ${market.yesPrice}, NO: ${market.noPrice}');
+```
+
+### Available Enums
+
+| Enum | Values | Helper Methods |
+|------|--------|----------------|
+| `OutcomeType` | `yes`, `no` | `opposite`, `isYes`, `isNo` |
+| `OrderSide` | `buy`, `sell` | `opposite` |
+| `OrderType` | `gtc`, `gtd`, `fok`, `fak` | - |
+| `OrderStatus` | `live`, `matched`, `filled`, `cancelled`, `pending`, `delayed` | `isActive`, `isTerminal`, `isCancellable` |
+| `TradeStatus` | `mined`, `confirmed`, `retrying`, `failed` | `isTerminal`, `isPending` |
+| `GameStatus` | `scheduled`, `inProgress`, `halftime`, `ended`, `postponed`, `cancelled`, `suspended` | `isLive`, `isFinished`, `isUpcoming`, `isInterrupted` |
+| `ActivityType` | `trade`, `split`, `merge`, `redeem`, `deposit`, `withdraw` | - |
+
+### toLegacyMap()
+
+All models have a `toLegacyMap()` method that returns a simplified `Map<String, dynamic>`:
+
+```dart
+final market = markets.first;
+final map = market.toLegacyMap();
+// Returns a Map with parsed numeric values and simplified structure
+print(map['yesPrice']);  // double instead of String
+print(map['volume']);    // double instead of String
 ```
 
 ## Key Concepts
