@@ -5,7 +5,7 @@ import '../../enums/sports_league.dart';
 part 'team.g.dart';
 
 /// A sports team.
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable()
 class Team extends Equatable {
   final int id;
   final String? name;

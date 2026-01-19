@@ -7,7 +7,7 @@ import 'profile.dart';
 part 'search_result.g.dart';
 
 /// Search results from Gamma API.
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable()
 class SearchResult extends Equatable {
   final List<Event>? events;
   final List<Tag>? tags;

@@ -7,12 +7,12 @@ part of 'series.dart';
 // **************************************************************************
 
 Series _$SeriesFromJson(Map<String, dynamic> json) => Series(
-  id: (json['id'] as num?)?.toInt(),
+  id: parseIdNullable(json['id']),
   ticker: json['ticker'] as String?,
   slug: json['slug'] as String?,
   title: json['title'] as String?,
   subtitle: json['subtitle'] as String?,
-  seriesType: json['series_type'] as String?,
+  seriesType: json['seriesType'] as String?,
   recurrence: json['recurrence'] as String?,
   description: json['description'] as String?,
   image: json['image'] as String?,
@@ -24,23 +24,23 @@ Series _$SeriesFromJson(Map<String, dynamic> json) => Series(
   isNew: json['new'] as bool? ?? false,
   featured: json['featured'] as bool? ?? false,
   restricted: json['restricted'] as bool? ?? false,
-  volume24hr: (json['volume24hr'] as num?)?.toDouble(),
-  volume: (json['volume'] as num?)?.toDouble(),
-  liquidity: (json['liquidity'] as num?)?.toDouble(),
-  score: (json['score'] as num?)?.toDouble(),
-  commentCount: (json['comment_count'] as num?)?.toInt(),
-  publishedAt: json['published_at'] == null
+  volume24hr: parseDoubleNullable(json['volume24hr']),
+  volume: parseDoubleNullable(json['volume']),
+  liquidity: parseDoubleNullable(json['liquidity']),
+  score: parseDoubleNullable(json['score']),
+  commentCount: parseIdNullable(json['commentCount']),
+  publishedAt: json['publishedAt'] == null
       ? null
-      : DateTime.parse(json['published_at'] as String),
-  createdAt: json['created_at'] == null
+      : DateTime.parse(json['publishedAt'] as String),
+  createdAt: json['createdAt'] == null
       ? null
-      : DateTime.parse(json['created_at'] as String),
-  updatedAt: json['updated_at'] == null
+      : DateTime.parse(json['createdAt'] as String),
+  updatedAt: json['updatedAt'] == null
       ? null
-      : DateTime.parse(json['updated_at'] as String),
-  startDate: json['start_date'] == null
+      : DateTime.parse(json['updatedAt'] as String),
+  startDate: json['startDate'] == null
       ? null
-      : DateTime.parse(json['start_date'] as String),
+      : DateTime.parse(json['startDate'] as String),
   events: (json['events'] as List<dynamic>?)
       ?.map((e) => Event.fromJson(e as Map<String, dynamic>))
       .toList(),
@@ -58,7 +58,7 @@ Map<String, dynamic> _$SeriesToJson(Series instance) => <String, dynamic>{
   'slug': instance.slug,
   'title': instance.title,
   'subtitle': instance.subtitle,
-  'series_type': instance.seriesType,
+  'seriesType': instance.seriesType,
   'recurrence': instance.recurrence,
   'description': instance.description,
   'image': instance.image,
@@ -74,11 +74,11 @@ Map<String, dynamic> _$SeriesToJson(Series instance) => <String, dynamic>{
   'volume': instance.volume,
   'liquidity': instance.liquidity,
   'score': instance.score,
-  'comment_count': instance.commentCount,
-  'published_at': instance.publishedAt?.toIso8601String(),
-  'created_at': instance.createdAt?.toIso8601String(),
-  'updated_at': instance.updatedAt?.toIso8601String(),
-  'start_date': instance.startDate?.toIso8601String(),
+  'commentCount': instance.commentCount,
+  'publishedAt': instance.publishedAt?.toIso8601String(),
+  'createdAt': instance.createdAt?.toIso8601String(),
+  'updatedAt': instance.updatedAt?.toIso8601String(),
+  'startDate': instance.startDate?.toIso8601String(),
   'events': instance.events,
   'categories': instance.categories,
   'tags': instance.tags,

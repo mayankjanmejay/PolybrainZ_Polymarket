@@ -14,12 +14,12 @@ Team _$TeamFromJson(Map<String, dynamic> json) => Team(
   logo: json['logo'] as String?,
   abbreviation: json['abbreviation'] as String?,
   alias: json['alias'] as String?,
-  createdAt: json['created_at'] == null
+  createdAt: json['createdAt'] == null
       ? null
-      : DateTime.parse(json['created_at'] as String),
-  updatedAt: json['updated_at'] == null
+      : DateTime.parse(json['createdAt'] as String),
+  updatedAt: json['updatedAt'] == null
       ? null
-      : DateTime.parse(json['updated_at'] as String),
+      : DateTime.parse(json['updatedAt'] as String),
 );
 
 Map<String, dynamic> _$TeamToJson(Team instance) => <String, dynamic>{
@@ -30,6 +30,6 @@ Map<String, dynamic> _$TeamToJson(Team instance) => <String, dynamic>{
   'logo': instance.logo,
   'abbreviation': instance.abbreviation,
   'alias': instance.alias,
-  'created_at': instance.createdAt?.toIso8601String(),
-  'updated_at': instance.updatedAt?.toIso8601String(),
+  'createdAt': instance.createdAt?.toIso8601String(),
+  'updatedAt': instance.updatedAt?.toIso8601String(),
 };

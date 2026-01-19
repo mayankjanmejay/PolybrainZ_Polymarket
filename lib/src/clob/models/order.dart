@@ -21,7 +21,7 @@ class Order extends Equatable {
   final String outcome;
   final String? expiration;
   final String? type;
-  final String timestamp;
+  final String? timestamp;
   final String? status;
   final List<String>? associatedTrades;
 
@@ -37,7 +37,7 @@ class Order extends Equatable {
     required this.outcome,
     this.expiration,
     this.type,
-    required this.timestamp,
+    this.timestamp,
     this.status,
     this.associatedTrades,
   });

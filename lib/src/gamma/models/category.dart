@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'category.g.dart';
 
 /// A category for organizing events.
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable()
 class Category extends Equatable {
   final int? id;
   final String? label;

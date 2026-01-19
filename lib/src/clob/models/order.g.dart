@@ -18,7 +18,7 @@ Order _$OrderFromJson(Map<String, dynamic> json) => Order(
   outcome: json['outcome'] as String,
   expiration: json['expiration'] as String?,
   type: json['type'] as String?,
-  timestamp: json['timestamp'] as String,
+  timestamp: json['timestamp'] as String?,
   status: json['status'] as String?,
   associatedTrades: (json['associated_trades'] as List<dynamic>?)
       ?.map((e) => e as String)

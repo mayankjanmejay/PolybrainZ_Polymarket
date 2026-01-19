@@ -14,7 +14,7 @@ int _parseId(dynamic value) {
 }
 
 /// A tag for categorizing events and markets.
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable()
 class Tag extends Equatable {
   @JsonKey(fromJson: _parseId)
   final int id;

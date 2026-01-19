@@ -10,24 +10,24 @@ Tag _$TagFromJson(Map<String, dynamic> json) => Tag(
   id: _parseId(json['id']),
   label: json['label'] as String?,
   slug: json['slug'] as String?,
-  forceShow: json['force_show'] as bool? ?? false,
+  forceShow: json['forceShow'] as bool? ?? false,
   display: json['display'] as bool? ?? false,
-  eventCount: (json['event_count'] as num?)?.toInt(),
-  createdAt: json['created_at'] == null
+  eventCount: (json['eventCount'] as num?)?.toInt(),
+  createdAt: json['createdAt'] == null
       ? null
-      : DateTime.parse(json['created_at'] as String),
-  updatedAt: json['updated_at'] == null
+      : DateTime.parse(json['createdAt'] as String),
+  updatedAt: json['updatedAt'] == null
       ? null
-      : DateTime.parse(json['updated_at'] as String),
+      : DateTime.parse(json['updatedAt'] as String),
 );
 
 Map<String, dynamic> _$TagToJson(Tag instance) => <String, dynamic>{
   'id': instance.id,
   'label': instance.label,
   'slug': instance.slug,
-  'force_show': instance.forceShow,
+  'forceShow': instance.forceShow,
   'display': instance.display,
-  'event_count': instance.eventCount,
-  'created_at': instance.createdAt?.toIso8601String(),
-  'updated_at': instance.updatedAt?.toIso8601String(),
+  'eventCount': instance.eventCount,
+  'createdAt': instance.createdAt?.toIso8601String(),
+  'updatedAt': instance.updatedAt?.toIso8601String(),
 };

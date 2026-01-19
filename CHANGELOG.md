@@ -5,6 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.1] - 2026-01-19
+
+### Fixed
+
+#### JSON Parsing Bugs - Type Cast Exceptions
+
+Fixed multiple type cast exceptions when parsing API responses:
+
+**1. Null String Fields:**
+Fixed `type 'Null' is not a subtype of type 'String' in type cast` errors.
+- `Market.marketMakerAddress` - Now nullable
+- `Order.timestamp` - Now nullable
+- `OrderBook.timestamp`, `OrderBook.hash` - Now nullable
+- `Trade.matchTime`, `Trade.lastUpdate` - Now nullable
+
+**2. Gamma API Field Naming:**
+Fixed `fieldRename: FieldRename.snake` mismatch - Gamma API uses camelCase, not snake_case.
+- All Gamma models now use camelCase JSON keys (matching API response format)
+- Affected: `Market`, `Event`, `Tag`, `Series`, `Category`, `Profile`, `Comment`, `Team`, `SearchResult`
+
+**3. String-to-Number Type Coercion:**
+Fixed `type 'String' is not a subtype of type 'num?' in type cast` errors.
+- Added `json_helpers.dart` with flexible parsing functions
+- `Series.id` - API returns String `"2"`, now handled correctly
+- Numeric fields that may come as strings now use `parseIdNullable` / `parseDoubleNullable`
+
+The SDK now robustly handles API response variations without throwing type cast exceptions.
+
+---
+
 ## [1.8.0] - 2026-01-19
 
 ### Added

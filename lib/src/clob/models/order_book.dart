@@ -9,8 +9,8 @@ part 'order_book.g.dart';
 class OrderBook extends Equatable {
   final String market;
   final String assetId;
-  final String timestamp;
-  final String hash;
+  final String? timestamp;
+  final String? hash;
   final List<OrderSummary> bids;
   final List<OrderSummary> asks;
 
@@ -25,8 +25,8 @@ class OrderBook extends Equatable {
   const OrderBook({
     required this.market,
     required this.assetId,
-    required this.timestamp,
-    required this.hash,
+    this.timestamp,
+    this.hash,
     required this.bids,
     required this.asks,
     this.minTickSize,

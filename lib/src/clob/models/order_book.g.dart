@@ -9,8 +9,8 @@ part of 'order_book.dart';
 OrderBook _$OrderBookFromJson(Map<String, dynamic> json) => OrderBook(
   market: json['market'] as String,
   assetId: json['asset_id'] as String,
-  timestamp: json['timestamp'] as String,
-  hash: json['hash'] as String,
+  timestamp: json['timestamp'] as String?,
+  hash: json['hash'] as String?,
   bids: (json['bids'] as List<dynamic>)
       .map((e) => OrderSummary.fromJson(e as Map<String, dynamic>))
       .toList(),

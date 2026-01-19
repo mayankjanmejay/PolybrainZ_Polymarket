@@ -6,7 +6,7 @@ import 'profile.dart';
 part 'comment.g.dart';
 
 /// A comment on an event, series, or market.
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable()
 class Comment extends Equatable {
   final String id;
   final String? body;

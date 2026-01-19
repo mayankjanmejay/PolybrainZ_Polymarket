@@ -3,6 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 import '../../enums/recurrence_type.dart';
 import '../../enums/series_layout.dart';
 import '../../enums/series_type.dart';
+import 'json_helpers.dart';
 import 'event.dart';
 import 'tag.dart';
 import 'category.dart';
@@ -10,8 +11,9 @@ import 'category.dart';
 part 'series.g.dart';
 
 /// A series of related events.
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable()
 class Series extends Equatable {
+  @JsonKey(fromJson: parseIdNullable)
   final int? id;
   final String? ticker;
   final String? slug;
@@ -42,10 +44,15 @@ class Series extends Equatable {
   @JsonKey(defaultValue: false)
   final bool restricted;
 
+  @JsonKey(fromJson: parseDoubleNullable)
   final double? volume24hr;
+  @JsonKey(fromJson: parseDoubleNullable)
   final double? volume;
+  @JsonKey(fromJson: parseDoubleNullable)
   final double? liquidity;
+  @JsonKey(fromJson: parseDoubleNullable)
   final double? score;
+  @JsonKey(fromJson: parseIdNullable)
   final int? commentCount;
 
   final DateTime? publishedAt;

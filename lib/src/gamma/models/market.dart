@@ -9,7 +9,7 @@ import 'event.dart';
 part 'market.g.dart';
 
 /// A Polymarket market (Gamma API format).
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable()
 class Market extends Equatable {
   final String id;
   final String? question;
@@ -40,7 +40,7 @@ class Market extends Equatable {
   /// JSON string of prices array - use [outcomePricesList] for parsed list
   final String? outcomePrices;
 
-  final String marketMakerAddress;
+  final String? marketMakerAddress;
 
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -68,7 +68,7 @@ class Market extends Equatable {
     this.liquidityNum,
     this.outcomes,
     this.outcomePrices,
-    required this.marketMakerAddress,
+    this.marketMakerAddress,
     this.createdAt,
     this.updatedAt,
     this.events,

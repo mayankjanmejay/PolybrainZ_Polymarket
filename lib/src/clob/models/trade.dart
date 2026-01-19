@@ -17,8 +17,8 @@ class Trade extends Equatable {
   final String size;
   final String price;
   final String status;
-  final String matchTime;
-  final String lastUpdate;
+  final String? matchTime;
+  final String? lastUpdate;
   final String outcome;
   final String? owner;
   final String? tradeOwner;
@@ -37,8 +37,8 @@ class Trade extends Equatable {
     required this.size,
     required this.price,
     required this.status,
-    required this.matchTime,
-    required this.lastUpdate,
+    this.matchTime,
+    this.lastUpdate,
     required this.outcome,
     this.owner,
     this.tradeOwner,

@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'profile.g.dart';
 
 /// A user profile on Polymarket.
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable()
 class Profile extends Equatable {
   final DateTime? createdAt;
   final String? proxyWallet;

@@ -17,7 +17,7 @@ import 'series.dart';
 part 'event.g.dart';
 
 /// A Polymarket event containing one or more markets.
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable()
 class Event extends Equatable {
   final String id;
   final String? ticker;
