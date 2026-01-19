@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import '../../enums/outcome_type.dart';
 import 'clob_rewards.dart';
 
 part 'simplified_market.g.dart';
@@ -71,6 +72,9 @@ class SimplifiedToken extends Equatable {
   factory SimplifiedToken.fromJson(Map<String, dynamic> json) =>
       _$SimplifiedTokenFromJson(json);
   Map<String, dynamic> toJson() => _$SimplifiedTokenToJson(this);
+
+  /// Get outcome as type-safe [OutcomeType] enum.
+  OutcomeType? get outcomeEnum => OutcomeType.tryFromJson(outcome);
 
   /// Convert to a simplified Map format for easier consumption
   Map<String, dynamic> toLegacyMap() {

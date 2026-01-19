@@ -1,8 +1,14 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import '../../enums/business_subcategory.dart';
+import '../../enums/crypto_subcategory.dart';
 import '../../enums/game_status.dart';
 import '../../enums/market_category.dart';
+import '../../enums/politics_subcategory.dart';
+import '../../enums/pop_culture_subcategory.dart';
+import '../../enums/science_subcategory.dart';
 import '../../enums/sort_by.dart';
+import '../../enums/sports_subcategory.dart';
 import 'market.dart';
 import 'tag.dart';
 import 'category.dart';
@@ -163,6 +169,38 @@ class Event extends Equatable {
 
   /// Parse gameStatus to enum
   GameStatus? get gameStatusEnum => GameStatus.tryFromJson(gameStatus);
+
+  /// Parse subcategory to enum based on the category.
+  ///
+  /// Returns the appropriate subcategory enum based on [categoryEnum]:
+  /// - [PoliticsSubcategory] for politics
+  /// - [SportsSubcategory] for sports
+  /// - [CryptoSubcategory] for crypto
+  /// - [PopCultureSubcategory] for pop culture
+  /// - [BusinessSubcategory] for business
+  /// - [ScienceSubcategory] for science
+  Object? get subcategoryEnum {
+    if (subcategory == null) return null;
+    final cat = categoryEnum;
+    if (cat == null) return null;
+
+    switch (cat) {
+      case MarketCategory.politics:
+        return PoliticsSubcategory.bySlug(subcategory!);
+      case MarketCategory.sports:
+        return SportsSubcategory.bySlug(subcategory!);
+      case MarketCategory.crypto:
+        return CryptoSubcategory.bySlug(subcategory!);
+      case MarketCategory.popCulture:
+        return PopCultureSubcategory.bySlug(subcategory!);
+      case MarketCategory.business:
+        return BusinessSubcategory.bySlug(subcategory!);
+      case MarketCategory.science:
+        return ScienceSubcategory.bySlug(subcategory!);
+      default:
+        return null;
+    }
+  }
 
   /// Convert to a simplified Map format for easier consumption
   Map<String, dynamic> toLegacyMap() {

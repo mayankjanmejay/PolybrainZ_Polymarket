@@ -138,6 +138,9 @@ class LastTradePrice {
   }
 
   double get priceNum => double.parse(price);
+
+  /// Get side as type-safe [OrderSide] enum.
+  OrderSide get sideEnum => OrderSide.fromJson(side);
 }
 
 /// Price history data point.

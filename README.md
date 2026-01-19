@@ -5,7 +5,7 @@
 ### A Comprehensive Dart SDK for Polymarket Prediction Markets
 
 [![Dart SDK](https://img.shields.io/badge/Dart-%5E3.9.2-0175C2?logo=dart&logoColor=white)](https://dart.dev)
-[![Version](https://img.shields.io/badge/version-1.7.0-blue)](https://github.com/mayankjanmejay/PolyBrainZ_Polymarket/)
+[![Version](https://img.shields.io/badge/version-1.8.0-blue)](https://github.com/mayankjanmejay/PolyBrainZ_Polymarket/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 **Full-featured** | **Type-safe** | **Real-time WebSocket** | **Idiot-proof**
@@ -25,7 +25,7 @@
 | **Data API** | Positions, trades, activity, holders, portfolio analytics |
 | **WebSocket** | Real-time order book, prices, user notifications |
 | **Authentication** | L1 (EIP-712) and L2 (HMAC-SHA256) support |
-| **30+ Type-safe Enums** | Every string parameter with known values is a compile-time enum |
+| **40+ Type-safe Enums** | Every string parameter with known values is a compile-time enum |
 | **Category Detection** | Auto-detect categories from events, markets, and tags |
 | **Error Handling** | Typed exception hierarchy with `Result<T, E>` support |
 
@@ -37,7 +37,7 @@ Add to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  polybrainz_polymarket: ^1.7.0
+  polybrainz_polymarket: ^1.8.0
 ```
 
 ```bash

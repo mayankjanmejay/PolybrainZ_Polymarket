@@ -1,5 +1,6 @@
 import '../../core/api_client.dart';
 import '../../enums/market_order_by.dart';
+import '../../enums/sports_market_type.dart';
 import '../../enums/tag_slug.dart';
 import '../../enums/uma_resolution_status.dart';
 import '../models/market.dart';
@@ -40,7 +41,7 @@ class MarketsEndpoint {
     bool? cyom,
     UmaResolutionStatus? umaResolutionStatus,
     String? gameId,
-    List<String>? sportsMarketTypes,
+    List<SportsMarketType>? sportsMarketTypes,
     double? rewardsMinSize,
     List<String>? questionIds,
     bool? includeTag,
@@ -79,7 +80,8 @@ class MarketsEndpoint {
     }
     if (gameId != null) params['game_id'] = gameId;
     if (sportsMarketTypes != null) {
-      params['sports_market_types'] = sportsMarketTypes.join(',');
+      params['sports_market_types'] =
+          sportsMarketTypes.map((t) => t.value).join(',');
     }
     if (rewardsMinSize != null) {
       params['rewards_min_size'] = rewardsMinSize.toString();

@@ -1,5 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import '../../enums/recurrence_type.dart';
+import '../../enums/series_layout.dart';
+import '../../enums/series_type.dart';
 import 'event.dart';
 import 'tag.dart';
 import 'category.dart';
@@ -88,6 +91,15 @@ class Series extends Equatable {
 
   factory Series.fromJson(Map<String, dynamic> json) => _$SeriesFromJson(json);
   Map<String, dynamic> toJson() => _$SeriesToJson(this);
+
+  /// Get seriesType as type-safe [SeriesType] enum.
+  SeriesType? get seriesTypeEnum => SeriesType.tryFromJson(seriesType);
+
+  /// Get recurrence as type-safe [RecurrenceType] enum.
+  RecurrenceType? get recurrenceEnum => RecurrenceType.tryFromJson(recurrence);
+
+  /// Get layout as type-safe [SeriesLayout] enum.
+  SeriesLayout? get layoutEnum => SeriesLayout.tryFromJson(layout);
 
   /// Convert to a simplified Map format for easier consumption
   Map<String, dynamic> toLegacyMap() {

@@ -1,4 +1,5 @@
 import '../../core/api_client.dart';
+import '../../enums/market_category.dart';
 import '../../enums/recurrence_type.dart';
 import '../../enums/series_order_by.dart';
 import '../models/series.dart';
@@ -21,7 +22,7 @@ class SeriesEndpoint {
     bool? ascending,
     List<String>? slugs,
     List<int>? categoriesIds,
-    List<String>? categoriesLabels,
+    List<MarketCategory>? categories,
     bool? closed,
     bool? includeChat,
     RecurrenceType? recurrence,
@@ -37,8 +38,8 @@ class SeriesEndpoint {
     if (categoriesIds != null) {
       params['categories_id'] = categoriesIds.join(',');
     }
-    if (categoriesLabels != null) {
-      params['categories_label'] = categoriesLabels.join(',');
+    if (categories != null) {
+      params['categories_label'] = categories.map((c) => c.label).join(',');
     }
     if (closed != null) params['closed'] = closed.toString();
     if (includeChat != null) params['include_chat'] = includeChat.toString();

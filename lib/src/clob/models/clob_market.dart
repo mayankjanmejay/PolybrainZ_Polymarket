@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import '../../enums/tag_slug.dart';
 import 'clob_token.dart';
 import 'clob_rewards.dart';
 
@@ -101,6 +102,9 @@ class ClobMarket extends Equatable {
 
   /// Get the No token
   ClobToken? get noToken => tokens.length > 1 ? tokens[1] : null;
+
+  /// Get tags as type-safe [TagSlug] list.
+  List<TagSlug>? get tagSlugs => tags?.map((t) => TagSlug.fromValue(t)).toList();
 
   /// Convert to a simplified Map format for easier consumption
   Map<String, dynamic> toLegacyMap() {

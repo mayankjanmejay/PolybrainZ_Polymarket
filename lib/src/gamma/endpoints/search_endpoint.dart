@@ -3,6 +3,7 @@ import '../../enums/events_status.dart';
 import '../../enums/recurrence_type.dart';
 import '../../enums/search_query.dart';
 import '../../enums/search_sort.dart';
+import '../../enums/tag_slug.dart';
 import '../models/search_result.dart';
 
 /// Endpoints for search.
@@ -32,7 +33,7 @@ class SearchEndpoint {
     EventsStatus? eventsStatus,
     int? limitPerType,
     int? page,
-    List<String>? eventsTags,
+    List<TagSlug>? eventsTags,
     int? keepClosedMarkets,
     SearchSort? sort,
     bool? ascending,
@@ -52,7 +53,9 @@ class SearchEndpoint {
       params['limit_per_type'] = limitPerType.toString();
     }
     if (page != null) params['page'] = page.toString();
-    if (eventsTags != null) params['events_tags'] = eventsTags.join(',');
+    if (eventsTags != null) {
+      params['events_tags'] = eventsTags.map((t) => t.value).join(',');
+    }
     if (keepClosedMarkets != null) {
       params['keep_closed_markets'] = keepClosedMarkets.toString();
     }

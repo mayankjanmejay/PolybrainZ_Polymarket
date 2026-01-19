@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import '../../enums/order_status.dart';
 
 part 'order_response.g.dart';
 
@@ -27,6 +28,9 @@ class OrderResponse extends Equatable {
   factory OrderResponse.fromJson(Map<String, dynamic> json) =>
       _$OrderResponseFromJson(json);
   Map<String, dynamic> toJson() => _$OrderResponseToJson(this);
+
+  /// Get status as type-safe [OrderStatus] enum.
+  OrderStatus? get statusEnum => OrderStatus.tryFromJson(status);
 
   /// Convert to a simplified Map format for easier consumption
   Map<String, dynamic> toLegacyMap() {

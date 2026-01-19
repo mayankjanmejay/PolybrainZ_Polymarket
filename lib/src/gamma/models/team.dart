@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import '../../enums/sports_league.dart';
 
 part 'team.g.dart';
 
@@ -30,6 +31,9 @@ class Team extends Equatable {
 
   factory Team.fromJson(Map<String, dynamic> json) => _$TeamFromJson(json);
   Map<String, dynamic> toJson() => _$TeamToJson(this);
+
+  /// Get league as type-safe [SportsLeague] enum.
+  SportsLeague? get leagueEnum => SportsLeague.tryFromJson(league);
 
   /// Convert to a simplified Map format for easier consumption
   Map<String, dynamic> toLegacyMap() {

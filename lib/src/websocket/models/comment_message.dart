@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import '../../enums/parent_entity_type.dart';
 import '../../gamma/models/profile.dart';
 
 /// Comment update from RTDS.
@@ -40,6 +41,16 @@ class CommentMessage extends Equatable {
           ? Profile.fromJson(data['profile'] as Map<String, dynamic>)
           : null,
     );
+  }
+
+  /// Get parentEntityType as type-safe [ParentEntityType] enum.
+  ParentEntityType? get parentEntityTypeEnum {
+    if (parentEntityType == null) return null;
+    try {
+      return ParentEntityType.fromJson(parentEntityType!);
+    } catch (_) {
+      return null;
+    }
   }
 
   @override

@@ -1,4 +1,5 @@
 import '../../core/api_client.dart';
+import '../../enums/sports_league.dart';
 import '../../enums/sports_order_by.dart';
 import '../models/team.dart';
 
@@ -17,7 +18,7 @@ class SportsEndpoint {
     int offset = 0,
     SportsOrderBy? order,
     bool? ascending,
-    List<String>? leagues,
+    List<SportsLeague>? leagues,
     List<String>? names,
     List<String>? abbreviations,
   }) async {
@@ -28,7 +29,9 @@ class SportsEndpoint {
 
     if (order != null) params['order'] = order.value;
     if (ascending != null) params['ascending'] = ascending.toString();
-    if (leagues != null) params['league'] = leagues.join(',');
+    if (leagues != null) {
+      params['league'] = leagues.map((l) => l.value).join(',');
+    }
     if (names != null) params['name'] = names.join(',');
     if (abbreviations != null) params['abbreviation'] = abbreviations.join(',');
 

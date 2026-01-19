@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import '../../enums/parent_entity_type.dart';
 import 'profile.dart';
 
 part 'comment.g.dart';
@@ -38,6 +39,16 @@ class Comment extends Equatable {
   factory Comment.fromJson(Map<String, dynamic> json) =>
       _$CommentFromJson(json);
   Map<String, dynamic> toJson() => _$CommentToJson(this);
+
+  /// Get parentEntityType as type-safe [ParentEntityType] enum.
+  ParentEntityType? get parentEntityTypeEnum {
+    if (parentEntityType == null) return null;
+    try {
+      return ParentEntityType.fromJson(parentEntityType!);
+    } catch (_) {
+      return null;
+    }
+  }
 
   /// Convert to a simplified Map format for easier consumption
   Map<String, dynamic> toLegacyMap() {

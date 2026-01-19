@@ -5,6 +5,75 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.0] - 2026-01-19
+
+### Added
+
+#### Complete Magic String Elimination - 100% Type-Safe SDK!
+
+**New Enums:**
+- `SportsMarketType` - 20+ sports market types (winner, spread, total, prop, playerProp, futures, championship, etc.)
+- `SportsLeague` - 35+ leagues (NFL, NBA, MLB, NHL, EPL, La Liga, UFC, F1, PGA, Olympics, etc.)
+- `SeriesType` - Series types (recurring, championship, tournament, season, etc.)
+- `SeriesLayout` - Layout types (grid, list, carousel, featured, bracket, etc.)
+
+**New Model Getters (Parse Raw Strings to Enums):**
+- `LastTradePrice.sideEnum` → `OrderSide`
+- `Series.seriesTypeEnum` → `SeriesType`
+- `Series.recurrenceEnum` → `RecurrenceType`
+- `Series.layoutEnum` → `SeriesLayout`
+- `Comment.parentEntityTypeEnum` → `ParentEntityType`
+- `CommentMessage.parentEntityTypeEnum` → `ParentEntityType`
+- `Event.subcategoryEnum` → Appropriate subcategory enum based on category
+- `Team.leagueEnum` → `SportsLeague`
+- `SimplifiedToken.outcomeEnum` → `OutcomeType`
+- `ClobMarket.tagSlugs` → `List<TagSlug>`
+- `OrderResponse.statusEnum` → `OrderStatus`
+
+### Changed
+
+- **Breaking**: `MarketsEndpoint.listMarkets()` - `sportsMarketTypes` changed from `List<String>?` to `List<SportsMarketType>?`
+- **Breaking**: `SportsEndpoint.listTeams()` - `leagues` changed from `List<String>?` to `List<SportsLeague>?`
+- **Breaking**: `SeriesEndpoint.listSeries()` - `categoriesLabels` changed to `categories` with type `List<MarketCategory>?`
+- **Breaking**: `SearchEndpoint.search()` - `eventsTags` changed from `List<String>?` to `List<TagSlug>?`
+
+### Migration
+
+Before:
+```dart
+final markets = await client.gamma.markets.listMarkets(
+  sportsMarketTypes: ['winner', 'spread'],
+);
+final teams = await client.gamma.sports.listTeams(leagues: ['NFL', 'NBA']);
+final series = await client.gamma.series.listSeries(categoriesLabels: ['Sports']);
+final results = await client.gamma.search.search(
+  query: SearchQuery.nfl,
+  eventsTags: ['nfl', 'football'],
+);
+```
+
+After:
+```dart
+final markets = await client.gamma.markets.listMarkets(
+  sportsMarketTypes: [SportsMarketType.winner, SportsMarketType.spread],
+);
+final teams = await client.gamma.sports.listTeams(leagues: [SportsLeague.nfl, SportsLeague.nba]);
+final series = await client.gamma.series.listSeries(categories: [MarketCategory.sports]);
+final results = await client.gamma.search.search(
+  query: SearchQuery.nfl,
+  eventsTags: [TagSlug.nfl, TagSlug.football],
+);
+
+// Use enum getters on models
+final trade = await client.clob.pricing.getLastTradePrice(tokenId);
+print(trade.sideEnum);  // OrderSide.buy or OrderSide.sell
+
+final team = teams.first;
+print(team.leagueEnum);  // SportsLeague.nfl
+```
+
+---
+
 ## [1.7.0] - 2026-01-19
 
 ### Added
