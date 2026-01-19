@@ -1,5 +1,6 @@
 import '../../core/api_client.dart';
 import '../../enums/tag_order_by.dart';
+import '../../enums/tag_slug.dart';
 import '../models/tag.dart';
 
 /// Endpoints for tags.
@@ -43,9 +44,19 @@ class TagsEndpoint {
   }
 
   /// Get tag by slug.
-  Future<Tag> getBySlug(String slug) async {
+  ///
+  /// [slug] - The tag slug to retrieve (use [TagSlug] presets or custom)
+  ///
+  /// ```dart
+  /// // Using preset
+  /// final tag = await client.gamma.tags.getBySlug(TagSlug.politics);
+  ///
+  /// // Using custom
+  /// final tag = await client.gamma.tags.getBySlug(TagSlug.custom('my-tag'));
+  /// ```
+  Future<Tag> getBySlug(TagSlug slug) async {
     final response = await _client.get<Map<String, dynamic>>(
-      '/tags/slug/$slug',
+      '/tags/slug/${slug.value}',
     );
     return Tag.fromJson(response);
   }

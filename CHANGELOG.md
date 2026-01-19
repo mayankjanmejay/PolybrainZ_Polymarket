@@ -5,6 +5,60 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.0] - 2026-01-19
+
+### Added
+
+#### Type-Safe Tag Slugs - NO MORE MAGIC STRINGS!
+
+**`TagSlug` Sealed Class:**
+- 130+ preset tag slugs organized by category
+- `TagSlug.custom()` for user-created or unlisted tags with validation
+- `TagSlug.tryFromPreset()` - Find preset matching a value (returns null if not found)
+- `TagSlug.fromValue()` - Find preset or create custom slug
+
+**Preset Categories:**
+- **Main Categories**: `politics`, `sports`, `crypto`, `business`, `entertainment`, `popCulture`, `science`, `tech`, `finance`, `news`, `world`
+- **Politics**: `election`, `trump`, `biden`, `harris`, `congress`, `senate`, `house`, `supremeCourt`, `governor`, `republicans`, `democrats`
+- **Sports**: `nfl`, `nba`, `mlb`, `nhl`, `cfb`, `cbb`, `soccer`, `premierLeague`, `championsLeague`, `worldCup`, `mma`, `ufc`, `f1`, `olympics`, `superBowl`, `nbaFinals`, `heismanTrophy`, `tourDeFrance`, and more
+- **Crypto**: `bitcoin`, `ethereum`, `solana`, `xrp`, `doge`, `cardano`, `polygon`, `defi`, `nft`, `etfs`, `cryptocurrency`
+- **Business/Finance**: `economy`, `gdp`, `inflation`, `interestRates`, `fed`, `ipos`, `ceos`, `layoffs`, `tradeWar`, `bankOfJapan`, `monetaryPolicy`
+- **Entertainment**: `movies`, `tv`, `music`, `album`, `oscars`, `grammys`, `emmys`, `billboardHot100`, `youtube`, `tiktok`, `streaming`, `netflix`
+- **Science/Tech**: `ai`, `openai`, `chatgpt`, `spacex`, `nasa`, `space`, `climate`, `tesla`, `apple`, `google`, `microsoft`, `amazon`, `meta`
+- **World/Geopolitics**: `ukraine`, `russia`, `china`, `israel`, `iran`, `middleEast`, `europe`, `uk`, `france`, `germany`, `japan`, `india`, `war`, `nato`, `un`, `eu`
+- **People**: `elonMusk`, `joeRogan`, `kanyeWest`, `putin`, `netanyahu`, `popeFrancis`, `taylorSwift`
+
+**Tag Model Enhancement:**
+- `Tag.slugEnum` - Get the slug as a type-safe `TagSlug`
+- `Tag.slugPreset` - Try to get a preset `TagSlug` (returns null if no preset matches)
+
+### Changed
+
+- **Breaking**: `TagsEndpoint.getBySlug()` - `slug` parameter changed from `String` to `TagSlug`
+- **Breaking**: `EventsEndpoint.listEvents()` - `tagSlug` parameter changed from `String?` to `TagSlug?`
+- **Breaking**: `EventsEndpoint.getByTagSlug()` - `tagSlug` parameter changed from `String` to `TagSlug`
+- **Breaking**: `MarketsEndpoint.listMarkets()` - `tagSlug` parameter changed from `String?` to `TagSlug?`
+- **Breaking**: `MarketsEndpoint.getByTagSlug()` - `tagSlug` parameter changed from `String` to `TagSlug`
+
+### Migration
+
+Before:
+```dart
+final events = await client.gamma.events.listEvents(tagSlug: 'politics');
+final markets = await client.gamma.markets.getByTagSlug('crypto');
+```
+
+After:
+```dart
+final events = await client.gamma.events.listEvents(tagSlug: TagSlug.politics);
+final markets = await client.gamma.markets.getByTagSlug(TagSlug.crypto);
+
+// For custom/user-created tags:
+final events = await client.gamma.events.listEvents(tagSlug: TagSlug.custom('my-tag'));
+```
+
+---
+
 ## [1.6.1] - 2026-01-18
 
 ### Changed

@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+import '../../enums/tag_slug.dart';
+
 part 'tag.g.dart';
 
 /// Helper to parse id that could be String or int
@@ -42,6 +44,17 @@ class Tag extends Equatable {
 
   factory Tag.fromJson(Map<String, dynamic> json) => _$TagFromJson(json);
   Map<String, dynamic> toJson() => _$TagToJson(this);
+
+  /// Get the slug as a type-safe [TagSlug].
+  ///
+  /// Returns `null` if [slug] is null.
+  /// Attempts to match a preset first, otherwise creates a custom TagSlug.
+  TagSlug? get slugEnum => slug != null ? TagSlug.fromValue(slug!) : null;
+
+  /// Try to get a preset [TagSlug] matching this tag's slug.
+  ///
+  /// Returns `null` if [slug] is null or no preset matches.
+  TagSlug? get slugPreset => slug != null ? TagSlug.tryFromPreset(slug!) : null;
 
   /// Convert to a simplified Map format for easier consumption
   Map<String, dynamic> toLegacyMap() {

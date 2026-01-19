@@ -1,6 +1,7 @@
 import '../../core/api_client.dart';
 import '../../enums/event_order_by.dart';
 import '../../enums/recurrence_type.dart';
+import '../../enums/tag_slug.dart';
 import '../models/event.dart';
 import '../models/tag.dart';
 
@@ -19,7 +20,7 @@ class EventsEndpoint {
   /// [closed] - Filter by closed status
   /// [active] - Filter by active status
   /// [tagId] - Filter by tag ID
-  /// [tagSlug] - Filter by tag slug (e.g., 'politics', 'crypto')
+  /// [tagSlug] - Filter by tag slug (use [TagSlug] presets or custom)
   /// [featured] - Filter featured events only
   /// [hot] - Filter hot/trending events
   Future<List<Event>> listEvents({
@@ -30,7 +31,7 @@ class EventsEndpoint {
     List<int>? ids,
     List<String>? slugs,
     int? tagId,
-    String? tagSlug,
+    TagSlug? tagSlug,
     List<int>? excludeTagIds,
     bool? relatedTags,
     bool? featured,
@@ -57,7 +58,7 @@ class EventsEndpoint {
     if (ids != null) params['id'] = ids.join(',');
     if (slugs != null) params['slug'] = slugs.join(',');
     if (tagId != null) params['tag_id'] = tagId.toString();
-    if (tagSlug != null) params['tag_slug'] = tagSlug;
+    if (tagSlug != null) params['tag_slug'] = tagSlug.value;
     if (excludeTagIds != null) {
       params['exclude_tag_ids'] = excludeTagIds.join(',');
     }
@@ -141,7 +142,15 @@ class EventsEndpoint {
   }
 
   /// Get events by tag slug.
-  Future<List<Event>> getByTagSlug(String tagSlug, {int limit = 100}) {
+  ///
+  /// ```dart
+  /// // Using preset
+  /// final events = await client.gamma.events.getByTagSlug(TagSlug.politics);
+  ///
+  /// // Using custom
+  /// final events = await client.gamma.events.getByTagSlug(TagSlug.custom('my-tag'));
+  /// ```
+  Future<List<Event>> getByTagSlug(TagSlug tagSlug, {int limit = 100}) {
     return listEvents(
       limit: limit,
       tagSlug: tagSlug,

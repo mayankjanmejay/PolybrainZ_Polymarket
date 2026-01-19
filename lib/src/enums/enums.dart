@@ -25,6 +25,7 @@ export 'sort_by.dart';
 export 'sort_direction.dart';
 export 'sports_order_by.dart';
 export 'tag_order_by.dart';
+export 'tag_slug.dart';
 export 'trade_status.dart';
 export 'uma_resolution_status.dart';
 export 'ws_channel.dart';

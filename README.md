@@ -5,7 +5,7 @@
 ### A Comprehensive Dart SDK for Polymarket Prediction Markets
 
 [![Dart SDK](https://img.shields.io/badge/Dart-%5E3.9.2-0175C2?logo=dart&logoColor=white)](https://dart.dev)
-[![Version](https://img.shields.io/badge/version-1.6.1-blue)](https://github.com/mayankjanmejay/PolyBrainZ_Polymarket/)
+[![Version](https://img.shields.io/badge/version-1.7.0-blue)](https://github.com/mayankjanmejay/PolyBrainZ_Polymarket/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 **Full-featured** | **Type-safe** | **Real-time WebSocket** | **Idiot-proof**
@@ -37,7 +37,7 @@ Add to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  polybrainz_polymarket: ^1.6.1
+  polybrainz_polymarket: ^1.7.0
 ```
 
 ```bash
@@ -176,7 +176,7 @@ final event = await client.gamma.events.getBySlug('event-slug');
 final hotEvents = await client.gamma.events.getHotEvents();
 final featuredEvents = await client.gamma.events.getFeaturedEvents();
 final endingSoon = await client.gamma.events.getEndingSoon(within: Duration(days: 3));
-final politicsEvents = await client.gamma.events.getByTagSlug('politics');
+final politicsEvents = await client.gamma.events.getByTagSlug(TagSlug.politics);
 
 // Markets
 final markets = await client.gamma.markets.listMarkets(active: true);
@@ -427,6 +427,35 @@ Every parameter with known values is a compile-time enum. No more typos or inval
 
 </details>
 
+<details>
+<summary><strong>TagSlug Sealed Class (130+ Presets)</strong></summary>
+
+| Category | Presets |
+|----------|---------|
+| **Politics** | `politics`, `usElections`, `usPresidential`, `usSenate`, `usHouse`, `usGovernors`, `trump`, `biden`, `harris`, `congress`, `supremeCourt` |
+| **Sports** | `sports`, `nfl`, `nba`, `mlb`, `nhl`, `mls`, `wnba`, `collegeSports`, `soccer`, `golf`, `tennis`, `mma`, `boxing`, `f1`, `nascar` |
+| **Crypto** | `crypto`, `bitcoin`, `ethereum`, `solana`, `xrp`, `cardano`, `dogecoin`, `defi`, `nft`, `stablecoins`, `layer2` |
+| **Business** | `business`, `stocks`, `stockMarket`, `fed`, `interestRates`, `inflation`, `recession`, `ipo`, `mergers`, `earnings` |
+| **Entertainment** | `popCulture`, `oscars`, `grammys`, `emmys`, `movies`, `tv`, `music`, `celebrity`, `streaming`, `gaming`, `esports` |
+| **Science/Tech** | `science`, `technology`, `ai`, `openai`, `anthropic`, `google`, `apple`, `microsoft`, `spacex`, `nasa`, `climate` |
+| **World** | `globalElections`, `geopolitics`, `ukraine`, `russia`, `china`, `middleEast`, `nato`, `unitedNations` |
+
+```dart
+// Using presets (compile-time safe)
+final events = await client.gamma.events.getByTagSlug(TagSlug.crypto);
+final markets = await client.gamma.markets.listMarkets(tagSlug: TagSlug.nfl);
+
+// Custom tags (for user-created tags)
+final custom = await client.gamma.tags.getBySlug(TagSlug.custom('my-custom-tag'));
+
+// Get TagSlug from Tag model
+final tag = await client.gamma.tags.getById(123);
+final slug = tag.slugEnum;  // TagSlug (preset or custom)
+final preset = tag.slugPreset;  // TagSlug? (only if matches a preset)
+```
+
+</details>
+
 ---
 
 ## Category Detection
@@ -454,10 +483,10 @@ for (final entry in grouped.entries) {
   print('${entry.key.label}: ${entry.value.length} markets');
 }
 
-// Filter by category using slugs
-final cryptoMarkets = await client.gamma.markets.getByTagSlug('crypto');
+// Filter by category using TagSlug (130+ presets)
+final cryptoMarkets = await client.gamma.markets.getByTagSlug(TagSlug.crypto);
 final nflEvents = await client.gamma.events.listEvents(
-  tagSlug: SportsSubcategory.nfl.slug,
+  tagSlug: TagSlug.nfl,
 );
 ```
 
