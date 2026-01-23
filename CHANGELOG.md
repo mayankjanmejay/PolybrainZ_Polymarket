@@ -4,6 +4,42 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+## [3.1.0] - 2026-01-23
+
+### Breaking Changes
+
+- **Removed `PolygonClient`** - The blockchain RPC client has been removed to eliminate the `webthree` dependency, which caused `dart_style` version conflicts with packages like `televerse` and `freezed`. For blockchain operations (USDC balance, approvals), use a separate web3 library directly.
+- **Removed `PolymarketClient.polygon` getter** - No longer available since PolygonClient was removed
+
+### Added
+
+- **Internal crypto types** - Implemented `EthPrivateKey`, `EthereumAddress`, and `EthSignature` using pointycastle directly
+  - These types are exported from `polybrainz_polymarket` and replace the webthree types
+  - No external dependencies for Ethereum signing - eliminates `dart_style` conflicts entirely
+
+### Removed
+
+- `webthree` dependency removed entirely
+- `PolygonClient` class
+- `PolymarketClient.polygon` getter
+- Trading exceptions related to blockchain operations: `InsufficientAllowanceException`, `TransactionFailedException`, `TransactionTimeoutException`
+
+### Migration
+
+```dart
+// v3.0.x - With webthree (caused dart_style conflicts)
+import 'package:webthree/webthree.dart';
+final credentials = EthPrivateKey.fromHex(privateKey);
+
+// v3.1.0 - Internal types (no conflicts)
+import 'package:polybrainz_polymarket/polybrainz_polymarket.dart';
+final credentials = EthPrivateKey.fromHex(privateKey);
+// Same API, but no external dependencies!
+
+// For blockchain operations (if needed):
+// Use webthree or another web3 library directly in your project
+```
+
 ## [3.0.1] - 2026-01-23
 
 ### Added

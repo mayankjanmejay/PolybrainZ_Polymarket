@@ -2,11 +2,10 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:pointycastle/digests/keccak.dart';
-import 'package:webthree/webthree.dart';
-import 'package:webthree/crypto.dart';
 
 import '../../core/constants.dart';
 import '../../core/trading_exceptions.dart';
+import '../../crypto/crypto.dart';
 import 'typed_data_builder.dart';
 
 /// EIP-712 typed data signer for Polymarket orders.
@@ -229,26 +228,7 @@ class EIP712Signer {
   }
 
   /// Encode signature as 0x{r}{s}{v} string.
-  static String _encodeSignature(MsgSignature sig) {
-    final r = _bigIntToBytes(sig.r, 32);
-    final s = _bigIntToBytes(sig.s, 32);
-    final v = sig.v;
-    return '0x${_bytesToHex(Uint8List.fromList([...r, ...s, v]))}';
-  }
-
-  /// Convert BigInt to fixed-length bytes.
-  static Uint8List _bigIntToBytes(BigInt value, int length) {
-    final bytes = Uint8List(length);
-    var temp = value;
-    for (var i = length - 1; i >= 0; i--) {
-      bytes[i] = (temp & BigInt.from(0xff)).toInt();
-      temp = temp >> 8;
-    }
-    return bytes;
-  }
-
-  /// Convert bytes to hex string.
-  static String _bytesToHex(Uint8List bytes) {
-    return bytes.map((b) => b.toRadixString(16).padLeft(2, '0')).join();
+  static String _encodeSignature(EthSignature sig) {
+    return sig.toHex();
   }
 }

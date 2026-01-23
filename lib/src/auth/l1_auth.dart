@@ -1,9 +1,8 @@
 import 'dart:math';
 
-import 'package:webthree/webthree.dart';
-
 import '../core/constants.dart';
 import '../core/exceptions.dart';
+import '../crypto/crypto.dart';
 import '../clob/signing/eip712_signer.dart';
 
 /// L1 Authentication using private key EIP-712 signing.

@@ -1,5 +1,4 @@
-import 'package:webthree/webthree.dart';
-
+import '../crypto/crypto.dart';
 import 'bip32_impl.dart';
 import 'bip39_impl.dart';
 import 'wallet_credentials.dart';

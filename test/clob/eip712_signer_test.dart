@@ -1,6 +1,5 @@
 import 'package:polybrainz_polymarket/polybrainz_polymarket.dart';
 import 'package:test/test.dart';
-import 'package:webthree/webthree.dart';
 
 void main() {
   // Test private key (DO NOT use in production)

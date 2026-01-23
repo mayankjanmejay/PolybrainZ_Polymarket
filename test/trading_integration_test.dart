@@ -3,7 +3,6 @@ library trading_integration_test;
 
 import 'package:polybrainz_polymarket/polybrainz_polymarket.dart';
 import 'package:test/test.dart';
-import 'package:webthree/webthree.dart';
 
 /// Integration tests that hit live Polymarket APIs.
 ///
@@ -372,7 +371,6 @@ void main() {
 
       expect(client.hasTradingCapabilities, isTrue);
       expect(client.isAuthenticated, isTrue);
-      expect(() => client.polygon, returnsNormally);
       client.close();
     });
 
@@ -390,24 +388,6 @@ void main() {
       );
 
       publicClient.close();
-    });
-
-    test('polygon getter throws on non-trading client', () {
-      final client = PolymarketClient.authenticated(
-        credentials: const ApiCredentials(
-          apiKey: 'test',
-          secret: 'test',
-          passphrase: 'test',
-        ),
-        funder: testWalletAddress,
-      );
-
-      expect(
-        () => client.polygon,
-        throwsA(isA<AuthenticationException>()),
-      );
-
-      client.close();
     });
   });
 
