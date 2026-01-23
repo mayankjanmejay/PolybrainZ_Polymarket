@@ -75,7 +75,7 @@ class AuthService {
 
     final response = await _client.post<Map<String, dynamic>>(
       '/auth/api-key',
-      headers: l1Auth.getHeaders(),
+      headers: await l1Auth.getHeaders(),
     );
 
     final credentials = ApiCredentials(
@@ -107,7 +107,7 @@ class AuthService {
 
     final response = await _client.get<Map<String, dynamic>>(
       '/auth/derive-api-key',
-      headers: l1Auth.getHeaders(),
+      headers: await l1Auth.getHeaders(),
     );
 
     final credentials = ApiCredentials(

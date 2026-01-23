@@ -1,4 +1,4 @@
-import 'package:web3dart/web3dart.dart';
+import 'package:webthree/webthree.dart';
 
 import 'auth/models/api_credentials.dart';
 import 'auth/auth_service.dart';
@@ -242,14 +242,14 @@ class PolymarketClient {
   /// [expiration] - Optional order expiration duration
   ///
   /// Returns a [SignedOrder] ready for submission.
-  SignedOrder buildSignedOrder({
+  Future<SignedOrder> buildSignedOrder({
     required String tokenId,
     required OrderSide side,
     required double size,
     required double price,
     bool negRisk = false,
     Duration? expiration,
-  }) {
+  }) async {
     if (_privateKey == null || _walletAddress == null) {
       throw const AuthenticationException(
         'Private key required. Use PolymarketClient.withTrading() constructor.',
@@ -272,7 +272,7 @@ class PolymarketClient {
         : PolymarketConstants.exchangeAddress;
 
     // Sign order
-    final signature = EIP712Signer.signOrder(
+    final signature = await EIP712Signer.signOrder(
       order: order.toTypedDataMessage(),
       credentials: EthPrivateKey.fromHex(_privateKey!),
       verifyingContract: verifyingContract,
@@ -303,7 +303,7 @@ class PolymarketClient {
     OrderType orderType = OrderType.gtc,
     bool postOnly = false,
   }) async {
-    final signedOrder = buildSignedOrder(
+    final signedOrder = await buildSignedOrder(
       tokenId: tokenId,
       side: side,
       size: size,

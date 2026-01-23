@@ -1,6 +1,6 @@
 import 'package:polybrainz_polymarket/polybrainz_polymarket.dart';
 import 'package:test/test.dart';
-import 'package:web3dart/web3dart.dart';
+import 'package:webthree/webthree.dart';
 
 void main() {
   // Test private key (DO NOT use in production)
@@ -18,7 +18,7 @@ void main() {
 
   group('EIP712Signer', () {
     group('signOrder', () {
-      test('produces valid signature format', () {
+      test('produces valid signature format', () async {
         final order = OrderBuilder.buildLimitOrder(
           tokenId: '123456789012345678901234567890',
           makerAddress: walletAddress,
@@ -27,7 +27,7 @@ void main() {
           price: 0.55,
         );
 
-        final signature = EIP712Signer.signOrder(
+        final signature = await EIP712Signer.signOrder(
           order: order.toTypedDataMessage(),
           credentials: credentials,
           verifyingContract: PolymarketConstants.exchangeAddress,
@@ -38,7 +38,7 @@ void main() {
         expect(signature.length, equals(132));
       });
 
-      test('produces deterministic signatures for same input', () {
+      test('produces deterministic signatures for same input', () async {
         // Create identical orders (with same salt)
         final order = OrderStruct(
           salt: BigInt.from(12345),
@@ -55,13 +55,13 @@ void main() {
           signatureType: 0,
         );
 
-        final signature1 = EIP712Signer.signOrder(
+        final signature1 = await EIP712Signer.signOrder(
           order: order.toTypedDataMessage(),
           credentials: credentials,
           verifyingContract: PolymarketConstants.exchangeAddress,
         );
 
-        final signature2 = EIP712Signer.signOrder(
+        final signature2 = await EIP712Signer.signOrder(
           order: order.toTypedDataMessage(),
           credentials: credentials,
           verifyingContract: PolymarketConstants.exchangeAddress,
@@ -70,7 +70,7 @@ void main() {
         expect(signature1, equals(signature2));
       });
 
-      test('produces different signatures for different orders', () {
+      test('produces different signatures for different orders', () async {
         final order1 = OrderBuilder.buildLimitOrder(
           tokenId: '123456789012345678901234567890',
           makerAddress: walletAddress,
@@ -87,13 +87,13 @@ void main() {
           price: 0.55,
         );
 
-        final signature1 = EIP712Signer.signOrder(
+        final signature1 = await EIP712Signer.signOrder(
           order: order1.toTypedDataMessage(),
           credentials: credentials,
           verifyingContract: PolymarketConstants.exchangeAddress,
         );
 
-        final signature2 = EIP712Signer.signOrder(
+        final signature2 = await EIP712Signer.signOrder(
           order: order2.toTypedDataMessage(),
           credentials: credentials,
           verifyingContract: PolymarketConstants.exchangeAddress,
@@ -102,7 +102,8 @@ void main() {
         expect(signature1, isNot(equals(signature2)));
       });
 
-      test('produces different signatures for different verifying contracts', () {
+      test('produces different signatures for different verifying contracts',
+          () async {
         final order = OrderStruct(
           salt: BigInt.from(12345),
           maker: walletAddress,
@@ -118,13 +119,13 @@ void main() {
           signatureType: 0,
         );
 
-        final signatureStandard = EIP712Signer.signOrder(
+        final signatureStandard = await EIP712Signer.signOrder(
           order: order.toTypedDataMessage(),
           credentials: credentials,
           verifyingContract: PolymarketConstants.exchangeAddress,
         );
 
-        final signatureNegRisk = EIP712Signer.signOrder(
+        final signatureNegRisk = await EIP712Signer.signOrder(
           order: order.toTypedDataMessage(),
           credentials: credentials,
           verifyingContract: PolymarketConstants.negRiskExchangeAddress,
@@ -133,7 +134,7 @@ void main() {
         expect(signatureStandard, isNot(equals(signatureNegRisk)));
       });
 
-      test('works with sell orders', () {
+      test('works with sell orders', () async {
         final order = OrderBuilder.buildLimitOrder(
           tokenId: '123456789012345678901234567890',
           makerAddress: walletAddress,
@@ -142,7 +143,7 @@ void main() {
           price: 0.55,
         );
 
-        final signature = EIP712Signer.signOrder(
+        final signature = await EIP712Signer.signOrder(
           order: order.toTypedDataMessage(),
           credentials: credentials,
           verifyingContract: PolymarketConstants.exchangeAddress,
@@ -152,7 +153,7 @@ void main() {
         expect(signature.length, equals(132));
       });
 
-      test('works with expiration', () {
+      test('works with expiration', () async {
         final order = OrderBuilder.buildLimitOrder(
           tokenId: '123456789012345678901234567890',
           makerAddress: walletAddress,
@@ -162,7 +163,7 @@ void main() {
           expiration: const Duration(hours: 24),
         );
 
-        final signature = EIP712Signer.signOrder(
+        final signature = await EIP712Signer.signOrder(
           order: order.toTypedDataMessage(),
           credentials: credentials,
           verifyingContract: PolymarketConstants.exchangeAddress,
@@ -174,11 +175,11 @@ void main() {
     });
 
     group('signAuth', () {
-      test('produces valid signature format', () {
+      test('produces valid signature format', () async {
         final timestamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
         const nonce = 123456;
 
-        final signature = EIP712Signer.signAuth(
+        final signature = await EIP712Signer.signAuth(
           address: walletAddress,
           timestamp: timestamp,
           nonce: nonce,
@@ -189,18 +190,18 @@ void main() {
         expect(signature.length, equals(132));
       });
 
-      test('produces deterministic signatures for same input', () {
+      test('produces deterministic signatures for same input', () async {
         const timestamp = 1700000000;
         const nonce = 123456;
 
-        final signature1 = EIP712Signer.signAuth(
+        final signature1 = await EIP712Signer.signAuth(
           address: walletAddress,
           timestamp: timestamp,
           nonce: nonce,
           credentials: credentials,
         );
 
-        final signature2 = EIP712Signer.signAuth(
+        final signature2 = await EIP712Signer.signAuth(
           address: walletAddress,
           timestamp: timestamp,
           nonce: nonce,
@@ -210,17 +211,17 @@ void main() {
         expect(signature1, equals(signature2));
       });
 
-      test('produces different signatures for different timestamps', () {
+      test('produces different signatures for different timestamps', () async {
         const nonce = 123456;
 
-        final signature1 = EIP712Signer.signAuth(
+        final signature1 = await EIP712Signer.signAuth(
           address: walletAddress,
           timestamp: 1700000000,
           nonce: nonce,
           credentials: credentials,
         );
 
-        final signature2 = EIP712Signer.signAuth(
+        final signature2 = await EIP712Signer.signAuth(
           address: walletAddress,
           timestamp: 1700000001,
           nonce: nonce,
@@ -230,17 +231,17 @@ void main() {
         expect(signature1, isNot(equals(signature2)));
       });
 
-      test('produces different signatures for different nonces', () {
+      test('produces different signatures for different nonces', () async {
         const timestamp = 1700000000;
 
-        final signature1 = EIP712Signer.signAuth(
+        final signature1 = await EIP712Signer.signAuth(
           address: walletAddress,
           timestamp: timestamp,
           nonce: 123456,
           credentials: credentials,
         );
 
-        final signature2 = EIP712Signer.signAuth(
+        final signature2 = await EIP712Signer.signAuth(
           address: walletAddress,
           timestamp: timestamp,
           nonce: 654321,
@@ -250,11 +251,11 @@ void main() {
         expect(signature1, isNot(equals(signature2)));
       });
 
-      test('works with different chain IDs', () {
+      test('works with different chain IDs', () async {
         const timestamp = 1700000000;
         const nonce = 123456;
 
-        final signaturePolygon = EIP712Signer.signAuth(
+        final signaturePolygon = await EIP712Signer.signAuth(
           address: walletAddress,
           timestamp: timestamp,
           nonce: nonce,
@@ -262,7 +263,7 @@ void main() {
           chainId: 137, // Polygon
         );
 
-        final signatureMumbai = EIP712Signer.signAuth(
+        final signatureMumbai = await EIP712Signer.signAuth(
           address: walletAddress,
           timestamp: timestamp,
           nonce: nonce,
@@ -275,9 +276,9 @@ void main() {
     });
 
     group('error handling', () {
-      test('throws SigningException on invalid order', () {
+      test('throws SigningException on invalid order', () async {
         expect(
-          () => EIP712Signer.signOrder(
+          () async => await EIP712Signer.signOrder(
             order: {'invalid': 'data'},
             credentials: credentials,
             verifyingContract: PolymarketConstants.exchangeAddress,
@@ -289,7 +290,7 @@ void main() {
   });
 
   group('SignedOrder', () {
-    test('combines order and signature', () {
+    test('combines order and signature', () async {
       final order = OrderBuilder.buildLimitOrder(
         tokenId: '123456789012345678901234567890',
         makerAddress: walletAddress,
@@ -298,7 +299,7 @@ void main() {
         price: 0.55,
       );
 
-      final signature = EIP712Signer.signOrder(
+      final signature = await EIP712Signer.signOrder(
         order: order.toTypedDataMessage(),
         credentials: credentials,
         verifyingContract: PolymarketConstants.exchangeAddress,
@@ -310,7 +311,7 @@ void main() {
       expect(signedOrder.signature, equals(signature));
     });
 
-    test('toJson includes order and signature', () {
+    test('toJson includes order and signature', () async {
       final order = OrderBuilder.buildLimitOrder(
         tokenId: '123456789012345678901234567890',
         makerAddress: walletAddress,
@@ -319,7 +320,7 @@ void main() {
         price: 0.55,
       );
 
-      final signature = EIP712Signer.signOrder(
+      final signature = await EIP712Signer.signOrder(
         order: order.toTypedDataMessage(),
         credentials: credentials,
         verifyingContract: PolymarketConstants.exchangeAddress,

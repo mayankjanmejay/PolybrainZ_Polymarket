@@ -5,7 +5,7 @@
 ### A Comprehensive Dart SDK for Polymarket Prediction Markets
 
 [![Dart SDK](https://img.shields.io/badge/Dart-%5E3.9.2-0175C2?logo=dart&logoColor=white)](https://dart.dev)
-[![Version](https://img.shields.io/badge/version-2.0.0-blue)](https://github.com/mayankjanmejay/PolyBrainZ_Polymarket/)
+[![Version](https://img.shields.io/badge/version-3.0.0-blue)](https://github.com/mayankjanmejay/PolyBrainZ_Polymarket/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 **Full-featured** | **Type-safe** | **Live Trading** | **Real-time WebSocket**
@@ -39,7 +39,7 @@ Add to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  polybrainz_polymarket: ^2.0.0
+  polybrainz_polymarket: ^3.0.0
 ```
 
 ```bash

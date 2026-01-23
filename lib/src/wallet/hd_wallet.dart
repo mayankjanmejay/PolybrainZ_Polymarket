@@ -1,7 +1,7 @@
-import 'package:bip39/bip39.dart' as bip39;
-import 'package:bip32/bip32.dart' as bip32;
-import 'package:web3dart/web3dart.dart';
+import 'package:webthree/webthree.dart';
 
+import 'bip32_impl.dart';
+import 'bip39_impl.dart';
 import 'wallet_credentials.dart';
 
 /// HD Wallet generation and management.
@@ -15,17 +15,17 @@ class HdWallet {
 
   /// Generate a new 24-word mnemonic (256 bits of entropy).
   static String generateMnemonic() {
-    return bip39.generateMnemonic(strength: 256);
+    return Bip39.generateMnemonic(strength: 256);
   }
 
   /// Generate a new 12-word mnemonic (128 bits of entropy).
   static String generateMnemonic12() {
-    return bip39.generateMnemonic(strength: 128);
+    return Bip39.generateMnemonic(strength: 128);
   }
 
   /// Validate a mnemonic phrase.
   static bool validateMnemonic(String mnemonic) {
-    return bip39.validateMnemonic(mnemonic);
+    return Bip39.validateMnemonic(mnemonic);
   }
 
   /// Derive a wallet from mnemonic at given index.
@@ -45,8 +45,8 @@ class HdWallet {
       throw ArgumentError('Index must be non-negative');
     }
 
-    final seed = bip39.mnemonicToSeed(mnemonic);
-    final root = bip32.BIP32.fromSeed(seed);
+    final seed = Bip39.mnemonicToSeed(mnemonic);
+    final root = Bip32.fromSeed(seed);
     final child = root.derivePath('$derivationPathPrefix$index');
 
     if (child.privateKey == null) {

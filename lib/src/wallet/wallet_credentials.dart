@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:web3dart/web3dart.dart';
+import 'package:webthree/webthree.dart';
 
 /// Wallet credentials container for HD wallet derived keys.
 class WalletCredentials extends Equatable {

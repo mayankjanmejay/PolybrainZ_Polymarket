@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:pointycastle/digests/keccak.dart';
-import 'package:web3dart/web3dart.dart';
-import 'package:web3dart/crypto.dart';
+import 'package:webthree/webthree.dart';
+import 'package:webthree/crypto.dart';
 
 import '../../core/constants.dart';
 import '../../core/trading_exceptions.dart';
@@ -19,12 +19,12 @@ class EIP712Signer {
   /// Sign an order using EIP-712.
   ///
   /// Returns the signature in 0x{r}{s}{v} format (65 bytes).
-  static String signOrder({
+  static Future<String> signOrder({
     required Map<String, dynamic> order,
     required EthPrivateKey credentials,
     required String verifyingContract,
     int chainId = PolymarketConstants.polygonChainId,
-  }) {
+  }) async {
     try {
       final typedData = TypedDataBuilder.buildOrderTypedData(
         order: order,
@@ -32,7 +32,7 @@ class EIP712Signer {
         chainId: chainId,
       );
 
-      return _signTypedData(typedData, credentials);
+      return await _signTypedData(typedData, credentials);
     } catch (e, st) {
       throw SigningException(
         'Failed to sign order: $e',
@@ -45,13 +45,13 @@ class EIP712Signer {
   /// Sign CLOB authentication message.
   ///
   /// Returns the signature in 0x{r}{s}{v} format (65 bytes).
-  static String signAuth({
+  static Future<String> signAuth({
     required String address,
     required int timestamp,
     required int nonce,
     required EthPrivateKey credentials,
     int chainId = PolymarketConstants.polygonChainId,
-  }) {
+  }) async {
     try {
       final typedData = TypedDataBuilder.buildAuthTypedData(
         address: address,
@@ -60,7 +60,7 @@ class EIP712Signer {
         chainId: chainId,
       );
 
-      return _signTypedData(typedData, credentials);
+      return await _signTypedData(typedData, credentials);
     } catch (e, st) {
       throw SigningException(
         'Failed to sign auth: $e',
@@ -71,12 +71,12 @@ class EIP712Signer {
   }
 
   /// Sign EIP-712 typed data and return signature.
-  static String _signTypedData(
+  static Future<String> _signTypedData(
     Map<String, dynamic> typedData,
     EthPrivateKey credentials,
-  ) {
+  ) async {
     final hash = _hashTypedData(typedData);
-    final signature = credentials.signToEcSignature(hash);
+    final signature = await credentials.signToSignature(hash);
     return _encodeSignature(signature);
   }
 

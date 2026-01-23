@@ -4,6 +4,36 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+## [3.0.0] - 2026-01-23
+
+### Breaking Changes
+
+- **Upgraded to pointycastle 4.x** - Enables compatibility with latest serverpod and other packages
+- **Replaced web3dart with webthree** - webthree is the maintained fork with pointycastle 4.x support
+- **Signing methods are now async** - `EIP712Signer.signOrder()` and `EIP712Signer.signAuth()` now return `Future<String>`
+- **L1Auth.getHeaders() is now async** - Returns `Future<Map<String, String>>`
+- **buildSignedOrder() is now async** - Returns `Future<SignedOrder>`
+
+### Changed
+
+- Implemented BIP32 and BIP39 directly using pointycastle 4.x (removed bip32 and bip39 packages)
+- Removed encrypt package (was unused)
+- All imports changed from `package:web3dart` to `package:webthree`
+
+### Migration Guide
+
+```dart
+// Before (v2.x)
+final signature = EIP712Signer.signOrder(...);
+final headers = l1Auth.getHeaders();
+final signedOrder = client.buildSignedOrder(...);
+
+// After (v3.x)
+final signature = await EIP712Signer.signOrder(...);
+final headers = await l1Auth.getHeaders();
+final signedOrder = await client.buildSignedOrder(...);
+```
+
 ## [2.0.2] - 2026-01-23
 
 ### Fixed

@@ -3,7 +3,7 @@ library trading_integration_test;
 
 import 'package:polybrainz_polymarket/polybrainz_polymarket.dart';
 import 'package:test/test.dart';
-import 'package:web3dart/web3dart.dart';
+import 'package:webthree/webthree.dart';
 
 /// Integration tests that hit live Polymarket APIs.
 ///
@@ -52,13 +52,13 @@ void main() {
       expect(creds.address.hexEip55, equals(wallet.address));
     });
 
-    test('derived wallet can sign messages', () {
+    test('derived wallet can sign messages', () async {
       final mnemonic = HdWallet.generateMnemonic();
       final wallet = HdWallet.deriveWallet(mnemonic: mnemonic, index: 0);
       final creds = EthPrivateKey.fromHex(wallet.privateKey);
 
       // Sign a test auth message
-      final signature = EIP712Signer.signAuth(
+      final signature = await EIP712Signer.signAuth(
         address: wallet.address,
         timestamp: DateTime.now().millisecondsSinceEpoch ~/ 1000,
         nonce: 12345,
@@ -235,7 +235,7 @@ void main() {
         price: price.clamp(0.01, 0.99),
       );
 
-      final signature = EIP712Signer.signOrder(
+      final signature = await EIP712Signer.signOrder(
         order: order.toTypedDataMessage(),
         credentials: testCredentials,
         verifyingContract: PolymarketConstants.exchangeAddress,
@@ -258,7 +258,7 @@ void main() {
         price: price.clamp(0.01, 0.99),
       );
 
-      final signature = EIP712Signer.signOrder(
+      final signature = await EIP712Signer.signOrder(
         order: order.toTypedDataMessage(),
         credentials: testCredentials,
         verifyingContract: PolymarketConstants.exchangeAddress,
@@ -438,7 +438,7 @@ void main() {
       // In real usage, you'd check the CLOB market's negRisk field
       const verifyingContract = PolymarketConstants.exchangeAddress;
 
-      final signature = EIP712Signer.signOrder(
+      final signature = await EIP712Signer.signOrder(
         order: order.toTypedDataMessage(),
         credentials: testCredentials,
         verifyingContract: verifyingContract,

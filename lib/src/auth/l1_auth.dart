@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:web3dart/web3dart.dart';
+import 'package:webthree/webthree.dart';
 
 import '../core/constants.dart';
 import '../core/exceptions.dart';
@@ -49,11 +49,11 @@ class L1Auth {
   /// Generate authentication headers for L1 requests.
   ///
   /// These headers are used to create or derive API keys.
-  Map<String, String> getHeaders() {
+  Future<Map<String, String>> getHeaders() async {
     final timestamp = (DateTime.now().millisecondsSinceEpoch / 1000).floor();
     final nonce = _generateNonce();
 
-    final signature = EIP712Signer.signAuth(
+    final signature = await EIP712Signer.signAuth(
       address: walletAddress,
       timestamp: timestamp,
       nonce: nonce,

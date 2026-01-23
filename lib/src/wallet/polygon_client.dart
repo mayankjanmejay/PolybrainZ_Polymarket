@@ -1,5 +1,5 @@
 import 'package:http/http.dart' as http;
-import 'package:web3dart/web3dart.dart';
+import 'package:webthree/webthree.dart';
 
 import '../core/constants.dart';
 import '../core/trading_exceptions.dart';
