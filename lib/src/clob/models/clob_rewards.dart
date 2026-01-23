@@ -8,13 +8,22 @@ part 'clob_rewards.g.dart';
 class ClobRewards extends Equatable {
   final double maxSpread;
   final double minSize;
-  final Map<String, dynamic>? rates;
+
+  /// Reward rates - can be a List or Map from the API.
+  final dynamic rates;
 
   const ClobRewards({
     required this.maxSpread,
     required this.minSize,
     this.rates,
   });
+
+  /// Get rates as a List if available.
+  List<dynamic>? get ratesList => rates is List ? rates as List<dynamic> : null;
+
+  /// Get rates as a Map if available.
+  Map<String, dynamic>? get ratesMap =>
+      rates is Map ? rates as Map<String, dynamic> : null;
 
   factory ClobRewards.fromJson(Map<String, dynamic> json) =>
       _$ClobRewardsFromJson(json);

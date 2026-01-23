@@ -9,7 +9,7 @@ part of 'clob_rewards.dart';
 ClobRewards _$ClobRewardsFromJson(Map<String, dynamic> json) => ClobRewards(
   maxSpread: (json['max_spread'] as num).toDouble(),
   minSize: (json['min_size'] as num).toDouble(),
-  rates: json['rates'] as Map<String, dynamic>?,
+  rates: json['rates'],
 );
 
 Map<String, dynamic> _$ClobRewardsToJson(ClobRewards instance) =>
