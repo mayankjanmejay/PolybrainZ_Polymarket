@@ -1,41 +1,65 @@
-import 'dart:typed_data';
+import 'dart:math';
+
+import 'package:web3dart/web3dart.dart';
 
 import '../core/constants.dart';
 import '../core/exceptions.dart';
+import '../clob/signing/eip712_signer.dart';
 
 /// L1 Authentication using private key EIP-712 signing.
 ///
-/// Used to create or derive API keys.
-///
-/// NOTE: This is a simplified implementation. For production,
-/// consider using a proper Ethereum signing library like
-/// web3dart or ethers.
+/// Used to create or derive API keys from the CLOB API.
+/// This requires signing a message with your wallet's private key
+/// to prove ownership of the address.
 class L1Auth {
+  /// The private key (0x-prefixed hex string)
   final String privateKey;
+
+  /// The wallet address
   final String walletAddress;
+
+  /// Chain ID (default: Polygon mainnet)
   final int chainId;
+
+  /// Web3dart credentials for signing
+  final EthPrivateKey _credentials;
 
   L1Auth({
     required this.privateKey,
     required this.walletAddress,
     this.chainId = PolymarketConstants.polygonChainId,
-  }) {
+  }) : _credentials = EthPrivateKey.fromHex(privateKey) {
+    // Validate private key format
     if (!privateKey.startsWith('0x') || privateKey.length != 66) {
       throw const ValidationException(
         'Invalid private key format. Must be 0x-prefixed 64-character hex string.',
+      );
+    }
+
+    // Validate that the private key matches the wallet address
+    final derivedAddress = _credentials.address.hexEip55;
+    if (derivedAddress.toLowerCase() != walletAddress.toLowerCase()) {
+      throw ValidationException(
+        'Private key does not match wallet address. '
+        'Expected: $walletAddress, Got: $derivedAddress',
       );
     }
   }
 
   /// Generate authentication headers for L1 requests.
   ///
-  /// Used for creating/deriving API keys.
+  /// These headers are used to create or derive API keys.
   Map<String, String> getHeaders() {
     final timestamp = (DateTime.now().millisecondsSinceEpoch / 1000).floor();
     final nonce = _generateNonce();
 
-    final message = _createEip712Message(timestamp, nonce);
-    final signature = _signMessage(message);
+    final signature = EIP712Signer.signAuth(
+      address: walletAddress,
+      timestamp: timestamp,
+      nonce: nonce,
+      credentials: _credentials,
+      chainId: chainId,
+    );
 
     return {
       PolymarketConstants.headerPolyAddress: walletAddress,
@@ -45,80 +69,12 @@ class L1Auth {
     };
   }
 
-  /// Create EIP-712 typed data message.
-  Map<String, dynamic> _createEip712Message(int timestamp, int nonce) {
-    return {
-      'types': {
-        'EIP712Domain': [
-          {'name': 'name', 'type': 'string'},
-          {'name': 'version', 'type': 'string'},
-          {'name': 'chainId', 'type': 'uint256'},
-        ],
-        'ClobAuth': [
-          {'name': 'address', 'type': 'address'},
-          {'name': 'timestamp', 'type': 'string'},
-          {'name': 'nonce', 'type': 'uint256'},
-          {'name': 'message', 'type': 'string'},
-        ],
-      },
-      'primaryType': 'ClobAuth',
-      'domain': {
-        'name': 'ClobAuthDomain',
-        'version': '1',
-        'chainId': chainId,
-      },
-      'message': {
-        'address': walletAddress,
-        'timestamp': timestamp.toString(),
-        'nonce': nonce,
-        'message': 'This message attests that I control the given wallet',
-      },
-    };
-  }
-
-  /// Sign EIP-712 message with private key.
-  ///
-  /// NOTE: This is a simplified placeholder. Real implementation
-  /// requires proper EIP-712 hashing and ECDSA signing.
-  String _signMessage(Map<String, dynamic> message) {
-    // In a real implementation, you would:
-    // 1. Hash the structured data according to EIP-712
-    // 2. Sign with ECDSA using the private key
-    // 3. Return the signature in 0x{r}{s}{v} format
-
-    // This is a placeholder that won't work with the real API
-    // Use web3dart or similar library for actual signing
-    throw UnimplementedError(
-      'EIP-712 signing requires a proper Ethereum library. '
-      'Consider using web3dart package for signing.',
-    );
-  }
+  /// Get the credentials for signing.
+  EthPrivateKey get credentials => _credentials;
 
   /// Generate a random nonce.
   int _generateNonce() {
-    return DateTime.now().microsecondsSinceEpoch;
-  }
-}
-
-/// Helper class for EIP-712 type hashing.
-///
-/// NOTE: For production use, use a proper library like web3dart.
-class Eip712 {
-  Eip712._();
-
-  /// Domain separator type hash
-  static Uint8List get domainSeparatorTypeHash {
-    return _keccak256(
-      'EIP712Domain(string name,string version,uint256 chainId)',
-    );
-  }
-
-  /// Keccak256 hash
-  static Uint8List _keccak256(String input) {
-    // Note: Dart's crypto package doesn't include keccak256
-    // You'll need to use a package like pointycastle or web3dart
-    throw UnimplementedError(
-      'Keccak256 requires pointycastle or similar package',
-    );
+    final random = Random.secure();
+    return random.nextInt(1 << 30);
   }
 }

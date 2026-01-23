@@ -1,6 +1,6 @@
 name: polybrainz_polymarket
 description: A comprehensive Dart wrapper for the Polymarket API including Gamma, CLOB, Data APIs and WebSocket streams.
-version: 1.8.1
+version: 2.0.0
 repository: https://github.com/mayankjanmejay/PolybrainZ_Polymarket/
 
 environment:
@@ -13,6 +13,15 @@ dependencies:
   convert: ^3.1.1
   equatable: ^2.0.5
   json_annotation: ^4.9.0
+
+  # Wallet & Signing
+  web3dart: ^2.7.3
+  bip39: ^1.0.6
+  bip32: ^2.0.0
+  pointycastle: ^3.7.4
+
+  # Encryption (for key storage)
+  encrypt: ^5.0.3
 
 dev_dependencies:
   lints: ^6.0.0

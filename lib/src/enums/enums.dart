@@ -44,3 +44,5 @@ export 'pop_culture_subcategory.dart';
 export 'business_subcategory.dart';
 export 'science_subcategory.dart';
 export 'category_detector.dart';
+// Trading enums
+export 'trading_enums.dart';

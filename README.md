@@ -5,10 +5,10 @@
 ### A Comprehensive Dart SDK for Polymarket Prediction Markets
 
 [![Dart SDK](https://img.shields.io/badge/Dart-%5E3.9.2-0175C2?logo=dart&logoColor=white)](https://dart.dev)
-[![Version](https://img.shields.io/badge/version-1.8.1-blue)](https://github.com/mayankjanmejay/PolyBrainZ_Polymarket/)
+[![Version](https://img.shields.io/badge/version-2.0.0-blue)](https://github.com/mayankjanmejay/PolyBrainZ_Polymarket/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-**Full-featured** | **Type-safe** | **Real-time WebSocket** | **Idiot-proof**
+**Full-featured** | **Type-safe** | **Live Trading** | **Real-time WebSocket**
 
 [Installation](#installation) | [Quick Start](#quick-start) | [API Reference](#api-reference) | [Examples](#examples)
 
@@ -20,14 +20,16 @@
 
 | Feature | Description |
 |---------|-------------|
+| **Live Trading** | Order signing, submission, wallet management, blockchain operations |
 | **Gamma API** | Market discovery, events, tags, comments, profiles, search, leaderboard |
 | **CLOB API** | Order book, pricing, order management, trade history |
 | **Data API** | Positions, trades, activity, holders, portfolio analytics |
 | **WebSocket** | Real-time order book, prices, user notifications |
-| **Authentication** | L1 (EIP-712) and L2 (HMAC-SHA256) support |
+| **HD Wallet** | BIP-39/BIP-32/BIP-44 wallet generation and derivation |
+| **EIP-712 Signing** | Full order and auth message signing |
+| **Polygon Client** | USDC/MATIC balance, transfers, approvals |
 | **40+ Type-safe Enums** | Every string parameter with known values is a compile-time enum |
 | **Category Detection** | Auto-detect categories from events, markets, and tags |
-| **Error Handling** | Typed exception hierarchy with `Result<T, E>` support |
 
 ---
 
@@ -37,7 +39,7 @@ Add to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  polybrainz_polymarket: ^1.8.1
+  polybrainz_polymarket: ^2.0.0
 ```
 
 ```bash
@@ -158,6 +160,130 @@ void main() async {
 | `PolymarketClient.public()` | Public client, no authentication |
 | `PolymarketClient.authenticated()` | Authenticated client with API credentials |
 | `PolymarketClient.withPrivateKey()` | Client with private key for deriving credentials |
+| `PolymarketClient.withTrading()` | **Full trading client** with order signing & blockchain ops |
+
+---
+
+### Trading (v2.0+)
+
+<details open>
+<summary><strong>Place Orders with Full Signing</strong></summary>
+
+```dart
+import 'package:polybrainz_polymarket/polybrainz_polymarket.dart';
+
+void main() async {
+  // Create trading-enabled client
+  final client = PolymarketClient.withTrading(
+    credentials: ApiCredentials(
+      apiKey: 'your-api-key',
+      secret: 'your-secret',
+      passphrase: 'your-passphrase',
+    ),
+    walletAddress: '0xYourWalletAddress',
+    privateKey: '0xYourPrivateKey',
+  );
+
+  // Place an order (builds, signs, submits in one call)
+  final response = await client.placeOrder(
+    tokenId: 'token-id',
+    side: OrderSide.buy,
+    size: 10.0,   // 10 shares
+    price: 0.55,  // 55 cents
+  );
+  print('Order ID: ${response.orderId}');
+
+  // Or build and sign manually for more control
+  final signedOrder = client.buildSignedOrder(
+    tokenId: 'token-id',
+    side: OrderSide.sell,
+    size: 5.0,
+    price: 0.60,
+    negRisk: false,  // Set true for negative risk markets
+  );
+  final result = await client.clob.orders.postOrder(
+    signedOrder.toJson(),
+    orderType: OrderType.gtc,
+  );
+
+  client.close();
+}
+```
+
+</details>
+
+<details>
+<summary><strong>Wallet Generation & Management</strong></summary>
+
+```dart
+import 'package:polybrainz_polymarket/polybrainz_polymarket.dart';
+
+void main() {
+  // Generate a new HD wallet
+  final mnemonic = HdWallet.generateMnemonic(); // 12 words
+  final mnemonic24 = HdWallet.generateMnemonic(wordCount: 24);
+  print('Mnemonic: $mnemonic');
+
+  // Validate a mnemonic
+  final isValid = HdWallet.validateMnemonic(mnemonic);
+  print('Valid: $isValid');
+
+  // Derive wallet from mnemonic
+  final wallet = HdWallet.deriveWallet(mnemonic);
+  print('Address: ${wallet.address}');
+  print('Private Key: ${wallet.privateKey}');
+
+  // Derive multiple wallets (different indices)
+  final wallet0 = HdWallet.deriveWallet(mnemonic, index: 0);
+  final wallet1 = HdWallet.deriveWallet(mnemonic, index: 1);
+  final wallet2 = HdWallet.deriveWallet(mnemonic, index: 2);
+}
+```
+
+</details>
+
+<details>
+<summary><strong>Polygon Blockchain Operations</strong></summary>
+
+```dart
+import 'package:polybrainz_polymarket/polybrainz_polymarket.dart';
+
+void main() async {
+  final client = PolymarketClient.withTrading(
+    credentials: credentials,
+    walletAddress: '0x...',
+    privateKey: '0x...',
+  );
+
+  // Check balances
+  final maticBalance = await client.polygon.getMaticBalance('0x...');
+  final usdcBalance = await client.polygon.getUsdcBalance('0x...');
+  print('MATIC: $maticBalance, USDC: $usdcBalance');
+
+  // Check USDC allowance for trading
+  final allowance = await client.polygon.getUsdcAllowance(
+    owner: '0xYourAddress',
+    spender: PolymarketConstants.exchangeAddress,
+  );
+  print('Allowance: $allowance');
+
+  // Approve USDC for trading (if needed)
+  final txHash = await client.polygon.approveUsdc(
+    credentials: EthPrivateKey.fromHex('0x...'),
+    spender: PolymarketConstants.exchangeAddress,
+    amount: BigInt.from(1000000000), // 1000 USDC (6 decimals)
+  );
+  print('Approval TX: $txHash');
+
+  // Wait for transaction confirmation
+  final receipt = await client.polygon.waitForTransaction(txHash);
+  print('Confirmed in block: ${receipt?.blockNumber}');
+
+  client.close();
+}
+```
+
+</details>
 
 ---
 
@@ -387,6 +513,9 @@ Every parameter with known values is a compile-time enum. No more typos or inval
 | `OutcomeType` | `yes`, `no` | `opposite`, `isYes`, `isNo` |
 | `OrderSide` | `buy`, `sell` | `opposite` |
 | `OrderType` | `gtc`, `gtd`, `fok`, `fak` | - |
+| `TickSize` | `cent`, `tenthCent`, `hundredthCent` | `value` (double) |
+| `NegRiskFlag` | `standard`, `negRisk` | `value` (bool) |
+| `TimeInForce` | `gtc`, `gtd`, `fok`, `ioc` | - |
 | `OrderStatus` | `live`, `matched`, `filled`, `cancelled`, `pending`, `delayed` | `isActive`, `isTerminal`, `isCancellable` |
 | `TradeStatus` | `mined`, `confirmed`, `retrying`, `failed` | `isTerminal`, `isPending` |
 | `GameStatus` | `scheduled`, `inProgress`, `halftime`, `ended`, `postponed`, `cancelled`, `suspended` | `isLive`, `isFinished`, `isUpcoming`, `isInterrupted` |
@@ -513,7 +642,7 @@ final client = PolymarketClient.authenticated(
 </details>
 
 <details>
-<summary><strong>Deriving API Credentials (Requires web3dart)</strong></summary>
+<summary><strong>Deriving API Credentials</strong></summary>
 
 ```dart
 final client = PolymarketClient.withPrivateKey(
@@ -521,11 +650,12 @@ final client = PolymarketClient.withPrivateKey(
   walletAddress: '0xYourWalletAddress',
 );
 
-// Requires proper EIP-712 implementation
-// await client.clob.auth.createOrDeriveApiKey();
-```
+// Create or derive API key using EIP-712 L1 auth
+await client.clob.auth?.createOrDeriveApiKey();
 
-> **Note**: L1 authentication (EIP-712 signing) is implemented as a placeholder. For production, integrate with `web3dart` or similar.
+// Now the client has credentials and can trade
+final orders = await client.clob.orders.getOpenOrders();
+```
 
 </details>
 

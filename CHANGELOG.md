@@ -5,6 +5,138 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2026-01-23
+
+### Added
+
+#### Live Trading Extension - Full Trading Capabilities!
+
+**New Factory Constructor:**
+- `PolymarketClient.withTrading()` - Create a trading-enabled client with order signing and blockchain operations
+
+**New Convenience Methods on PolymarketClient:**
+- `buildSignedOrder()` - Build and sign an order ready for submission
+- `placeOrder()` - Build, sign, and submit an order in one call
+- `polygon` getter - Access Polygon blockchain operations
+- `hasTradingCapabilities` - Check if trading is enabled
+
+**New Wallet Module (`lib/src/wallet/`):**
+- `HdWallet` - HD wallet generation and derivation
+  - `generateMnemonic()` - Generate BIP-39 mnemonic (12 or 24 words)
+  - `validateMnemonic()` - Validate mnemonic phrase
+  - `deriveWallet()` - Derive wallet from mnemonic using BIP-44 path
+- `WalletCredentials` - Container for address, private key, derivation index
+- `PolygonClient` - Polygon blockchain operations
+  - `getMaticBalance()` - Get MATIC balance
+  - `getUsdcBalance()` - Get USDC balance
+  - `transferUsdc()` - Transfer USDC to address
+  - `approveUsdc()` - Approve USDC spending for CTF Exchange
+  - `getUsdcAllowance()` - Check current USDC allowance
+  - `waitForTransaction()` - Wait for transaction confirmation
+
+**New EIP-712 Signing Module (`lib/src/clob/signing/`):**
+- `EIP712Signer` - Sign orders and auth messages with EIP-712
+  - `signOrder()` - Sign order for CLOB submission
+  - `signAuth()` - Sign authentication message for L1 auth
+- `TypedDataBuilder` - Build EIP-712 typed data structures
+
+**New Order Building Module (`lib/src/clob/orders/`):**
+- `OrderStruct` - Raw order structure matching CLOB contract
+  - `toJson()` - Convert to JSON for API submission
+  - `toTypedDataMessage()` - Convert to EIP-712 typed data
+  - `price` / `size` getters - Human-readable price and size
+- `OrderBuilder` - Build limit and market orders
+  - `buildLimitOrder()` - Build a limit order with price/size
+  - `buildMarketOrder()` - Build a market order
+
+**New Trading Models:**
+- `SignedOrder` - Order with signature ready for submission
+- `CancelAllResponse` - Response from bulk cancel operations
+- `CancelFailure` - Details of failed cancellation
+- `CancelResult` - Result of single order cancellation
+- `OrderScoringResponse` - Check if order is scoring rewards
+
+**New Trading Enums:**
+- `TickSize` - Order book tick sizes (`cent`, `tenthCent`, `hundredthCent`)
+- `NegRiskFlag` - Negative risk market flag (`standard`, `negRisk`)
+- `TimeInForce` - Order time in force (`gtc`, `gtd`, `fok`, `ioc`)
+
+**New Trading Exceptions:**
+- `TradingException` - Base trading exception
+- `OrderSubmissionException` - Order submission failed
+- `SigningException` - EIP-712 signing failed
+- `WalletException` - Wallet operation failed
+- `InsufficientUsdcException` - Not enough USDC
+- `InsufficientGasException` - Not enough MATIC for gas
+- `InsufficientAllowanceException` - USDC not approved
+- `TransactionFailedException` - Transaction reverted
+- `TransactionTimeoutException` - Transaction not confirmed in time
+
+**New Constants:**
+- `PolymarketConstants.usdcAddress` - USDC token contract
+- `PolymarketConstants.negRiskAdapterAddress` - Neg risk adapter contract
+- `PolymarketConstants.conditionalTokensAddress` - CTF contract
+- `PolymarketConstants.polygonRpcUrl` - Default Polygon RPC
+- `PolymarketConstants.alternativeRpcUrls` - Fallback RPC URLs
+- `PolymarketConstants.eip712DomainName` - EIP-712 domain name
+- `PolymarketConstants.eip712DomainVersion` - EIP-712 domain version
+
+### Changed
+
+- **Breaking**: `L1Auth` now implements actual EIP-712 signing (was placeholder)
+- **Breaking**: New dependencies required: `web3dart`, `bip39`, `bip32`, `pointycastle`, `encrypt`
+
+### Migration
+
+Before (v1.x - L1Auth was placeholder):
+```dart
+// L1Auth threw UnimplementedError
+final l1Auth = L1Auth(privateKey: key, walletAddress: addr);
+l1Auth.getHeaders(); // Would throw
+```
+
+After (v2.0 - Full trading support):
+```dart
+// Create trading client
+final client = PolymarketClient.withTrading(
+  credentials: ApiCredentials(
+    apiKey: 'your-api-key',
+    secret: 'your-secret',
+    passphrase: 'your-passphrase',
+  ),
+  walletAddress: '0x...',
+  privateKey: '0x...',
+);
+
+// Check USDC balance
+final balance = await client.polygon.getUsdcBalance('0x...');
+
+// Place an order
+final response = await client.placeOrder(
+  tokenId: 'token-id',
+  side: OrderSide.buy,
+  size: 10.0,
+  price: 0.55,
+);
+
+// Or build and sign manually
+final signedOrder = client.buildSignedOrder(
+  tokenId: 'token-id',
+  side: OrderSide.buy,
+  size: 10.0,
+  price: 0.55,
+  negRisk: false,
+);
+final response = await client.clob.orders.postOrder(signedOrder.toJson());
+
+// Generate a new wallet
+final mnemonic = HdWallet.generateMnemonic();
+final wallet = HdWallet.deriveWallet(mnemonic);
+print('Address: ${wallet.address}');
+```
+
+---
+
 ## [1.8.1] - 2026-01-19
 
 ### Fixed

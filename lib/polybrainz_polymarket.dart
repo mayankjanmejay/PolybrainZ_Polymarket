@@ -66,3 +66,6 @@ export 'src/data/data.dart';
 
 // WebSocket
 export 'src/websocket/websocket.dart';
+
+// Wallet operations
+export 'src/wallet/wallet.dart';
