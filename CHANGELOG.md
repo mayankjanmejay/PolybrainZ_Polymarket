@@ -4,6 +4,26 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+## [3.0.1] - 2026-01-23
+
+### Added
+
+- **Re-exported webthree types** - Consumers can now import `EthPrivateKey`, `Credentials`, and `EthereumAddress` directly from `polybrainz_polymarket` instead of needing a direct `webthree` dependency
+  - This resolves `dart_style` version conflicts when using packages like `televerse` that depend on `dart_style ^3.0.0` (webthree uses `^2.3.2`)
+
+### Migration
+
+If your code imports from `webthree` directly for signing:
+
+```dart
+// Before (causes dart_style conflict with televerse, freezed, etc.)
+import 'package:webthree/webthree.dart';
+
+// After (no conflict)
+import 'package:polybrainz_polymarket/polybrainz_polymarket.dart';
+// EthPrivateKey, Credentials, EthereumAddress are available
+```
+
 ## [3.0.0] - 2026-01-23
 
 ### Breaking Changes

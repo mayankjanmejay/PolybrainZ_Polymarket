@@ -69,3 +69,8 @@ export 'src/websocket/websocket.dart';
 
 // Wallet operations
 export 'src/wallet/wallet.dart';
+
+// Re-export webthree types so consumers don't need direct webthree dependency
+// This avoids dart_style version conflicts (webthree uses ^2.3.2, other packages may use ^3.0.0)
+export 'package:webthree/webthree.dart'
+    show EthPrivateKey, Credentials, EthereumAddress;
