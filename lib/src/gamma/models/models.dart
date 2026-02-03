@@ -1,5 +1,6 @@
 export 'event.dart';
 export 'market.dart';
+export 'soccer_match.dart';
 export 'tag.dart';
 export 'category.dart';
 export 'profile.dart';

@@ -3,6 +3,7 @@ import '../../enums/event_order_by.dart';
 import '../../enums/recurrence_type.dart';
 import '../../enums/tag_slug.dart';
 import '../models/event.dart';
+import '../models/soccer_match.dart';
 import '../models/tag.dart';
 
 /// Endpoints for events.
@@ -173,6 +174,187 @@ class EventsEndpoint {
       closed: false,
       order: EventOrderBy.endDate,
       ascending: true,
+    );
+  }
+
+  // =========================================================================
+  // SOCCER MATCH METHODS
+  // =========================================================================
+
+  /// Get active soccer matches from a specific league with draw markets.
+  ///
+  /// This method fetches events from the specified league tag and converts
+  /// them to [SoccerMatch] objects, filtering for:
+  /// - Active events only (not ended/resolved)
+  /// - Match format events (Team A vs Team B)
+  /// - Events with draw markets (required for hedge strategies)
+  ///
+  /// ```dart
+  /// // Get Premier League matches
+  /// final matches = await client.gamma.events.getSoccerMatches(
+  ///   TagSlug.premierLeague,
+  /// );
+  ///
+  /// for (final match in matches) {
+  ///   print('${match.teamA} vs ${match.teamB}');
+  ///   print('  Draw price: ${match.drawPrice}');
+  ///   print('  No-draw price: ${match.noDrawPrice}');
+  /// }
+  /// ```
+  Future<List<SoccerMatch>> getSoccerMatches(
+    TagSlug leagueTag, {
+    int limit = 100,
+    bool requireDrawMarket = true,
+    bool activeOnly = true,
+    DateTime? matchAfter,
+    DateTime? matchBefore,
+  }) async {
+    // Fetch more events to account for client-side filtering
+    // (API date filters return 422 errors, so we filter client-side)
+    final fetchLimit = (matchAfter != null || matchBefore != null)
+        ? (limit * 3).clamp(limit, 300)
+        : limit;
+
+    final events = await listEvents(
+      limit: fetchLimit,
+      tagSlug: leagueTag,
+      active: activeOnly,
+      closed: false,
+      archived: false,
+      order: EventOrderBy.endDate,
+      ascending: true,
+    );
+
+    var matches = SoccerMatch.fromEvents(events, league: leagueTag.value);
+
+    // Client-side date filtering (API date params return 422 errors)
+    if (matchAfter != null) {
+      matches = matches
+          .where((m) => m.matchTime != null && m.matchTime!.isAfter(matchAfter))
+          .toList();
+    }
+    if (matchBefore != null) {
+      matches = matches
+          .where(
+              (m) => m.matchTime != null && m.matchTime!.isBefore(matchBefore))
+          .toList();
+    }
+
+    if (requireDrawMarket) {
+      matches = matches.where((m) => m.hasDrawMarket).toList();
+    }
+
+    // Apply limit after filtering
+    if (matches.length > limit) {
+      matches = matches.sublist(0, limit);
+    }
+
+    return matches;
+  }
+
+  /// Get active soccer matches from multiple leagues.
+  ///
+  /// Fetches matches from all specified leagues and combines them.
+  ///
+  /// ```dart
+  /// final matches = await client.gamma.events.getSoccerMatchesMultiLeague([
+  ///   TagSlug.premierLeague,
+  ///   TagSlug.laLiga,
+  ///   TagSlug.bundesliga,
+  /// ]);
+  /// ```
+  Future<List<SoccerMatch>> getSoccerMatchesMultiLeague(
+    List<TagSlug> leagueTags, {
+    int limitPerLeague = 50,
+    bool requireDrawMarket = true,
+    bool activeOnly = true,
+    DateTime? matchAfter,
+    DateTime? matchBefore,
+  }) async {
+    final allMatches = <SoccerMatch>[];
+
+    for (final tag in leagueTags) {
+      final matches = await getSoccerMatches(
+        tag,
+        limit: limitPerLeague,
+        requireDrawMarket: requireDrawMarket,
+        activeOnly: activeOnly,
+        matchAfter: matchAfter,
+        matchBefore: matchBefore,
+      );
+      allMatches.addAll(matches);
+    }
+
+    // Sort by match time
+    allMatches.sort((a, b) {
+      final aTime = a.matchTime;
+      final bTime = b.matchTime;
+      if (aTime == null && bTime == null) return 0;
+      if (aTime == null) return 1;
+      if (bTime == null) return -1;
+      return aTime.compareTo(bTime);
+    });
+
+    return allMatches;
+  }
+
+  /// Get all European football matches from major leagues.
+  ///
+  /// Convenience method that fetches from:
+  /// - Premier League
+  /// - La Liga
+  /// - Bundesliga
+  /// - Serie A
+  /// - Ligue 1
+  /// - Champions League
+  /// - Europa League
+  ///
+  /// ```dart
+  /// final matches = await client.gamma.events.getEuropeanFootballMatches();
+  /// ```
+  Future<List<SoccerMatch>> getEuropeanFootballMatches({
+    int limitPerLeague = 30,
+    bool requireDrawMarket = true,
+    DateTime? matchAfter,
+    DateTime? matchBefore,
+  }) {
+    return getSoccerMatchesMultiLeague(
+      [
+        TagSlug.premierLeague,
+        TagSlug.laLiga,
+        TagSlug.bundesliga,
+        TagSlug.serieA,
+        TagSlug.ligue1,
+        TagSlug.championsLeague,
+        TagSlug.europaLeague,
+      ],
+      limitPerLeague: limitPerLeague,
+      requireDrawMarket: requireDrawMarket,
+      matchAfter: matchAfter,
+      matchBefore: matchBefore,
+    );
+  }
+
+  /// Get upcoming soccer matches (within the next N days).
+  ///
+  /// ```dart
+  /// // Get matches in the next 7 days
+  /// final upcoming = await client.gamma.events.getUpcomingSoccerMatches(
+  ///   TagSlug.premierLeague,
+  ///   withinDays: 7,
+  /// );
+  /// ```
+  Future<List<SoccerMatch>> getUpcomingSoccerMatches(
+    TagSlug leagueTag, {
+    int withinDays = 7,
+    int limit = 50,
+  }) {
+    final now = DateTime.now();
+    return getSoccerMatches(
+      leagueTag,
+      limit: limit,
+      matchAfter: now,
+      matchBefore: now.add(Duration(days: withinDays)),
     );
   }
 }
