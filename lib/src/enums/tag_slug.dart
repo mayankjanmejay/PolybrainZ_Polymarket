@@ -144,11 +144,48 @@ sealed class TagSlug {
   /// Champions League
   static const TagSlug championsLeague = _PresetTagSlug('champions-league');
 
+  /// UEFA Europa League
+  static const TagSlug europaLeague = _PresetTagSlug('uefa-europa-league');
+
   /// MLS
   static const TagSlug mls = _PresetTagSlug('mls');
 
   /// World Cup
   static const TagSlug worldCup = _PresetTagSlug('world-cup');
+
+  // --- Additional European Leagues (confirmed working) ---
+
+  /// Portuguese Primeira Liga
+  static const TagSlug primeiraLiga = _PresetTagSlug('primeira-liga');
+
+  /// Scottish Premiership
+  static const TagSlug scottishPremiership = _PresetTagSlug('scottish-premiership');
+
+  /// EFL Championship (English 2nd tier)
+  static const TagSlug eflChampionship = _PresetTagSlug('efl-championship');
+
+  /// Serie B (Italian 2nd tier)
+  static const TagSlug serieB = _PresetTagSlug('serie-b');
+
+  // --- Domestic Cups ---
+
+  /// FA Cup (England)
+  static const TagSlug faCup = _PresetTagSlug('fa-cup');
+
+  /// Carabao Cup / EFL Cup (England)
+  static const TagSlug carabaoCup = _PresetTagSlug('carabao-cup');
+
+  /// Copa del Rey (Spain)
+  static const TagSlug copaDelRey = _PresetTagSlug('copa-del-rey');
+
+  /// DFB-Pokal (Germany)
+  static const TagSlug dfbPokal = _PresetTagSlug('dfb-pokal');
+
+  /// Coupe de France (France)
+  static const TagSlug coupeDeFrance = _PresetTagSlug('coupe-de-france');
+
+  /// Danish Superliga (Denmark)
+  static const TagSlug denmarkSuperliga = _PresetTagSlug('denmark-superliga');
 
   /// Tennis
   static const TagSlug tennis = _PresetTagSlug('tennis');
@@ -519,10 +556,14 @@ sealed class TagSlug {
     governor, republicans, democrats,
     // Sports
     nfl, nba, mlb, nhl, cfb, cbb, soccer, premierLeague, laLiga, bundesliga,
-    serieA, ligue1, championsLeague, mls, worldCup, tennis, golf, pga, boxing,
-    mma, ufc, f1, nascar, olympics, cricket, rugby, esports, horseRacing,
-    superBowl, nbaFinals, worldSeries, stanleyCup, marchMadness, heismanTrophy,
-    tourDeFrance, uefaNationsLeague,
+    serieA, ligue1, championsLeague, europaLeague, mls, worldCup,
+    // Additional European football
+    primeiraLiga, scottishPremiership, eflChampionship, serieB,
+    faCup, carabaoCup, copaDelRey, dfbPokal, coupeDeFrance, denmarkSuperliga,
+    // Other sports
+    tennis, golf, pga, boxing, mma, ufc, f1, nascar, olympics, cricket, rugby,
+    esports, horseRacing, superBowl, nbaFinals, worldSeries, stanleyCup,
+    marchMadness, heismanTrophy, tourDeFrance, uefaNationsLeague,
     // Crypto
     bitcoin, ethereum, solana, xrp, doge, cardano, polygon, defi, nft, etfs,
     cryptocurrency,
@@ -561,10 +602,25 @@ sealed class TagSlug {
   /// Sports-related presets
   static const List<TagSlug> sportsPresets = [
     sports, nfl, nba, mlb, nhl, cfb, cbb, soccer, premierLeague, laLiga,
-    bundesliga, serieA, ligue1, championsLeague, mls, worldCup, tennis, golf,
-    pga, boxing, mma, ufc, f1, nascar, olympics, cricket, rugby, esports,
-    horseRacing, superBowl, nbaFinals, worldSeries, stanleyCup, marchMadness,
-    heismanTrophy, tourDeFrance, uefaNationsLeague,
+    bundesliga, serieA, ligue1, championsLeague, europaLeague, mls, worldCup,
+    // Additional European leagues
+    primeiraLiga, scottishPremiership, eflChampionship, serieB, denmarkSuperliga,
+    // Domestic cups
+    faCup, carabaoCup, copaDelRey, dfbPokal, coupeDeFrance,
+    // Other sports
+    tennis, golf, pga, boxing, mma, ufc, f1, nascar, olympics, cricket, rugby,
+    esports, horseRacing, superBowl, nbaFinals, worldSeries, stanleyCup,
+    marchMadness, heismanTrophy, tourDeFrance, uefaNationsLeague,
+  ];
+
+  /// European football/soccer presets (confirmed working on Polymarket)
+  static const List<TagSlug> europeanFootballPresets = [
+    soccer, premierLeague, laLiga, bundesliga, serieA, ligue1,
+    championsLeague, europaLeague, worldCup,
+    // Additional leagues
+    primeiraLiga, scottishPremiership, eflChampionship, serieB, denmarkSuperliga,
+    // Domestic cups
+    faCup, carabaoCup, copaDelRey, dfbPokal, coupeDeFrance,
   ];
 
   /// Crypto-related presets

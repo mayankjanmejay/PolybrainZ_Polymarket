@@ -42,7 +42,7 @@ enum SportsLeague {
   /// College Football Playoff
   cfp('CFP'),
 
-  // === European Soccer ===
+  // === European Soccer - Top Leagues ===
 
   /// English Premier League
   epl('EPL'),
@@ -59,11 +59,47 @@ enum SportsLeague {
   /// Ligue 1 (France)
   ligue1('Ligue 1'),
 
+  /// Portuguese Primeira Liga
+  primeiraLiga('Primeira Liga'),
+
+  /// Scottish Premiership
+  scottishPremiership('Scottish Premiership'),
+
+  // === European Soccer - Second Tier ===
+
+  /// EFL Championship (English 2nd tier)
+  eflChampionship('EFL Championship'),
+
+  /// Serie B (Italian 2nd tier)
+  serieB('Serie B'),
+
+  // === European Competitions ===
+
   /// UEFA Champions League
   championsLeague('Champions League'),
 
   /// UEFA Europa League
   europaLeague('Europa League'),
+
+  /// UEFA Conference League
+  conferenceLeague('Conference League'),
+
+  // === Domestic Cups ===
+
+  /// FA Cup (England)
+  faCup('FA Cup'),
+
+  /// Carabao Cup / EFL Cup (England)
+  carabaoCup('Carabao Cup'),
+
+  /// Copa del Rey (Spain)
+  copaDelRey('Copa del Rey'),
+
+  /// DFB-Pokal (Germany)
+  dfbPokal('DFB-Pokal'),
+
+  /// Coupe de France (France)
+  coupeDeFrance('Coupe de France'),
 
   // === International Soccer ===
 
@@ -169,17 +205,33 @@ enum SportsLeague {
 
   /// Check if this is a soccer/football league
   bool get isSoccer =>
-      this == mls ||
+      // Top European leagues
       this == epl ||
       this == laLiga ||
       this == serieA ||
       this == bundesliga ||
       this == ligue1 ||
+      this == primeiraLiga ||
+      this == scottishPremiership ||
+      // Second tier
+      this == eflChampionship ||
+      this == serieB ||
+      // European competitions
       this == championsLeague ||
       this == europaLeague ||
+      this == conferenceLeague ||
+      // Domestic cups
+      this == faCup ||
+      this == carabaoCup ||
+      this == copaDelRey ||
+      this == dfbPokal ||
+      this == coupeDeFrance ||
+      // International
       this == worldCup ||
       this == euros ||
-      this == copaAmerica;
+      this == copaAmerica ||
+      // Americas
+      this == mls;
 
   /// Check if this is a combat sport
   bool get isCombatSport =>

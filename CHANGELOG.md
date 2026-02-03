@@ -4,6 +4,115 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [3.4.0] - 2026-02-03
+
+### Added
+
+- `TagSlug.denmarkSuperliga` - Danish Superliga support (tag: `denmark-superliga`)
+- Added to `europeanFootballPresets`, `sportsPresets`, and `allPresets`
+
+## [3.3.0] - 2026-02-03
+
+### Added
+
+#### Soccer Match Model & Methods
+
+New `SoccerMatch` model for structured soccer match data with draw markets (ideal for hedge strategies):
+
+```dart
+// Get Premier League matches with draw markets
+final matches = await client.gamma.events.getSoccerMatches(
+  TagSlug.premierLeague,
+  limit: 10,
+);
+
+for (final match in matches) {
+  print('${match.teamA} vs ${match.teamB}');
+  print('  Team A Win: ${(match.teamAWinPrice * 100).toStringAsFixed(1)}%');
+  print('  Draw: ${(match.drawPrice * 100).toStringAsFixed(1)}%');
+  print('  Team B Win: ${(match.teamBWinPrice * 100).toStringAsFixed(1)}%');
+  print('  No-Draw (for hedge): ${(match.noDrawPrice * 100).toStringAsFixed(1)}%');
+  print('  Draw Token IDs: ${match.drawTokenIds}');
+}
+
+// Get matches from multiple leagues
+final multiLeague = await client.gamma.events.getSoccerMatchesMultiLeague([
+  TagSlug.premierLeague,
+  TagSlug.laLiga,
+  TagSlug.bundesliga,
+]);
+
+// Get all European football matches
+final allEuropean = await client.gamma.events.getEuropeanFootballMatches();
+
+// Get upcoming matches (next 7 days)
+final upcoming = await client.gamma.events.getUpcomingSoccerMatches(
+  TagSlug.championsLeague,
+  withinDays: 7,
+);
+```
+
+**SoccerMatch Properties:**
+- `teamA` / `teamB` - Team names parsed from event title
+- `teamAWinMarket` / `drawMarket` / `teamBWinMarket` - Individual markets
+- `teamAWinPrice` / `drawPrice` / `teamBWinPrice` - Win probabilities
+- `noDrawPrice` - Price for "No Draw" outcome (for hedge strategies)
+- `drawTokenIds` / `teamAWinTokenIds` / `teamBWinTokenIds` - CLOB token IDs for trading
+- `totalLiquidity` / `drawLiquidity` - Market liquidity
+- `matchTime` - Match date/time
+- `isActive` / `hasAllMarkets` / `hasDrawMarket` - Status flags
+
+**New EventsEndpoint Methods:**
+- `getSoccerMatches(TagSlug leagueTag, ...)` - Get matches from a specific league
+- `getSoccerMatchesMultiLeague(List<TagSlug> leagueTags, ...)` - Get matches from multiple leagues
+- `getEuropeanFootballMatches(...)` - Get all major European league matches
+- `getUpcomingSoccerMatches(TagSlug leagueTag, ...)` - Get upcoming matches within N days
+
+#### Expanded European Football Support
+
+Added comprehensive support for European football leagues and domestic cups with **10 new confirmed working tags**:
+
+**New European Leagues:**
+- `TagSlug.europaLeague` / `SportsLeague.europaLeague` - UEFA Europa League
+- `TagSlug.primeiraLiga` / `SportsLeague.primeiraLiga` - Portuguese Primeira Liga
+- `TagSlug.scottishPremiership` / `SportsLeague.scottishPremiership` - Scottish Premiership
+- `TagSlug.eflChampionship` / `SportsLeague.eflChampionship` - English Championship (2nd tier)
+- `TagSlug.serieB` / `SportsLeague.serieB` - Italian Serie B (2nd tier)
+- `SportsLeague.conferenceLeague` - UEFA Conference League
+
+**New Domestic Cups:**
+- `TagSlug.faCup` / `SportsLeague.faCup` - FA Cup (England)
+- `TagSlug.carabaoCup` / `SportsLeague.carabaoCup` - Carabao Cup / EFL Cup (England)
+- `TagSlug.copaDelRey` / `SportsLeague.copaDelRey` - Copa del Rey (Spain)
+- `TagSlug.dfbPokal` / `SportsLeague.dfbPokal` - DFB-Pokal (Germany)
+- `TagSlug.coupeDeFrance` / `SportsLeague.coupeDeFrance` - Coupe de France (France)
+
+**New Preset Collections:**
+- `TagSlug.europeanFootballPresets` - All European football tags in one list
+
+**Updated `SportsLeague.isSoccer`:**
+- Now correctly identifies all European leagues, second-tier leagues, and domestic cups as soccer
+
+### Example Usage
+
+```dart
+// Fetch Portuguese Primeira Liga events
+final events = await client.gamma.events.getByTagSlug(TagSlug.primeiraLiga);
+
+// Fetch FA Cup events
+final faCupEvents = await client.gamma.events.getByTagSlug(TagSlug.faCup);
+
+// Get all European football presets
+for (final tag in TagSlug.europeanFootballPresets) {
+  print('${tag.value}');
+}
+
+// Check if a league is soccer
+print(SportsLeague.scottishPremiership.isSoccer); // true
+print(SportsLeague.dfbPokal.isSoccer); // true
+```
+
 ## [3.1.0] - 2026-01-23
 
 ### Breaking Changes

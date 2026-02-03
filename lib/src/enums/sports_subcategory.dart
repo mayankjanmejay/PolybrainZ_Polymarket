@@ -39,11 +39,45 @@ enum SportsSubcategory {
   /// Champions League
   championsLeague('champions-league', 'Champions League'),
 
+  /// UEFA Europa League
+  europaLeague('uefa-europa-league', 'Europa League'),
+
   /// MLS
   mls('mls', 'MLS'),
 
   /// World Cup
   worldCup('world-cup', 'World Cup'),
+
+  // --- Additional European Leagues ---
+
+  /// Portuguese Primeira Liga
+  primeiraLiga('primeira-liga', 'Primeira Liga'),
+
+  /// Scottish Premiership
+  scottishPremiership('scottish-premiership', 'Scottish Premiership'),
+
+  /// EFL Championship (English 2nd tier)
+  eflChampionship('efl-championship', 'EFL Championship'),
+
+  /// Serie B (Italian 2nd tier)
+  serieB('serie-b', 'Serie B'),
+
+  // --- Domestic Cups ---
+
+  /// FA Cup (England)
+  faCup('fa-cup', 'FA Cup'),
+
+  /// Carabao Cup / EFL Cup (England)
+  carabaoCup('carabao-cup', 'Carabao Cup'),
+
+  /// Copa del Rey (Spain)
+  copaDelRey('copa-del-rey', 'Copa del Rey'),
+
+  /// DFB-Pokal (Germany)
+  dfbPokal('dfb-pokal', 'DFB-Pokal'),
+
+  /// Coupe de France (France)
+  coupeDeFrance('coupe-de-france', 'Coupe de France'),
 
   /// Tennis
   tennis('tennis', 'Tennis'),
