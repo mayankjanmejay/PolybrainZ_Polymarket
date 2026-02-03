@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.5.0] - 2026-02-03
+
+### Breaking Changes
+
+- **Removed `tagSlug` parameter from `MarketsEndpoint.listMarkets()`** - The Polymarket /markets API ignores this parameter completely (returns random markets regardless of tag value). Use `EventsEndpoint.listEvents(tagSlug: ...)` instead, which works correctly.
+- **Removed `MarketsEndpoint.getByTagSlug()` method** - Same reason as above.
+
+### Migration
+
+```dart
+// BROKEN (removed) - markets endpoint ignores tagSlug
+final markets = await client.gamma.markets.listMarkets(tagSlug: TagSlug.bundesliga);
+final markets = await client.gamma.markets.getByTagSlug(TagSlug.bundesliga);
+
+// WORKS - use events endpoint instead
+final events = await client.gamma.events.listEvents(tagSlug: TagSlug.bundesliga);
+
+// BEST for soccer - use getSoccerMatches
+final matches = await client.gamma.events.getSoccerMatches(TagSlug.bundesliga);
+```
+
 ## [3.4.0] - 2026-02-03
 
 ### Added

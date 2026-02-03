@@ -1,7 +1,6 @@
 import '../../core/api_client.dart';
 import '../../enums/market_order_by.dart';
 import '../../enums/sports_market_type.dart';
-import '../../enums/tag_slug.dart';
 import '../../enums/uma_resolution_status.dart';
 import '../models/market.dart';
 import '../models/tag.dart';
@@ -16,7 +15,10 @@ class MarketsEndpoint {
   ///
   /// [order] - Field to order by (volume, volume24hr, liquidity, endDate, startDate, createdAt)
   /// [ascending] - Sort direction (true = ascending, false = descending)
-  /// [tagSlug] - Filter by tag slug (use [TagSlug] presets or custom)
+  ///
+  /// NOTE: tagSlug parameter was removed because the Polymarket /markets API
+  /// ignores it completely (returns random markets regardless of tag).
+  /// Use EventsEndpoint.listEvents(tagSlug: ...) instead, which works correctly.
   Future<List<Market>> listMarkets({
     int limit = 100,
     int offset = 0,
@@ -36,7 +38,6 @@ class MarketsEndpoint {
     DateTime? endDateMin,
     DateTime? endDateMax,
     int? tagId,
-    TagSlug? tagSlug,
     bool? relatedTags,
     bool? cyom,
     UmaResolutionStatus? umaResolutionStatus,
@@ -72,7 +73,6 @@ class MarketsEndpoint {
     if (volumeNumMin != null) params['volume_num_min'] = volumeNumMin.toString();
     if (volumeNumMax != null) params['volume_num_max'] = volumeNumMax.toString();
     if (tagId != null) params['tag_id'] = tagId.toString();
-    if (tagSlug != null) params['tag_slug'] = tagSlug.value;
     if (relatedTags != null) params['related_tags'] = relatedTags.toString();
     if (cyom != null) params['cyom'] = cyom.toString();
     if (umaResolutionStatus != null) {
@@ -179,23 +179,10 @@ class MarketsEndpoint {
     );
   }
 
-  /// Get markets by tag slug.
-  ///
-  /// ```dart
-  /// // Using preset
-  /// final markets = await client.gamma.markets.getByTagSlug(TagSlug.crypto);
-  ///
-  /// // Using custom
-  /// final markets = await client.gamma.markets.getByTagSlug(TagSlug.custom('my-tag'));
-  /// ```
-  Future<List<Market>> getByTagSlug(TagSlug tagSlug, {int limit = 100}) {
-    return listMarkets(
-      limit: limit,
-      tagSlug: tagSlug,
-      active: true,
-      closed: false,
-    );
-  }
+  // NOTE: getByTagSlug was removed because the Polymarket /markets API
+  // ignores the tag_slug parameter completely (returns random markets).
+  // Use client.gamma.events.listEvents(tagSlug: ...) or
+  // client.gamma.events.getSoccerMatches(...) instead.
 
   /// Get markets ending soon.
   Future<List<Market>> getEndingSoon({
