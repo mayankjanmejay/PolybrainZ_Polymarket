@@ -187,6 +187,12 @@ sealed class TagSlug {
   /// Danish Superliga (Denmark)
   static const TagSlug denmarkSuperliga = _PresetTagSlug('denmark-superliga');
 
+  /// 2. Bundesliga (Germany 2nd tier)
+  static const TagSlug bundesliga2 = _PresetTagSlug('bundesliga-2');
+
+  /// Australian A-League
+  static const TagSlug australianALeague = _PresetTagSlug('australian-a-league');
+
   /// Tennis
   static const TagSlug tennis = _PresetTagSlug('tennis');
 
@@ -560,6 +566,7 @@ sealed class TagSlug {
     // Additional European football
     primeiraLiga, scottishPremiership, eflChampionship, serieB,
     faCup, carabaoCup, copaDelRey, dfbPokal, coupeDeFrance, denmarkSuperliga,
+    bundesliga2, australianALeague,
     // Other sports
     tennis, golf, pga, boxing, mma, ufc, f1, nascar, olympics, cricket, rugby,
     esports, horseRacing, superBowl, nbaFinals, worldSeries, stanleyCup,
@@ -605,6 +612,7 @@ sealed class TagSlug {
     bundesliga, serieA, ligue1, championsLeague, europaLeague, mls, worldCup,
     // Additional European leagues
     primeiraLiga, scottishPremiership, eflChampionship, serieB, denmarkSuperliga,
+    bundesliga2, australianALeague,
     // Domestic cups
     faCup, carabaoCup, copaDelRey, dfbPokal, coupeDeFrance,
     // Other sports
@@ -619,8 +627,14 @@ sealed class TagSlug {
     championsLeague, europaLeague, worldCup,
     // Additional leagues
     primeiraLiga, scottishPremiership, eflChampionship, serieB, denmarkSuperliga,
+    bundesliga2,
     // Domestic cups
     faCup, carabaoCup, copaDelRey, dfbPokal, coupeDeFrance,
+  ];
+
+  /// Football/soccer presets from other regions (confirmed working on Polymarket)
+  static const List<TagSlug> otherFootballPresets = [
+    mls, australianALeague,
   ];
 
   /// Crypto-related presets

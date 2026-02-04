@@ -10,7 +10,21 @@
       "Bash(dart pub publish:*)",
       "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd MIT LICENSE and rename docs to doc\n\n- Add MIT License file for open-source compliance\n- Rename docs/ to doc/ to follow Dart package layout convention\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
       "Bash(git reset:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(dart --version:*)",
+      "Bash(git push:*)",
+      "Bash(curl:*)",
+      "Bash(python:*)",
+      "Bash(findstr:*)",
+      "Bash(python3:*)",
+      "Bash(ls:*)",
+      "Bash(git rm:*)",
+      "Bash(for tag in primeira-liga scottish-premiership uefa-europa-league copa-del-rey fa-cup carabao-cup dfb-pokal coupe-de-france efl-championship serie-b)",
+      "Bash(do)",
+      "Bash(echo:*)",
+      "Bash(done)",
+      "Bash(POLYMARKET_API_KEY=\"019bb372-791e-71eb-8caa-dd401ce8b827\" POLYMARKET_SECRET=\"PUKueXc-BWKkDCGoPe_owK6V7SvP2G90-ZNzp_QRJ0U=\" POLYMARKET_PASSPHRASE=\"eb7ddf4e15dd44870e2efceed922108bf88a3de72d34fdabedef5b8f9f44630b\" dart test:*)",
+      "Bash(del:*)"
     ]
   }
 }
