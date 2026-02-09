@@ -44,6 +44,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Poland (Ekstraklasa) - No active soccer markets
 - Croatia (HNL) - No active soccer markets
 
+## [3.6.0] - 2026-02-03
+
+### Added
+
+- `TagSlug.bundesliga2` - 2. Bundesliga / Germany 2nd tier (tag: `bundesliga-2`)
+- `TagSlug.australianALeague` - Australian A-League (tag: `australian-a-league`)
+- `TagSlug.otherFootballPresets` - New preset list for non-European football leagues
+
+### Note
+
+The following leagues were requested but are **NOT available on Polymarket**:
+- Netherlands (Eredivisie) - No active soccer markets
+- Poland (Ekstraklasa) - No active soccer markets
+- Croatia (HNL) - No active soccer markets
+
 ## [3.5.0] - 2026-02-03
 
 ### Breaking Changes
