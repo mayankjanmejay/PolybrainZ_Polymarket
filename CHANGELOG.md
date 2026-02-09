@@ -5,27 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [3.7.0] - 2026-02-09
+## [3.8.0] - 2026-02-09
 
 ### Added
 
-#### EU Soccer - New League Tags
-- `TagSlug.ligue2` - Ligue 2 (France 2nd tier)
-- `TagSlug.laLiga2` - La Liga 2 / Segunda Division (Spain 2nd tier)
-- `TagSlug.bundesliga2` - 2. Bundesliga (Germany 2nd tier)
-- `TagSlug.ligaPortugal` - Liga Portugal (alternative Portuguese league tag)
-- `TagSlug.norwayEliteserien` - Norwegian Eliteserien
+#### Comprehensive API Scan - New EU Soccer League Tags
 - `TagSlug.eredivisie` - Eredivisie (Netherlands) - tag: `ere`
 - `TagSlug.turkishSuperLig` - Turkish Super Lig - tag: `tur`
 - `TagSlug.russianPremierLeague` - Russian Premier League - tag: `rus`
 - `TagSlug.ekstraklasa` - Ekstraklasa (Poland) - future-proofed
 - `TagSlug.croatiaHnl` - HNL / Prva Liga (Croatia) - future-proofed
 
-#### EU Soccer - New Cup/Competition Tags
-- `TagSlug.europaConferenceLeague` - UEFA Europa Conference League
-- `TagSlug.tacaDePortugal` - Taca de Portugal (Portuguese Cup)
+#### New Cup/Competition Tags
 - `TagSlug.coppaItalia` - Coppa Italia (Italian Cup) - tag: `itc`
-- `TagSlug.fifaClubWorldCup` - FIFA Club World Cup
 - `TagSlug.fifaWorldCup2026` - 2026 FIFA World Cup
 
 #### Non-EU Soccer Tags (all confirmed active)
@@ -36,27 +28,52 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `TagSlug.copaSudamericana` - Copa Sudamericana - tag: `sud`
 - `TagSlug.kLeague` - K-League (South Korea)
 - `TagSlug.saudiProLeague` - Saudi Professional League
+
+#### Tennis
+- `TagSlug.rolandGarros` - Roland-Garros (alias for French Open)
+
+#### Updated Preset Lists
+- Updated `europeanFootballPresets` with comprehensive API scan results (29 total)
+- Updated `otherFootballPresets` with non-EU soccer tags (9)
+
+## [3.7.0] - 2026-02-09
+
+### Added
+
+#### New EU Soccer Tags (all confirmed working on Polymarket)
+- `TagSlug.ligue2` - Ligue 2 (France 2nd tier)
+- `TagSlug.laLiga2` - La Liga 2 / Segunda Division (Spain 2nd tier)
+- `TagSlug.bundesliga2` - 2. Bundesliga (Germany 2nd tier)
+- `TagSlug.ligaPortugal` - Liga Portugal (alternative Portuguese league tag)
+- `TagSlug.tacaDePortugal` - Taca de Portugal (Portuguese Cup)
+- `TagSlug.europaConferenceLeague` - UEFA Europa Conference League
+- `TagSlug.norwayEliteserien` - Norwegian Eliteserien
+- `TagSlug.fifaClubWorldCup` - FIFA Club World Cup
 - `TagSlug.australianALeague` - Australian A-League
 
-#### Tennis Tags (all confirmed active)
+#### New Tennis Tags (all confirmed working on Polymarket)
 - `TagSlug.atp` - ATP Tour (general)
 - `TagSlug.wta` - WTA Tour (general)
 - `TagSlug.atpTour` - ATP Tour (match-level events)
 - `TagSlug.atpFinals` - ATP Finals (year-end championship)
 - `TagSlug.atp250` - ATP 250 tournaments
 - `TagSlug.australianOpen` - Australian Open
-- `TagSlug.frenchOpen` - French Open
-- `TagSlug.rolandGarros` - Roland-Garros (alias for French Open)
+- `TagSlug.frenchOpen` - French Open / Roland-Garros
 - `TagSlug.wimbledon` - Wimbledon
 - `TagSlug.usOpen` - US Open
 - `TagSlug.miamiOpen` - Miami Open
 - `TagSlug.monteCarlo` - Monte-Carlo Masters
 - `TagSlug.madridOpen` - Madrid Open
 
-#### New/Updated Preset Lists
-- `TagSlug.tennisPresets` - All tennis tags (13)
-- `TagSlug.otherFootballPresets` - Non-European football leagues (9)
-- Updated `europeanFootballPresets` with all new EU soccer tags (29 total)
+#### New Preset Lists
+- `TagSlug.tennisPresets` - All tennis tags
+- `TagSlug.otherFootballPresets` - Non-European football leagues
+- Updated `europeanFootballPresets` with all new EU soccer tags
+
+### Not Available on Polymarket
+- Netherlands (Eredivisie) - No active soccer markets
+- Poland (Ekstraklasa) - No active soccer markets
+- Croatia (HNL) - No active soccer markets
 
 ## [3.6.0] - 2026-02-03
 
