@@ -5,17 +5,41 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [3.6.0] - 2026-02-03
+## [3.6.0] - 2026-02-09
 
 ### Added
 
-- `TagSlug.bundesliga2` - 2. Bundesliga / Germany 2nd tier (tag: `bundesliga-2`)
-- `TagSlug.australianALeague` - Australian A-League (tag: `australian-a-league`)
-- `TagSlug.otherFootballPresets` - New preset list for non-European football leagues
+#### New EU Soccer Tags (all confirmed working on Polymarket)
+- `TagSlug.ligue2` - Ligue 2 (France 2nd tier)
+- `TagSlug.laLiga2` - La Liga 2 / Segunda Division (Spain 2nd tier)
+- `TagSlug.bundesliga2` - 2. Bundesliga (Germany 2nd tier)
+- `TagSlug.ligaPortugal` - Liga Portugal (alternative Portuguese league tag)
+- `TagSlug.tacaDePortugal` - Taca de Portugal (Portuguese Cup)
+- `TagSlug.europaConferenceLeague` - UEFA Europa Conference League
+- `TagSlug.norwayEliteserien` - Norwegian Eliteserien
+- `TagSlug.fifaClubWorldCup` - FIFA Club World Cup
+- `TagSlug.australianALeague` - Australian A-League
 
-### Note
+#### New Tennis Tags (all confirmed working on Polymarket)
+- `TagSlug.atp` - ATP Tour (general)
+- `TagSlug.wta` - WTA Tour (general)
+- `TagSlug.atpTour` - ATP Tour (match-level events)
+- `TagSlug.atpFinals` - ATP Finals (year-end championship)
+- `TagSlug.atp250` - ATP 250 tournaments
+- `TagSlug.australianOpen` - Australian Open
+- `TagSlug.frenchOpen` - French Open / Roland-Garros
+- `TagSlug.wimbledon` - Wimbledon
+- `TagSlug.usOpen` - US Open
+- `TagSlug.miamiOpen` - Miami Open
+- `TagSlug.monteCarlo` - Monte-Carlo Masters
+- `TagSlug.madridOpen` - Madrid Open
 
-The following leagues were requested but are **NOT available on Polymarket**:
+#### New Preset Lists
+- `TagSlug.tennisPresets` - All tennis tags
+- `TagSlug.otherFootballPresets` - Non-European football leagues
+- Updated `europeanFootballPresets` with all new EU soccer tags
+
+### Not Available on Polymarket
 - Netherlands (Eredivisie) - No active soccer markets
 - Poland (Ekstraklasa) - No active soccer markets
 - Croatia (HNL) - No active soccer markets

@@ -190,11 +190,80 @@ sealed class TagSlug {
   /// 2. Bundesliga (Germany 2nd tier)
   static const TagSlug bundesliga2 = _PresetTagSlug('bundesliga-2');
 
+  /// Ligue 2 (France 2nd tier)
+  static const TagSlug ligue2 = _PresetTagSlug('ligue-2');
+
+  /// La Liga 2 / Segunda Division (Spain 2nd tier)
+  static const TagSlug laLiga2 = _PresetTagSlug('la-liga-2');
+
+  /// Liga Portugal (alternative tag for Portuguese league)
+  static const TagSlug ligaPortugal = _PresetTagSlug('liga-portugal');
+
+  /// Taca de Portugal (Portuguese Cup)
+  static const TagSlug tacaDePortugal = _PresetTagSlug('taca-de-portugal');
+
+  /// UEFA Europa Conference League
+  static const TagSlug europaConferenceLeague = _PresetTagSlug('europa-conference-league');
+
+  /// Norwegian Eliteserien (Norway)
+  static const TagSlug norwayEliteserien = _PresetTagSlug('norway-eliteserien');
+
+  /// FIFA Club World Cup
+  static const TagSlug fifaClubWorldCup = _PresetTagSlug('fifa-club-world-cup');
+
   /// Australian A-League
   static const TagSlug australianALeague = _PresetTagSlug('australian-a-league');
 
-  /// Tennis
+  // ============================================================
+  // TENNIS
+  // ============================================================
+
+  /// Tennis (general)
   static const TagSlug tennis = _PresetTagSlug('tennis');
+
+  /// ATP Tour (general)
+  static const TagSlug atp = _PresetTagSlug('atp');
+
+  /// WTA Tour (general)
+  static const TagSlug wta = _PresetTagSlug('wta');
+
+  /// ATP Tour (match-level events)
+  static const TagSlug atpTour = _PresetTagSlug('atp-tour');
+
+  /// ATP Finals (year-end championship)
+  static const TagSlug atpFinals = _PresetTagSlug('atp-finals');
+
+  /// ATP 250 tournaments
+  static const TagSlug atp250 = _PresetTagSlug('atp-250');
+
+  // --- Grand Slams ---
+
+  /// Australian Open
+  static const TagSlug australianOpen = _PresetTagSlug('australian-open');
+
+  /// French Open / Roland-Garros
+  static const TagSlug frenchOpen = _PresetTagSlug('french-open');
+
+  /// Wimbledon
+  static const TagSlug wimbledon = _PresetTagSlug('wimbledon');
+
+  /// US Open (Tennis)
+  static const TagSlug usOpen = _PresetTagSlug('us-open');
+
+  // --- Masters 1000 ---
+
+  /// Miami Open
+  static const TagSlug miamiOpen = _PresetTagSlug('miami-open');
+
+  /// Monte-Carlo Masters
+  static const TagSlug monteCarlo = _PresetTagSlug('monte-carlo');
+
+  /// Madrid Open
+  static const TagSlug madridOpen = _PresetTagSlug('madrid-open');
+
+  // ============================================================
+  // OTHER SPORTS
+  // ============================================================
 
   /// Golf
   static const TagSlug golf = _PresetTagSlug('golf');
@@ -564,11 +633,19 @@ sealed class TagSlug {
     nfl, nba, mlb, nhl, cfb, cbb, soccer, premierLeague, laLiga, bundesliga,
     serieA, ligue1, championsLeague, europaLeague, mls, worldCup,
     // Additional European football
-    primeiraLiga, scottishPremiership, eflChampionship, serieB,
-    faCup, carabaoCup, copaDelRey, dfbPokal, coupeDeFrance, denmarkSuperliga,
-    bundesliga2, australianALeague,
+    primeiraLiga, scottishPremiership, eflChampionship, serieB, denmarkSuperliga,
+    bundesliga2, ligue2, laLiga2, ligaPortugal, norwayEliteserien,
+    // Domestic & international cups
+    faCup, carabaoCup, copaDelRey, dfbPokal, coupeDeFrance, tacaDePortugal,
+    europaConferenceLeague, fifaClubWorldCup,
+    // Non-European football
+    australianALeague,
+    // Tennis
+    tennis, atp, wta, atpTour, atpFinals, atp250,
+    australianOpen, frenchOpen, wimbledon, usOpen,
+    miamiOpen, monteCarlo, madridOpen,
     // Other sports
-    tennis, golf, pga, boxing, mma, ufc, f1, nascar, olympics, cricket, rugby,
+    golf, pga, boxing, mma, ufc, f1, nascar, olympics, cricket, rugby,
     esports, horseRacing, superBowl, nbaFinals, worldSeries, stanleyCup,
     marchMadness, heismanTrophy, tourDeFrance, uefaNationsLeague,
     // Crypto
@@ -612,29 +689,50 @@ sealed class TagSlug {
     bundesliga, serieA, ligue1, championsLeague, europaLeague, mls, worldCup,
     // Additional European leagues
     primeiraLiga, scottishPremiership, eflChampionship, serieB, denmarkSuperliga,
-    bundesliga2, australianALeague,
-    // Domestic cups
-    faCup, carabaoCup, copaDelRey, dfbPokal, coupeDeFrance,
+    bundesliga2, ligue2, laLiga2, ligaPortugal, norwayEliteserien,
+    // Domestic & international cups
+    faCup, carabaoCup, copaDelRey, dfbPokal, coupeDeFrance, tacaDePortugal,
+    europaConferenceLeague, fifaClubWorldCup,
+    // Non-European football
+    australianALeague,
+    // Tennis
+    tennis, atp, wta, atpTour, atpFinals, atp250,
+    australianOpen, frenchOpen, wimbledon, usOpen,
+    miamiOpen, monteCarlo, madridOpen,
     // Other sports
-    tennis, golf, pga, boxing, mma, ufc, f1, nascar, olympics, cricket, rugby,
+    golf, pga, boxing, mma, ufc, f1, nascar, olympics, cricket, rugby,
     esports, horseRacing, superBowl, nbaFinals, worldSeries, stanleyCup,
     marchMadness, heismanTrophy, tourDeFrance, uefaNationsLeague,
   ];
 
   /// European football/soccer presets (confirmed working on Polymarket)
   static const List<TagSlug> europeanFootballPresets = [
+    // Top 5 leagues
     soccer, premierLeague, laLiga, bundesliga, serieA, ligue1,
-    championsLeague, europaLeague, worldCup,
+    // UEFA competitions
+    championsLeague, europaLeague, europaConferenceLeague,
+    uefaNationsLeague, worldCup, fifaClubWorldCup,
     // Additional leagues
-    primeiraLiga, scottishPremiership, eflChampionship, serieB, denmarkSuperliga,
-    bundesliga2,
+    primeiraLiga, ligaPortugal, scottishPremiership, denmarkSuperliga,
+    norwayEliteserien,
+    // Second tiers
+    eflChampionship, serieB, bundesliga2, ligue2, laLiga2,
     // Domestic cups
-    faCup, carabaoCup, copaDelRey, dfbPokal, coupeDeFrance,
+    faCup, carabaoCup, copaDelRey, dfbPokal, coupeDeFrance, tacaDePortugal,
   ];
 
   /// Football/soccer presets from other regions (confirmed working on Polymarket)
   static const List<TagSlug> otherFootballPresets = [
     mls, australianALeague,
+  ];
+
+  /// Tennis presets (confirmed working on Polymarket)
+  static const List<TagSlug> tennisPresets = [
+    tennis, atp, wta, atpTour, atpFinals, atp250,
+    // Grand Slams
+    australianOpen, frenchOpen, wimbledon, usOpen,
+    // Masters 1000
+    miamiOpen, monteCarlo, madridOpen,
   ];
 
   /// Crypto-related presets
