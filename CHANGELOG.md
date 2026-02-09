@@ -39,10 +39,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `TagSlug.otherFootballPresets` - Non-European football leagues
 - Updated `europeanFootballPresets` with all new EU soccer tags
 
-### Not Available on Polymarket
-- Netherlands (Eredivisie) - No active soccer markets
-- Poland (Ekstraklasa) - No active soccer markets
-- Croatia (HNL) - No active soccer markets
+#### Future-Proofed Tags (no active markets yet, slug based on Polymarket naming convention)
+- `TagSlug.eredivisie` - Eredivisie (Netherlands)
+- `TagSlug.ekstraklasa` - Ekstraklasa (Poland)
+- `TagSlug.croatiaHnl` - HNL / Prva Liga (Croatia)
 
 ## [3.6.0] - 2026-02-03
 

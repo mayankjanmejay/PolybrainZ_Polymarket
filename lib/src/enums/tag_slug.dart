@@ -208,6 +208,15 @@ sealed class TagSlug {
   /// Norwegian Eliteserien (Norway)
   static const TagSlug norwayEliteserien = _PresetTagSlug('norway-eliteserien');
 
+  /// Eredivisie (Netherlands) - may not have active markets yet
+  static const TagSlug eredivisie = _PresetTagSlug('eredivisie');
+
+  /// Ekstraklasa (Poland) - may not have active markets yet
+  static const TagSlug ekstraklasa = _PresetTagSlug('ekstraklasa');
+
+  /// HNL / Prva Liga (Croatia) - may not have active markets yet
+  static const TagSlug croatiaHnl = _PresetTagSlug('croatia-hnl');
+
   /// FIFA Club World Cup
   static const TagSlug fifaClubWorldCup = _PresetTagSlug('fifa-club-world-cup');
 
@@ -635,6 +644,7 @@ sealed class TagSlug {
     // Additional European football
     primeiraLiga, scottishPremiership, eflChampionship, serieB, denmarkSuperliga,
     bundesliga2, ligue2, laLiga2, ligaPortugal, norwayEliteserien,
+    eredivisie, ekstraklasa, croatiaHnl,
     // Domestic & international cups
     faCup, carabaoCup, copaDelRey, dfbPokal, coupeDeFrance, tacaDePortugal,
     europaConferenceLeague, fifaClubWorldCup,
@@ -690,6 +700,7 @@ sealed class TagSlug {
     // Additional European leagues
     primeiraLiga, scottishPremiership, eflChampionship, serieB, denmarkSuperliga,
     bundesliga2, ligue2, laLiga2, ligaPortugal, norwayEliteserien,
+    eredivisie, ekstraklasa, croatiaHnl,
     // Domestic & international cups
     faCup, carabaoCup, copaDelRey, dfbPokal, coupeDeFrance, tacaDePortugal,
     europaConferenceLeague, fifaClubWorldCup,
@@ -714,7 +725,7 @@ sealed class TagSlug {
     uefaNationsLeague, worldCup, fifaClubWorldCup,
     // Additional leagues
     primeiraLiga, ligaPortugal, scottishPremiership, denmarkSuperliga,
-    norwayEliteserien,
+    norwayEliteserien, eredivisie, ekstraklasa, croatiaHnl,
     // Second tiers
     eflChampionship, serieB, bundesliga2, ligue2, laLiga2,
     // Domestic cups
