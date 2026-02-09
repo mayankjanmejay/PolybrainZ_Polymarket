@@ -9,40 +9,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-#### New EU Soccer Tags (all confirmed working on Polymarket)
+#### EU Soccer - New League Tags
 - `TagSlug.ligue2` - Ligue 2 (France 2nd tier)
 - `TagSlug.laLiga2` - La Liga 2 / Segunda Division (Spain 2nd tier)
 - `TagSlug.bundesliga2` - 2. Bundesliga (Germany 2nd tier)
 - `TagSlug.ligaPortugal` - Liga Portugal (alternative Portuguese league tag)
-- `TagSlug.tacaDePortugal` - Taca de Portugal (Portuguese Cup)
-- `TagSlug.europaConferenceLeague` - UEFA Europa Conference League
 - `TagSlug.norwayEliteserien` - Norwegian Eliteserien
+- `TagSlug.eredivisie` - Eredivisie (Netherlands) - tag: `ere`
+- `TagSlug.turkishSuperLig` - Turkish Super Lig - tag: `tur`
+- `TagSlug.russianPremierLeague` - Russian Premier League - tag: `rus`
+- `TagSlug.ekstraklasa` - Ekstraklasa (Poland) - future-proofed
+- `TagSlug.croatiaHnl` - HNL / Prva Liga (Croatia) - future-proofed
+
+#### EU Soccer - New Cup/Competition Tags
+- `TagSlug.europaConferenceLeague` - UEFA Europa Conference League
+- `TagSlug.tacaDePortugal` - Taca de Portugal (Portuguese Cup)
+- `TagSlug.coppaItalia` - Coppa Italia (Italian Cup) - tag: `itc`
 - `TagSlug.fifaClubWorldCup` - FIFA Club World Cup
+- `TagSlug.fifaWorldCup2026` - 2026 FIFA World Cup
+
+#### Non-EU Soccer Tags (all confirmed active)
+- `TagSlug.brazilSerieA` - Brazil Serie A
+- `TagSlug.argPrimeraDivision` - Argentine Primera Division - tag: `arg`
+- `TagSlug.ligaMx` - Liga MX (Mexico) - tag: `mex`
+- `TagSlug.copaLibertadores` - Copa Libertadores - tag: `lib`
+- `TagSlug.copaSudamericana` - Copa Sudamericana - tag: `sud`
+- `TagSlug.kLeague` - K-League (South Korea)
+- `TagSlug.saudiProLeague` - Saudi Professional League
 - `TagSlug.australianALeague` - Australian A-League
 
-#### New Tennis Tags (all confirmed working on Polymarket)
+#### Tennis Tags (all confirmed active)
 - `TagSlug.atp` - ATP Tour (general)
 - `TagSlug.wta` - WTA Tour (general)
 - `TagSlug.atpTour` - ATP Tour (match-level events)
 - `TagSlug.atpFinals` - ATP Finals (year-end championship)
 - `TagSlug.atp250` - ATP 250 tournaments
 - `TagSlug.australianOpen` - Australian Open
-- `TagSlug.frenchOpen` - French Open / Roland-Garros
+- `TagSlug.frenchOpen` - French Open
+- `TagSlug.rolandGarros` - Roland-Garros (alias for French Open)
 - `TagSlug.wimbledon` - Wimbledon
 - `TagSlug.usOpen` - US Open
 - `TagSlug.miamiOpen` - Miami Open
 - `TagSlug.monteCarlo` - Monte-Carlo Masters
 - `TagSlug.madridOpen` - Madrid Open
 
-#### New Preset Lists
-- `TagSlug.tennisPresets` - All tennis tags
-- `TagSlug.otherFootballPresets` - Non-European football leagues
-- Updated `europeanFootballPresets` with all new EU soccer tags
-
-#### Future-Proofed Tags (no active markets yet, slug based on Polymarket naming convention)
-- `TagSlug.eredivisie` - Eredivisie (Netherlands)
-- `TagSlug.ekstraklasa` - Ekstraklasa (Poland)
-- `TagSlug.croatiaHnl` - HNL / Prva Liga (Croatia)
+#### New/Updated Preset Lists
+- `TagSlug.tennisPresets` - All tennis tags (13)
+- `TagSlug.otherFootballPresets` - Non-European football leagues (9)
+- Updated `europeanFootballPresets` with all new EU soccer tags (29 total)
 
 ## [3.6.0] - 2026-02-03
 

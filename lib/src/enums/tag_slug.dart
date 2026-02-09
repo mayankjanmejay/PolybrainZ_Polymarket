@@ -208,8 +208,8 @@ sealed class TagSlug {
   /// Norwegian Eliteserien (Norway)
   static const TagSlug norwayEliteserien = _PresetTagSlug('norway-eliteserien');
 
-  /// Eredivisie (Netherlands) - may not have active markets yet
-  static const TagSlug eredivisie = _PresetTagSlug('eredivisie');
+  /// Eredivisie (Netherlands) - tag is abbreviated as 'ere'
+  static const TagSlug eredivisie = _PresetTagSlug('ere');
 
   /// Ekstraklasa (Poland) - may not have active markets yet
   static const TagSlug ekstraklasa = _PresetTagSlug('ekstraklasa');
@@ -217,11 +217,49 @@ sealed class TagSlug {
   /// HNL / Prva Liga (Croatia) - may not have active markets yet
   static const TagSlug croatiaHnl = _PresetTagSlug('croatia-hnl');
 
+  // --- Non-European Leagues ---
+
+  /// Brazil Serie A
+  static const TagSlug brazilSerieA = _PresetTagSlug('brazil-serie-a');
+
+  /// Argentine Primera Division
+  static const TagSlug argPrimeraDivision = _PresetTagSlug('arg');
+
+  /// Liga MX (Mexico)
+  static const TagSlug ligaMx = _PresetTagSlug('mex');
+
+  /// Copa Libertadores (South America)
+  static const TagSlug copaLibertadores = _PresetTagSlug('lib');
+
+  /// Copa Sudamericana (South America)
+  static const TagSlug copaSudamericana = _PresetTagSlug('sud');
+
+  /// K-League (South Korea)
+  static const TagSlug kLeague = _PresetTagSlug('k-league');
+
+  /// Russian Premier League
+  static const TagSlug russianPremierLeague = _PresetTagSlug('rus');
+
+  /// Turkish Super Lig
+  static const TagSlug turkishSuperLig = _PresetTagSlug('tur');
+
+  /// Saudi Professional League
+  static const TagSlug saudiProLeague = _PresetTagSlug('saudi-professional-league');
+
+  /// Coppa Italia (Italian Cup)
+  static const TagSlug coppaItalia = _PresetTagSlug('itc');
+
   /// FIFA Club World Cup
   static const TagSlug fifaClubWorldCup = _PresetTagSlug('fifa-club-world-cup');
 
+  /// 2026 FIFA World Cup
+  static const TagSlug fifaWorldCup2026 = _PresetTagSlug('2026-fifa-world-cup');
+
   /// Australian A-League
   static const TagSlug australianALeague = _PresetTagSlug('australian-a-league');
+
+  /// Roland-Garros (alias for French Open)
+  static const TagSlug rolandGarros = _PresetTagSlug('roland-garros');
 
   // ============================================================
   // TENNIS
@@ -647,12 +685,14 @@ sealed class TagSlug {
     eredivisie, ekstraklasa, croatiaHnl,
     // Domestic & international cups
     faCup, carabaoCup, copaDelRey, dfbPokal, coupeDeFrance, tacaDePortugal,
-    europaConferenceLeague, fifaClubWorldCup,
+    coppaItalia, europaConferenceLeague, fifaClubWorldCup, fifaWorldCup2026,
     // Non-European football
-    australianALeague,
+    australianALeague, brazilSerieA, argPrimeraDivision, ligaMx,
+    copaLibertadores, copaSudamericana, kLeague,
+    russianPremierLeague, turkishSuperLig, saudiProLeague,
     // Tennis
     tennis, atp, wta, atpTour, atpFinals, atp250,
-    australianOpen, frenchOpen, wimbledon, usOpen,
+    australianOpen, frenchOpen, rolandGarros, wimbledon, usOpen,
     miamiOpen, monteCarlo, madridOpen,
     // Other sports
     golf, pga, boxing, mma, ufc, f1, nascar, olympics, cricket, rugby,
@@ -703,12 +743,14 @@ sealed class TagSlug {
     eredivisie, ekstraklasa, croatiaHnl,
     // Domestic & international cups
     faCup, carabaoCup, copaDelRey, dfbPokal, coupeDeFrance, tacaDePortugal,
-    europaConferenceLeague, fifaClubWorldCup,
+    coppaItalia, europaConferenceLeague, fifaClubWorldCup, fifaWorldCup2026,
     // Non-European football
-    australianALeague,
+    australianALeague, brazilSerieA, argPrimeraDivision, ligaMx,
+    copaLibertadores, copaSudamericana, kLeague,
+    russianPremierLeague, turkishSuperLig, saudiProLeague,
     // Tennis
     tennis, atp, wta, atpTour, atpFinals, atp250,
-    australianOpen, frenchOpen, wimbledon, usOpen,
+    australianOpen, frenchOpen, rolandGarros, wimbledon, usOpen,
     miamiOpen, monteCarlo, madridOpen,
     // Other sports
     golf, pga, boxing, mma, ufc, f1, nascar, olympics, cricket, rugby,
@@ -722,26 +764,29 @@ sealed class TagSlug {
     soccer, premierLeague, laLiga, bundesliga, serieA, ligue1,
     // UEFA competitions
     championsLeague, europaLeague, europaConferenceLeague,
-    uefaNationsLeague, worldCup, fifaClubWorldCup,
+    uefaNationsLeague, worldCup, fifaClubWorldCup, fifaWorldCup2026,
     // Additional leagues
     primeiraLiga, ligaPortugal, scottishPremiership, denmarkSuperliga,
     norwayEliteserien, eredivisie, ekstraklasa, croatiaHnl,
+    turkishSuperLig, russianPremierLeague,
     // Second tiers
     eflChampionship, serieB, bundesliga2, ligue2, laLiga2,
     // Domestic cups
-    faCup, carabaoCup, copaDelRey, dfbPokal, coupeDeFrance, tacaDePortugal,
+    faCup, carabaoCup, copaDelRey, dfbPokal, coupeDeFrance,
+    tacaDePortugal, coppaItalia,
   ];
 
   /// Football/soccer presets from other regions (confirmed working on Polymarket)
   static const List<TagSlug> otherFootballPresets = [
-    mls, australianALeague,
+    mls, australianALeague, brazilSerieA, argPrimeraDivision, ligaMx,
+    copaLibertadores, copaSudamericana, kLeague, saudiProLeague,
   ];
 
   /// Tennis presets (confirmed working on Polymarket)
   static const List<TagSlug> tennisPresets = [
     tennis, atp, wta, atpTour, atpFinals, atp250,
     // Grand Slams
-    australianOpen, frenchOpen, wimbledon, usOpen,
+    australianOpen, frenchOpen, rolandGarros, wimbledon, usOpen,
     // Masters 1000
     miamiOpen, monteCarlo, madridOpen,
   ];
